@@ -1,0 +1,79 @@
+package dinosaurgame.controller;
+
+import javax.swing.Timer;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import dinosaurgame.model.ModelImpl;
+import dinosaurgame.view.ViewImpl;
+
+/**
+ * Implementazione concreta del controller del gioco.
+ * Gestisce il ciclo di aggiornamento e intercetta gli input da tastiera.
+ */
+public class ControllerImpl implements Controller {
+
+    private final ModelImpl model;
+    private final ViewImpl view;
+    private Timer timer;
+
+    /**
+     * Crea un nuovo controller per il gioco.
+     * Avvia il timer e imposta i listener per i tasti premuti e rilasciati.
+     *
+     * @param model il modello del gioco
+     * @param view  la vista del gioco
+     */
+    public ControllerImpl(ModelImpl model, ViewImpl view) {
+        this.model = model;
+        this.view = view;
+
+        setupTimer();
+        setupKeyListener();
+    }
+
+    /**
+     * Imposta e crea il timer che aggiorna il gioco.
+     */
+    private void setupTimer() {
+        timer = new Timer(12, e -> {
+            model.update();
+            view.repaint();
+        });
+        timer.start();
+    }
+
+    /**
+     * Imposta il listener per il salto del dinosauro.
+     */
+    private void setupKeyListener() {
+        view.getPanel().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    model.jump();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    model.releaseJump();
+                }
+            }
+        });
+
+        view.getPanel().setFocusable(true);
+        view.getPanel().requestFocusInWindow();
+    }
+
+    @Override
+    public void start() {
+        timer.start();
+    }
+
+    @Override
+    public void stop() {
+        timer.stop();
+    }
+}
