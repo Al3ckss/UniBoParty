@@ -59,7 +59,7 @@ public class MazeGridImpl implements MazeGrid {
         return copy;
     }
 
-     /**
+    /**
      * @{inheritDoc}
      */
     @Override
@@ -67,7 +67,7 @@ public class MazeGridImpl implements MazeGrid {
         return this.startRow;
     }
 
-     /**
+    /**
      * @{inheritDoc}
      */
     @Override
@@ -83,7 +83,7 @@ public class MazeGridImpl implements MazeGrid {
         return this.exitRow;
     }
     
-     /**
+    /**
      * @{inheritDoc}
      */
     @Override
