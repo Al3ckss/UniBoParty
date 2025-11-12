@@ -39,7 +39,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getRows() {
@@ -47,7 +47,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getCols() {
@@ -55,7 +55,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Cell getCell(int row, int col) {
@@ -63,7 +63,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Player getPlayer() {
@@ -71,7 +71,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean movePlayer(Direction dir) {
@@ -80,12 +80,12 @@ public class MazeModelImpl implements MazeModel {
         int newRow = this.player.getRow();
         int newCol = this.player.getCol();
 
-        // Calcola nuova posizione in base alla direzione
+        
         switch (dir) {
-            case UP -> newRow--; // vai su
-            case DOWN -> newRow++; // vai giù
-            case LEFT -> newCol--; // vai a sinistra
-            case RIGHT -> newCol++; // vai a destra
+            case UP -> newRow--; 
+            case DOWN -> newRow++; 
+            case LEFT -> newCol--; 
+            case RIGHT -> newCol++; 
         }
         if (!isInside(newRow, newCol))
             return false;
@@ -120,7 +120,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getMaxMoves() {
@@ -128,7 +128,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public long getStartTimeMillis() {
@@ -136,7 +136,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public long getTimeLimitMillis() {
@@ -144,7 +144,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
 
     @Override
@@ -153,7 +153,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void removeObserver(GameObserver o) {
@@ -161,7 +161,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void reset() {
@@ -175,7 +175,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getCurrentMoves() {
@@ -183,7 +183,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean checkWin() {
@@ -191,7 +191,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean checkLose() {
