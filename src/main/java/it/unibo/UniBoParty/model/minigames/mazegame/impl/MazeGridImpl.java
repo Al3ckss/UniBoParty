@@ -3,6 +3,7 @@ package it.unibo.uniboparty.model.minigames.mazegame.impl;
 import it.unibo.uniboparty.model.minigames.mazegame.api.Cell;
 import it.unibo.uniboparty.model.minigames.mazegame.api.MazeGrid;
 import it.unibo.uniboparty.utilities.CellType;
+
 /**
  * Implementation of the MazeGrid interface.
  */
@@ -15,11 +16,12 @@ public class MazeGridImpl implements MazeGrid {
 
     /**
      * Constructor for MazeGridImpl.
+     * 
      * @param layout rapprezenting the layout of the maze
      */
-    public MazeGridImpl(CellType[][] layout) {
-        int rows = layout.length;
-        int cols = layout[0].length;
+    public MazeGridImpl(final CellType[][] layout) {
+        final int rows = layout.length;
+        final int cols = layout[0].length;
         this.grid = new Cell[rows][cols];
         int foundStartRow = -1;
         int foundStartCol = -1;
@@ -27,7 +29,7 @@ public class MazeGridImpl implements MazeGrid {
         int foundExitCol = -1;
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                CellType type = layout[r][c];
+                final CellType type = layout[r][c];
                 grid[r][c] = new CellImpl(r, c, type);
                 if (type == CellType.START) {
                     foundStartRow = r;
@@ -46,13 +48,13 @@ public class MazeGridImpl implements MazeGrid {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public Cell[][] getGrid() {
-        int rows = grid.length;
-        int cols = grid[0].length;
-        Cell[][] copy = new Cell[rows][cols];
+        final int rows = grid.length;
+        final int cols = grid[0].length;
+        final Cell[][] copy = new Cell[rows][cols];
         for (int r = 0; r < rows; r++) {
             System.arraycopy(grid[r], 0, copy[r], 0, cols);
         }
@@ -60,7 +62,7 @@ public class MazeGridImpl implements MazeGrid {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getStartRow() {
@@ -68,7 +70,7 @@ public class MazeGridImpl implements MazeGrid {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getStartCol() {
@@ -76,15 +78,15 @@ public class MazeGridImpl implements MazeGrid {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getExitRow() {
         return this.exitRow;
     }
-    
+
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getExitCol() {

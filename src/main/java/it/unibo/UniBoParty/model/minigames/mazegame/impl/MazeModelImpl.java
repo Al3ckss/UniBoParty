@@ -10,6 +10,7 @@ import it.unibo.uniboparty.model.minigames.mazegame.api.Player;
 import it.unibo.uniboparty.utilities.CellType;
 import it.unibo.uniboparty.utilities.Direction;
 import it.unibo.uniboparty.view.minigames.mazegame.api.GameObserver;
+
 /**
  * Implementation of the MazeModel interface.
  */
@@ -21,10 +22,10 @@ public class MazeModelImpl implements MazeModel {
 
     private final List<GameObserver> observers = new ArrayList<>();
 
-    private boolean win = false;
-    private boolean lose = false;
+    private boolean win;
+    private boolean lose;
     private int maxMoves = MAX_MOVES_NUM;
-    private int currentMoves = 0;
+    private int currentMoves;
     private final long startTimeMillis;
     private long timeLimitMillis = MINUTE_MILLIS;
  
@@ -32,7 +33,7 @@ public class MazeModelImpl implements MazeModel {
      * Constructor for MazeModelImpl that generates a new maze.
      */
     public MazeModelImpl() {
-        MazeGenerator generator = new MazeGeneratorImpl();
+        final MazeGenerator generator = new MazeGeneratorImpl();
         this.grid = new MazeGridImpl(generator.generate());
         this.player = new PlayerImpl(this.grid, grid.getStartRow(), grid.getStartCol());
         this.startTimeMillis = System.currentTimeMillis();
@@ -58,7 +59,7 @@ public class MazeModelImpl implements MazeModel {
      * {@inheritDoc}
      */
     @Override
-    public Cell getCell(int row, int col) {
+    public Cell getCell(final int row, final int col) {
         return this.grid.getGrid()[row][col];
     }
 
@@ -74,25 +75,27 @@ public class MazeModelImpl implements MazeModel {
      * {@inheritDoc}
      */
     @Override
-    public boolean movePlayer(Direction dir) {
-        if (win || lose)
+    public boolean movePlayer(final Direction dir) {
+        if (win || lose) {
             return false;
+        }
         int newRow = this.player.getRow();
         int newCol = this.player.getCol();
 
-        
         switch (dir) {
             case UP -> newRow--; 
             case DOWN -> newRow++; 
             case LEFT -> newCol--; 
             case RIGHT -> newCol++; 
         }
-        if (!isInside(newRow, newCol))
+        if (!isInside(newRow, newCol)) {
             return false;
+        }
 
         Cell target = getCell(newRow, newCol);
-        if (target.getType() == CellType.WALL)
+        if (target.getType() == CellType.WALL) {
             return false;
+        }
 
         this.player.setPosition(newRow, newCol);
         currentMoves++;
@@ -102,7 +105,7 @@ public class MazeModelImpl implements MazeModel {
         return true;
     }
 
-    private boolean isInside(int row, int col) {
+    private boolean isInside(final int row, final int col) {
         return row >= 0 && row < getRows() && col >= 0 && col < getCols();
     }
 
@@ -114,7 +117,7 @@ public class MazeModelImpl implements MazeModel {
     }
 
     private void notifyObservers() {
-        for (GameObserver o : observers) {
+        for (final GameObserver o : observers) {
             o.onModelUpdated(this);
         }
     }
@@ -156,7 +159,7 @@ public class MazeModelImpl implements MazeModel {
      * {@inheritDoc}
      */
     @Override
-    public void removeObserver(GameObserver o) {
+    public void removeObserver(final GameObserver o) {
         this.observers.remove(o);
     }
 

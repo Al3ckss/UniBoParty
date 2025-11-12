@@ -15,7 +15,7 @@ public class MazeGeneratorImpl implements MazeGenerator {
     final CellType X = CellType.EXIT;
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public CellType[][] generate() {

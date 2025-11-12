@@ -2,6 +2,7 @@ package it.unibo.uniboparty.model.minigames.mazegame.impl;
 
 import it.unibo.uniboparty.model.minigames.mazegame.api.Cell;
 import it.unibo.uniboparty.utilities.CellType;
+
 /**
  * Implementation of the Cell interface.
  */
@@ -11,11 +12,12 @@ public class CellImpl implements Cell {
     private final CellType type;
     /**
      * Constructor for CellImpl.
+     * 
      * @param row rapprezenting the row index of the cell
      * @param col rapprezenting the column index of the cell
      * @param type rapprezenting the type of the cell
      */
-    public CellImpl(int row, int col, CellType type) {
+    public CellImpl(final int row, final int col, final CellType type) {
         this.row = row;
         this.col = col;
         this.type = type;
@@ -23,7 +25,7 @@ public class CellImpl implements Cell {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getRow() {
@@ -31,7 +33,7 @@ public class CellImpl implements Cell {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getCol() {
@@ -39,7 +41,7 @@ public class CellImpl implements Cell {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public CellType getType() {
@@ -47,7 +49,7 @@ public class CellImpl implements Cell {
     }
 
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean isWalkable() {

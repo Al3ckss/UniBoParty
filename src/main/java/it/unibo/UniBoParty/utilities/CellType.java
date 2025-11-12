@@ -1,8 +1,10 @@
 package it.unibo.uniboparty.utilities;
+
 /**
  * Enum representing the different types of cells in the maze.
  */
 public enum CellType {
+
     /**
      * Represents a wall cell.
      */

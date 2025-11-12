@@ -1,28 +1,29 @@
-package it.unibo.UniBoParty.model.minigames.mazegame;
+package it.unibo.uniboparty.model.minigames.mazegame;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.uniboparty.model.minigames.mazegame.impl.MazeGridImpl;
 import it.unibo.uniboparty.model.minigames.mazegame.impl.PlayerImpl;
 import it.unibo.uniboparty.utilities.CellType;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
-    private PlayerImpl player;
     private static final int INITIAL_ROW = 0;
     private static final int INITIAL_COL = 0;
+    private PlayerImpl player;
 
     @BeforeEach
     void setUp() {
         final CellType[][] layout = {
             {CellType.START},
-            {CellType.EMPTY}
+            {CellType.EMPTY},
         };
         final MazeGridImpl grid = new MazeGridImpl(layout);
         this.player = new PlayerImpl(grid, INITIAL_ROW, INITIAL_COL);
     }
+
     /**
      * test the constructor and getters of PlayerImpl.
      */
@@ -56,7 +57,7 @@ class PlayerTest {
     void testIncrementMovesManually() {
         player.incrementMoves();
         assertEquals(1, player.getMoves());
-        
+
         player.incrementMoves();
         assertEquals(2, player.getMoves());
     }

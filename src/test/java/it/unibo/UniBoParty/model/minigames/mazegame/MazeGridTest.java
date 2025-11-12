@@ -1,4 +1,4 @@
-package it.unibo.UniBoParty.model.minigames.mazegame;
+package it.unibo.uniboparty.model.minigames.mazegame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,23 +7,31 @@ import it.unibo.uniboparty.model.minigames.mazegame.api.Cell;
 import it.unibo.uniboparty.model.minigames.mazegame.impl.MazeGridImpl;
 import it.unibo.uniboparty.utilities.CellType;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
-public class MazeGridTest {
+/**
+ * Test class for MazeGridImpl.
+ */
+class MazeGridTest {
 
+    private static final int START_ROW = 1;
+    private static final int START_COL = 0;
+    private static final int EXIT_ROW = 2;
+    private static final int EXIT_COL = 1;
     private CellType[][] testLayout;
-    private final int START_ROW = 1;
-    private final int START_COL = 0;
-    private final int EXIT_ROW = 2;
-    private final int EXIT_COL = 1;
 
+    /**
+     * Set up a test layout before each test.
+     */
     @BeforeEach
     void setUp() {
 
         testLayout = new CellType[][]{
             {CellType.WALL, CellType.EMPTY, CellType.WALL},
             {CellType.START, CellType.EMPTY, CellType.EMPTY},
-            {CellType.WALL, CellType.EXIT, CellType.WALL}
+            {CellType.WALL, CellType.EXIT, CellType.WALL},
         };
     }
 
@@ -32,14 +40,14 @@ public class MazeGridTest {
      */
     @Test
     void testConstructorAndStartExitPositions() {
-        MazeGridImpl grid = new MazeGridImpl(testLayout);
+        final MazeGridImpl grid = new MazeGridImpl(testLayout);
 
         assertEquals(START_ROW, grid.getStartRow());
         assertEquals(START_COL, grid.getStartCol());
         assertEquals(EXIT_ROW, grid.getExitRow());
         assertEquals(EXIT_COL, grid.getExitCol());
-        
-        Cell startCell = grid.getGrid()[START_ROW][START_COL];
+
+        final Cell startCell = grid.getGrid()[START_ROW][START_COL];
         assertEquals(CellType.START, startCell.getType());
         assertEquals(START_ROW, startCell.getRow());
     }
@@ -49,9 +57,9 @@ public class MazeGridTest {
      */
     @Test
     void testGetGridReturnsACopy() {
-        MazeGridImpl gridImpl = new MazeGridImpl(testLayout);
-        Cell[][] originalGridCopy = gridImpl.getGrid();
-        Cell[][] secondGridCopy = gridImpl.getGrid();
+        final MazeGridImpl gridImpl = new MazeGridImpl(testLayout);
+        final Cell[][] originalGridCopy = gridImpl.getGrid();
+        final Cell[][] secondGridCopy = gridImpl.getGrid();
 
         assertNotSame(originalGridCopy, secondGridCopy);
 

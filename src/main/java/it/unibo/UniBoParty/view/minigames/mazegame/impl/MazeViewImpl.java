@@ -28,7 +28,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
         requestFocus();
     }
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onModelUpdated(MazeModel model) {
@@ -44,7 +44,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
         }
     }
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void render(MazeModel model) {
@@ -56,8 +56,8 @@ public class MazeViewImpl extends JFrame implements MazeView {
      * Inner class for rendering the maze as a JPanel.
      */
     private class MazePanel extends JPanel {
-        /*+
-         * @{inheritDoc}
+        /**
+         * {@inheritDoc}
          */
         @Override
         protected void paintComponent(Graphics g) {

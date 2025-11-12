@@ -1,4 +1,4 @@
-package it.unibo.UniBoParty.model.minigames.mazegame;
+package it.unibo.uniboparty.model.minigames.mazegame;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,29 +8,18 @@ import it.unibo.uniboparty.model.minigames.mazegame.impl.MazeModelImpl;
 import it.unibo.uniboparty.utilities.Direction;
 import it.unibo.uniboparty.view.minigames.mazegame.api.GameObserver;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
+/**
+ * Test class for MazeModelImpl.
+ */
 public class MazeModelTest {
+    private static final int MAX_MOVES_EXPECTED = 65;
     private MazeModelImpl model;
     private TestObserver observer;
-    
-    private static class TestObserver implements GameObserver {
-        private int updateCount = 0;
-
-        @Override
-        public void onModelUpdated(MazeModel model) {
-            updateCount++;
-        }
-
-        public int getUpdateCount() {
-            return updateCount;
-        }
-        
-        public void resetUpdateCount() {
-            this.updateCount = 0;
-        }
-    }
 
     /**
      * Set up the MazeModelImpl and TestObserver before each test.
@@ -65,74 +54,46 @@ public class MazeModelTest {
     /**
      * test all directions where the player cannot move (either due to walls or boundaries).
      */
-    @SuppressWarnings("unused")
     @Test
     void testMovePlayerFailsAgainstWallOrBoundary() {
-        int initialMoves = model.getCurrentMoves();
-        int initialRow = model.getPlayer().getRow();
-        int initialCol = model.getPlayer().getCol();
-        
-        
-        int successfulMoves = 0;
-        for (Direction dir : Direction.values()) {
-            if (model.movePlayer(dir)) {
-                successfulMoves++;
-            }
-        }
-
-        
-        model.reset();
-        observer.resetUpdateCount();
-        
-        
         model.movePlayer(Direction.DOWN);
-        int currentMoves = model.getCurrentMoves();
-        
-       
-        boolean successful = model.movePlayer(Direction.UP); 
-        
+        final int currentMoves = model.getCurrentMoves();
+        final boolean successful = model.movePlayer(Direction.UP); 
         if (!successful) {
-            assertEquals(currentMoves, model.getCurrentMoves(), "Le mosse NON devono essere incrementate per una mossa fallita.");
-            assertEquals(0, observer.getUpdateCount(), "L'observer NON deve essere notificato per una mossa fallita.");
+            assertEquals(currentMoves, model.getCurrentMoves());
+            assertEquals(0, observer.getUpdateCount());
         }
     }
  
-   /**
+    /**
     * Test the reset functionality of the MazeModelImpl.
     */
     @Test
     void testResetFunctionality() {
-   
         final int initialRow = model.getPlayer().getRow();
         final int initialCol = model.getPlayer().getCol();
-        
         int successfulMoves = 0;
-     
         if (model.movePlayer(Direction.RIGHT)) {
             successfulMoves++;
         }
-
         if (model.movePlayer(Direction.UP)) {
             successfulMoves++;
         }
-  
-        int movesBeforeReset = model.getCurrentMoves();
-        assertEquals(successfulMoves, movesBeforeReset, "Il conteggio di currentMoves deve corrispondere alle mosse riuscite.");
-        assertTrue(successfulMoves > 0, "Almeno una mossa deve essere riuscita per testare correttamente il reset.");
-        
-        
+        final int movesBeforeReset = model.getCurrentMoves();
+        assertEquals(successfulMoves, movesBeforeReset);
+        assertTrue(successfulMoves > 0);
+
         if (successfulMoves > 0) { 
-             assertFalse(model.getPlayer().getRow() == initialRow && model.getPlayer().getCol() == initialCol,
-                         "Il player deve essersi spostato dalla posizione iniziale.");
+            assertFalse(model.getPlayer().getRow() == initialRow && model.getPlayer().getCol() == initialCol);
         }
         model.reset();
-        assertEquals(0, model.getCurrentMoves(), "Le mosse correnti del modello devono essere azzerate.");
+        assertEquals(0, model.getCurrentMoves());
 
-        int expectedUpdates = successfulMoves + 1;
-        assertEquals(expectedUpdates, observer.getUpdateCount(), "L'observer deve essere notificato: Mosse Riuscite + 1 (per Reset).");
+        final int expectedUpdates = successfulMoves + 1;
+        assertEquals(expectedUpdates, observer.getUpdateCount());
 
-        assertEquals(initialRow, model.getPlayer().getRow(), "La riga del player deve tornare alla riga di START (posizione iniziale).");
-        assertEquals(initialCol, model.getPlayer().getCol(), "La colonna del player deve tornare alla colonna di START (posizione iniziale).");
+        assertEquals(initialRow, model.getPlayer().getRow());
+        assertEquals(initialCol, model.getPlayer().getCol());
     }
 
     /**
@@ -143,9 +104,24 @@ public class MazeModelTest {
         assertTrue(model.getRows() > 0);
         assertTrue(model.getCols() > 0);
         assertNotNull(model.getPlayer());
- 
         assertNotNull(model.getCell(0, 0));
+        assertEquals(MAX_MOVES_EXPECTED, model.getMaxMoves());
+    }
 
-        assertEquals(65, model.getMaxMoves());
+    private static final class TestObserver implements GameObserver {
+        private int updateCount;
+
+        @Override
+        public void onModelUpdated(final MazeModel model) {
+            updateCount++;
+        }
+
+        public int getUpdateCount() {
+            return updateCount;
+        }
+
+        public void resetUpdateCount() {
+            this.updateCount = 0;
+        }
     }
 }

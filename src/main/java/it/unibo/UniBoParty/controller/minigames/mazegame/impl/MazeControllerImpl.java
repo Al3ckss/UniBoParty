@@ -24,26 +24,21 @@ public class MazeControllerImpl implements MazeController {
     public MazeControllerImpl() {
         this.model = new MazeModelImpl();
         this.view = new MazeViewImpl(model);
-
-        
         model.addObserver(view);
-
-        
         addKeyBindings(view);
-
-        
         startNewGame();
     }
- /**
-  * @{inheritDoc}
-  */
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startNewGame() {
         model.reset();
         view.render(model);
     }
 
-    private void addKeyBindings(JFrame frame) {
+    private void addKeyBindings(final JFrame frame) {
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
