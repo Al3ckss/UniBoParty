@@ -1,7 +1,9 @@
 package it.unibo.uniboparty.model.minigames.tetris.impl;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.uniboparty.model.minigames.tetris.api.Piece;
@@ -12,7 +14,7 @@ public final class PieceImpl implements Piece {
     private final Color color;
 
     public PieceImpl(List<Point> cells, String name, Color color) {
-        // Normalize shape so top-left is (0,0)
+
         int minR = cells.stream().mapToInt(p -> p.y).min().orElse(0);
         int minC = cells.stream().mapToInt(p -> p.x).min().orElse(0);
         List<Point> norm = new ArrayList<>();

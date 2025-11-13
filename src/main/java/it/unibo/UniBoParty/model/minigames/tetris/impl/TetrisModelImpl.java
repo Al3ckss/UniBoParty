@@ -1,22 +1,22 @@
 package it.unibo.uniboparty.model.minigames.tetris.impl;
 
-import java.util.*;
-
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 import it.unibo.uniboparty.model.minigames.tetris.api.GridModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
+
+/**
+ * Implementation of the TetrisModel interface.
+ */
 public final class TetrisModelImpl implements TetrisModel {
     private final GridModel grid;
     private final Random rng = new Random();
     private final List<PieceImpl> rack;
     private PieceImpl selected;
     public int score;
-
-    //private java.util.Timer gameTimer;
-    //private int totalDurationSeconds;
-    //private long startTimeMillis;
-    //private static final int WINNING_SCORE = 100;
-    //private static final int GAME_DURATION_SECONDS = 120;
 
     /**
      * Creates a new TetrisModelImpl instance with the specified grid dimensions.

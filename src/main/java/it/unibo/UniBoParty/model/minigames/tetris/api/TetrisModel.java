@@ -105,6 +105,7 @@ public interface TetrisModel {
     /**
      * Selects a piece from the rack for future placement on the grid.
      * If another piece was previously selected, it will be overwritten.
+     * 
      * @param p the {@link PieceImpl} chosen by the player
      */
     void selectPiece(PieceImpl p);
@@ -112,6 +113,7 @@ public interface TetrisModel {
     /**
      * Returns the currently selected piece.
      * If no piece is selected, returns {@code null}.
+     * 
      * @return the {@link PieceImpl} currently selected, or {@code null} if none is selected
      */
     PieceImpl getSelected();

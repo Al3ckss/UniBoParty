@@ -16,6 +16,7 @@ public final class TetrisControllerImpl implements TetrisController {
     
     /**
      * Creates a new {@code GameControllerImpl} instance, initializing the game model and view.
+     * 
      * @param model 
      * @param view 
      */

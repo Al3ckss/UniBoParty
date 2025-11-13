@@ -1,16 +1,12 @@
 package it.unibo.uniboparty.view.minigames.tetris.impl;
 
 import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
 import java.awt.FlowLayout;
 import java.awt.Font;
-
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 
@@ -44,4 +40,3 @@ final class HUD extends JPanel implements ModelListener {
         scoreLbl.setText("Score: " + model.getScore());
     }
 }
-

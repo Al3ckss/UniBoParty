@@ -1,13 +1,23 @@
 package it.unibo.uniboparty.view.minigames.tetris.impl;
 
-import javax.swing.*;
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.impl.PieceImpl;
 import it.unibo.uniboparty.view.minigames.tetris.api.Rackview;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Image;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 final class RackViewImpl extends JPanel implements Rackview, ModelListener {
     private final TetrisModel model;

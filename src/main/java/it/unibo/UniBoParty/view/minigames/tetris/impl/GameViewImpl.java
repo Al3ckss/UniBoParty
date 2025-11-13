@@ -1,10 +1,11 @@
 package it.unibo.uniboparty.view.minigames.tetris.impl;
-import javax.swing.*;
 
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 import it.unibo.uniboparty.view.minigames.tetris.api.GameView;
+import java.awt.BorderLayout;
 
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public final class GameViewImpl extends JFrame implements GameView{
     private final GridViewImpl gridView;

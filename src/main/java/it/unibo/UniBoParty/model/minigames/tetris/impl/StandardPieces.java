@@ -1,7 +1,8 @@
 package it.unibo.uniboparty.model.minigames.tetris.impl;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /*
@@ -20,22 +21,22 @@ final class StandardPieces {
     static final List<PieceImpl> ALL;
     static {
         List<PieceImpl> list = new ArrayList<>();
-        // 1-cell
+
         list.add(PieceImpl.of(new int[][]{{0,0}}, "Dot", pick(0)));
-        // 2-cells
+
         list.add(PieceImpl.of(new int[][]{{0,0},{0,1}}, "DominoH", pick(1)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0}}, "DominoV", pick(2)));
-        // 3-cells
+
         list.add(PieceImpl.of(new int[][]{{0,0},{0,1},{0,2}}, "I3H", pick(3)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{2,0}}, "I3V", pick(4)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{1,1}}, "L3", pick(5)));
-        // 4-cells
+
         list.add(PieceImpl.of(new int[][]{{0,0},{0,1},{0,2},{0,3}}, "I4H", pick(6)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{2,0},{3,0}}, "I4V", pick(0)));
         list.add(PieceImpl.of(new int[][]{{0,0},{0,1},{1,0},{1,1}}, "O", pick(1)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{2,0},{2,1}}, "L4", pick(2)));
         list.add(PieceImpl.of(new int[][]{{0,1},{1,0},{1,1},{1,2}}, "T4", pick(3)));
-        // 5-cells
+
         list.add(PieceImpl.of(new int[][]{{0,0},{0,1},{0,2},{0,3},{0,4}}, "I5H", pick(4)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{2,0},{3,0},{4,0}}, "I5V", pick(5)));
         list.add(PieceImpl.of(new int[][]{{0,0},{1,0},{2,0},{2,1},{2,2}}, "L5", pick(6)));

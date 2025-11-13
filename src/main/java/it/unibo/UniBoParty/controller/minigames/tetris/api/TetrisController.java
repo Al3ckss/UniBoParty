@@ -1,6 +1,5 @@
 package it.unibo.uniboparty.controller.minigames.tetris.api;
 
-
 public interface TetrisController {
     /**
      * Checks whether the game is over.

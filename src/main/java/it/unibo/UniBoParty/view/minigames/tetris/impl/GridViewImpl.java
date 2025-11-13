@@ -1,13 +1,19 @@
 package it.unibo.uniboparty.view.minigames.tetris.impl;
 
-import javax.swing.*;
-
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 import it.unibo.uniboparty.model.minigames.tetris.impl.PieceImpl;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JPanel;
 
 final class GridViewImpl extends JPanel implements ModelListener {
     private final TetrisModel model;

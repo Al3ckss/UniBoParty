@@ -16,21 +16,24 @@ public final class GridModelImpl implements GridModel {
         this.rows = rows; this.cols = cols;
         this.grid = new boolean[rows][cols];
     }
-     /**
+
+    /**
      * {@InheritDoc}
      */
     @Override
     public void addListener(ModelListener l) { 
         listeners.add(l); 
     }
-     /**
+
+    /**
      * {@InheritDoc}
      */
     @Override
     public void removeListener(ModelListener l) { 
         listeners.remove(l); 
     }
-     /**
+
+    /**
      * {@InheritDoc}
      */
     @Override
@@ -39,7 +42,8 @@ public final class GridModelImpl implements GridModel {
             l.onModelChanged();
          }
     }
-     /**
+
+    /**
      * {@InheritDoc}
      */
     @Override
@@ -47,7 +51,7 @@ public final class GridModelImpl implements GridModel {
         return grid[r][c]; 
     }
 
-     /**
+    /**
      * {@InheritDoc}
      */
     @Override
@@ -60,7 +64,7 @@ public final class GridModelImpl implements GridModel {
         return true;
     }
 
-     /**
+    /**
      * {@InheritDoc}
      */
     @Override
@@ -71,7 +75,7 @@ public final class GridModelImpl implements GridModel {
         //fireChange();
     }
 
-     /**
+    /**
      * {@InheritDoc}
      */
     @Override
