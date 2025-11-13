@@ -9,7 +9,7 @@ import java.util.List;
 import it.unibo.uniboparty.model.minigames.tetris.api.Piece;
 
 public final class PieceImpl implements Piece {
-    private final List<Point> cells; // relative coordinates, origin at (0,0)
+    private final List<Point> cells;
     private final String name;
     private final Color color;
 
@@ -51,17 +51,6 @@ public final class PieceImpl implements Piece {
     @Override
     public int height() { 
         return cells.stream().mapToInt(p -> p.y).max().orElse(0) + 1; 
-    }
-
-     /**
-     * {@InheritDoc}
-     */
-    @Override
-    public PieceImpl rotate90() { // optional rotation utility
-        List<Point> rotated = new ArrayList<>();
-        int maxX = cells.stream().mapToInt(p -> p.x).max().orElse(0);
-        for (Point p : cells) rotated.add(new Point(maxX - p.y, p.x));
-        return new PieceImpl(rotated, name + "_rot", color);
     }
 
     /**

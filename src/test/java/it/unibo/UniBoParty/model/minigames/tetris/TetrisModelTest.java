@@ -2,7 +2,6 @@ package it.unibo.uniboparty.model.minigames.tetris;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import it.unibo.uniboparty.model.minigames.tetris.api.GridModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.impl.GridModelImpl;

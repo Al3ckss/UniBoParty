@@ -3,8 +3,6 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.List;
 
-import it.unibo.uniboparty.model.minigames.tetris.impl.PieceImpl;
-
 /**
  * Represents a Tetris piece and provides methods for its properties and transformations.
  */
@@ -23,12 +21,6 @@ public interface Piece {
      * @return the height of the piece
      */
     int height();
-
-    /**
-     * Returns a new PieceImpl instance representing this piece rotated 90 degrees clockwise.*
-     * @return the rotated PieceImpl instance
-     */
-    PieceImpl rotate90();
 
     /**
      * Returns the list of relative cell coordinates that make up the piece.
