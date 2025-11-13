@@ -10,11 +10,12 @@ import it.unibo.uniboparty.utilities.CellType;
  */
 public class MazeGeneratorImpl implements MazeGenerator {
 
-    private static final CellType WALL = CellType.WALL;
-    private static final CellType EMPTY = CellType.EMPTY;
-    private static final CellType START = CellType.START;
-    private static final CellType EXIT = CellType.EXIT;
+    private static final CellType WA = CellType.WALL;
+    private static final CellType EM = CellType.EMPTY;
+    private static final CellType ST = CellType.START;
+    private static final CellType EX = CellType.EXIT;
     private final Random random = new Random();
+
     /**
      * {@inheritDoc}
      */
@@ -32,52 +33,52 @@ public class MazeGeneratorImpl implements MazeGenerator {
 
     private CellType[][] buildMaze1() {
         return new CellType[][] {
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
-                {WALL, START, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA,WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
+                {WA, ST, EM, EM, WA, EM, EM, EM, EM, WA, EM, EM, EM, EM, WA, EM, EM, EM, EM, WA},
+                {WA, WA, EM, WA, WA, EM, WA, WA, EM, WA, EM, WA, WA, EM, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, WA, EM, EM, EM, WA, EM, EM, WA, EM, EM, WA},
+                {WA, EM, WA, WA, WA, EM, WA, WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA},
+                {WA, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EX, WA},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
         };
         
     }
 
     private CellType[][] buildMaze2() {
         return new CellType[][] {
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
-                {WALL, START, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
-                {WALL, WALL, EMPTY, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
+                {WA, ST, EM, WA, EM, EM, EM, EM, WA, EM, EM, WA, EM, EM, EM, EM, WA, EM, EM, WA},
+                {WA, WA, EM, WA, EM, WA, WA, EM, WA, WA, EM, WA, WA, WA, EM, WA, WA, EM, WA, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, EM, WA, WA, WA, WA, WA, EM, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA},
+                {WA, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, EM, EM, EM, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, EX, WA},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
         };
 
     }
@@ -85,26 +86,26 @@ public class MazeGeneratorImpl implements MazeGenerator {
     private CellType[][] buildMaze3() {
 
         return new CellType[][] {
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
-                {WALL, START, EMPTY, WALL, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
-                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
-                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
-                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
+                {WA, ST, EM, WA, EM, WA, EM, EM, EM, WA, EM, EM, WA, EM, WA, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, EM, WA, WA, WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, EM, WA, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, WA, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, EM, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA},
+                {WA, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, EM, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, WA, WA, WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EM, WA},
+                {WA, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, EM, WA},
+                {WA, EM, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, EX, WA},
+                {WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA, WA},
         };
 
     }

@@ -27,7 +27,7 @@ public class MazeModelImpl implements MazeModel {
     private final int maxMoves = MAX_MOVES_NUM;
     private int currentMoves;
     private final long startTimeMillis;
-    private final long timeLimitMillis = MINUTE_MILLIS;
+    private static final long timeLimitMillis = MINUTE_MILLIS;
  
     /**
      * Constructor for MazeModelImpl that generates a new maze.
@@ -95,9 +95,7 @@ public class MazeModelImpl implements MazeModel {
             case RIGHT: 
                 newCol++; 
                 break;
-            default:
 
-                break;
         }
         if (!isInside(newRow, newCol)) {
             return false;

@@ -21,7 +21,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
     private static final int PLAYER_PADDING = 5;
     private static final int PLAYER_DIAMETER_INSET = 10;
     private MazeModel model;
-    final private MazePanel mazePanel;
+    private final MazePanel mazePanel;
 
     /**
      * Constructor for MazeViewImpl.
