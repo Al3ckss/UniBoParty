@@ -9,12 +9,12 @@ import it.unibo.uniboparty.utilities.CellType;
  * Implementation of the MazeGenerator interface.
  */
 public class MazeGeneratorImpl implements MazeGenerator {
-    private final Random random = new Random();
-    static private final CellType w = CellType.WALL;
-    static private final CellType e = CellType.EMPTY;
-    static private final CellType s = CellType.START;
-    static private final CellType x = CellType.EXIT;
 
+    private static final CellType WALL = CellType.WALL;
+    private static final CellType EMPTY = CellType.EMPTY;
+    private static final CellType START = CellType.START;
+    private static final CellType EXIT = CellType.EXIT;
+    private final Random random = new Random();
     /**
      * {@inheritDoc}
      */
@@ -32,52 +32,52 @@ public class MazeGeneratorImpl implements MazeGenerator {
 
     private CellType[][] buildMaze1() {
         return new CellType[][] {
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
-                {w, s, e, e, w, e, e, e, e, w, e, e, e, e, w, e, e, e, e, w},
-                {w, w, e, w, w, e, w, w, e, w, e, w, w, e, w, w, w, w, e, w},
-                {w, e, e, e, e, e, w, e, e, w, e, e, e, w, e, e, w, e, e, w},
-                {w, e, w, w, w, e, w, w, e, w, w, w, w, e, w, w, w, w, e, w},
-                {w, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, w, e, e, e, e, e, e, e, w, e, w},
-                {w, e, w, w, w, w, w, e, w, w, w, w, w, w, w, e, w, w, e, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, e, w, w},
-                {w, e, e, e, e, e, e, w, e, e, e, e, e, e, w, e, e, e, e, w},
-                {w, e, w, w, w, w, e, w, w, w, w, w, w, e, w, w, w, w, e, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, x, w},
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WALL, START, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
         };
         
     }
 
     private CellType[][] buildMaze2() {
         return new CellType[][] {
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
-                {w, s, e, w, e, e, e, e, w, e, e, w, e, e, e, e, w, e, e, w},
-                {w, w, e, w, e, w, w, e, w, w, e, w, w, w, e, w, w, e, w, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, w, e, e, e, e, w},
-                {w, e, w, w, w, w, w, w, w, w, w, w, e, w, w, w, w, w, w, w},
-                {w, e, e, e, e, e, e, e, e, e, e, w, e, e, e, e, e, e, e, w},
-                {w, w, w, w, w, w, w, w, w, w, e, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, w, e, e, e, e, e, e, e, w, e, e, e, w},
-                {w, e, w, w, w, w, e, w, w, w, w, w, w, w, e, w, w, w, e, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, e, w, w, w, w, w, e, w, w, w, e, w, w, w, w, w, w},
-                {w, e, e, e, e, w, e, e, e, e, e, e, e, w, e, e, e, e, e, w},
-                {w, e, w, w, w, w, e, w, w, w, w, w, w, e, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, e, e, e, e, w, w, w, w, w, w, w, w, w, x, w},
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WALL, START, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
+                {WALL, WALL, EMPTY, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
         };
 
     }
@@ -85,26 +85,26 @@ public class MazeGeneratorImpl implements MazeGenerator {
     private CellType[][] buildMaze3() {
 
         return new CellType[][] {
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
-                {w, s, e, w, e, w, e, e, e, w, e, e, w, e, w, e, e, e, e, w},
-                {w, e, w, w, e, w, w, w, e, w, w, w, w, e, w, w, w, e, w, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w, w, w, w},
-                {w, e, e, e, e, e, e, e, e, w, e, e, e, e, e, e, w, e, e, w},
-                {w, e, w, w, w, w, w, e, w, w, w, w, w, w, w, e, w, w, w, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, e, w, w, w, e, w, w, w, w, w, w, w, w, e, w, w, w, w},
-                {w, e, e, e, e, w, e, e, e, e, e, e, e, w, e, e, e, e, e, w},
-                {w, e, w, w, w, w, e, w, w, w, w, w, w, e, w, w, w, w, e, w},
-                {w, e, e, e, e, e, w, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, e, w},
-                {w, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, w},
-                {w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, x, w},
-                {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
+                {WALL, START, EMPTY, WALL, EMPTY, WALL, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, EMPTY, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, WALL, WALL, WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EMPTY, WALL},
+                {WALL, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, WALL},
+                {WALL, EMPTY, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, EXIT, WALL},
+                {WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL, WALL},
         };
 
     }

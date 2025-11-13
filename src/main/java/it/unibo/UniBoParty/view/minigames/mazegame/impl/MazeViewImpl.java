@@ -41,9 +41,9 @@ public class MazeViewImpl extends JFrame implements MazeView {
         setTitle("Maze Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setSize(model.getCols() * CELL_SIZE + FRAME_WIDTH_INSET, model.getRows() * CELL_SIZE + FRAME_HEIGHT_INSET); 
-        
-        setLocationRelativeTo(null); 
+        setSize(model.getCols() * CELL_SIZE + FRAME_WIDTH_INSET, model.getRows() * CELL_SIZE + FRAME_HEIGHT_INSET);
+
+        setLocationRelativeTo(null);
         add(mazePanel);
 
         setVisible(true);

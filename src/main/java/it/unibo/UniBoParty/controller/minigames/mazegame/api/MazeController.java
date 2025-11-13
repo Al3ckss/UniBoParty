@@ -9,6 +9,6 @@ public interface MazeController {
     /**
      * Start a new game by resetting the maze and player position.
      */
-    public void startNewGame();
+    void startNewGame();
 }
 
