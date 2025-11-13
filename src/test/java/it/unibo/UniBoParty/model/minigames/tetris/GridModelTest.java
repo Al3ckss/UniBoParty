@@ -6,30 +6,20 @@ import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.impl.GridModelImpl;
 import it.unibo.uniboparty.model.minigames.tetris.impl.PieceImpl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Color;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class GridModelTest {
+    private static final int ROWS = 10;
+    private static final int COLS = 10;
+    private static final int TEST_ROWANDCOL = 5;
     private GridModelImpl grid;
     private PieceImpl dot;
     private PieceImpl block;
     private TestListener listener;
-    private static final int ROWS = 10;
-    private static final int COLS = 10;
-
-    /**
-     *fake listener for testing purposes.
-     */
-    static class TestListener implements ModelListener {
-        private int callCount = 0;
-        @Override
-        public void onModelChanged() {
-            callCount++;
-        }
-        int getCallCount() { return callCount; }
-        void reset() { callCount = 0; }
-    }
 
     @BeforeEach
     void setUp() {
@@ -64,8 +54,8 @@ class GridModelTest {
     @Test
     void testCanPlaceValidPlacement() {
 
-        assertTrue(grid.canPlace(block, 5, 5));
-        assertTrue(grid.canPlace(dot, 9, 9));
+        assertTrue(grid.canPlace(block, TEST_ROWANDCOL, TEST_ROWANDCOL));
+        assertTrue(grid.canPlace(dot, ROWS-1, COLS-1));
     }
 
     /**
@@ -74,8 +64,8 @@ class GridModelTest {
     @Test
     void testCanPlaceInvalidBoundary() {
 
-        assertFalse(grid.canPlace(block, ROWS - 1, 5));
-        assertFalse(grid.canPlace(block, 5, COLS - 1));
+        assertFalse(grid.canPlace(block, ROWS - 1, TEST_ROWANDCOL));
+        assertFalse(grid.canPlace(block, TEST_ROWANDCOL, COLS - 1));
     }
 
     /**
@@ -109,31 +99,31 @@ class GridModelTest {
      * test clearFullLines method for various scenarios.
      */
     @Test
-    void testClearFullLines_NoLines() {
-        // Piazziamo solo una cella
-        grid.place(dot, 5, 5);
+    void testClearFullLinesNoLines() {
+
+        grid.place(dot, TEST_ROWANDCOL, TEST_ROWANDCOL);
         
         int cleared = grid.clearFullLines();
         assertEquals(0, cleared);
-        assertTrue(grid.isOccupied(5, 5)); // La cella deve rimanere
+        assertTrue(grid.isOccupied(TEST_ROWANDCOL, TEST_ROWANDCOL)); // La cella deve rimanere
     }
 
     /**
      * test clearFullLines method when a full row is present.
      */
     @Test
-    void testClearFullLines_FullRow() {
-        // Riempiamo intenzionalmente una riga (riga 5)
-        for(int c = 0; c < COLS; c++) {
-            grid.place(dot, 5, c);
+    void testClearFullLinesFullRow() {
+
+        for (int c = 0; c < COLS; c++) {
+            grid.place(dot, TEST_ROWANDCOL, c);
         }
-        
-        int cleared = grid.clearFullLines();
+
+        final int cleared = grid.clearFullLines();
         
         assertEquals(1, cleared);
 
         for (int c = 0; c < COLS; c++) {
-            assertFalse(grid.isOccupied(5, c));
+            assertFalse(grid.isOccupied(TEST_ROWANDCOL, c));
         }
     }
 
@@ -141,42 +131,63 @@ class GridModelTest {
      * test clearFullLines method when a full column is present.
      */
     @Test
-    void testClearFullLines_FullColumn() {
+    void testClearFullLinesFullColumn() {
 
-        for(int r = 0; r < ROWS; r++) {
-            grid.place(dot, r, 5);
+        for (int r = 0; r < ROWS; r++) {
+            grid.place(dot, r, TEST_ROWANDCOL);
         }
 
-        int cleared = grid.clearFullLines();
+        final int cleared = grid.clearFullLines();
 
         assertEquals(1, cleared);
 
         for (int r = 0; r < ROWS; r++) {
-            assertFalse(grid.isOccupied(r, 5));
+            assertFalse(grid.isOccupied(r, TEST_ROWANDCOL));
         }
     }
 
+    /**
+     * test clearFullLines method when both a full row and column overlap.
+     */
     @Test
-    void testClearFullLines_RowAndColumnOverlap() {
+    void testClearFullLinesRowAndColumnOverlap() {
 
-    for(int r = 0; r < ROWS; r++) {
-        grid.place(dot, r, 5);
+    for (int r = 0; r < ROWS; r++) {
+        grid.place(dot, r, TEST_ROWANDCOL);
     }
 
-    for(int c = 0; c < COLS; c++) {
+    for (int c = 0; c < COLS; c++) {
 
-        if (!grid.isOccupied(5, c)) { 
-            grid.place(dot, 5, c);
+        if (!grid.isOccupied(TEST_ROWANDCOL, c)) { 
+            grid.place(dot, TEST_ROWANDCOL, c);
         }
     }
 
-    int cleared = grid.clearFullLines();
+    final int cleared = grid.clearFullLines();
 
     assertEquals(2, cleared, "Dovrebbe contare 2 (1 riga + 1 colonna)");
     for (int r = 0; r < ROWS; r++) {
         for (int c = 0; c < COLS; c++) {
             assertFalse(grid.isOccupied(r, c));
         }
+    }
+}
+
+/**
+ * fake listener for testing purposes.
+ */
+static class TestListener implements ModelListener {
+     private int callCount;
+    @Override
+    public void onModelChanged() {
+        callCount++;
+    }
+    int getCallCount() {
+        return callCount;
+    }
+
+    void reset() {
+        callCount = 0;
     }
 }
 }
