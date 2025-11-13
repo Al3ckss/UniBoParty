@@ -10,10 +10,10 @@ import it.unibo.uniboparty.utilities.CellType;
  */
 public class MazeGeneratorImpl implements MazeGenerator {
     private final Random random = new Random();
-    private final CellType w = CellType.WALL;
-    private final CellType e = CellType.EMPTY;
-    private final CellType s = CellType.START;
-    private final CellType x = CellType.EXIT;
+    static private final CellType w = CellType.WALL;
+    static private final CellType e = CellType.EMPTY;
+    static private final CellType s = CellType.START;
+    static private final CellType x = CellType.EXIT;
 
     /**
      * {@inheritDoc}
@@ -31,8 +31,7 @@ public class MazeGeneratorImpl implements MazeGenerator {
     }
 
     private CellType[][] buildMaze1() {
-
-        final CellType[][] layout = new CellType[][] {
+        return new CellType[][] {
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
                 {w, s, e, e, w, e, e, e, e, w, e, e, e, e, w, e, e, e, e, w},
                 {w, w, e, w, w, e, w, w, e, w, e, w, w, e, w, w, w, w, e, w},
@@ -54,11 +53,11 @@ public class MazeGeneratorImpl implements MazeGenerator {
                 {w, w, w, w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, x, w},
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
         };
-        return layout;
+        
     }
 
     private CellType[][] buildMaze2() {
-        final CellType[][] layout = new CellType[][] {
+        return new CellType[][] {
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
                 {w, s, e, w, e, e, e, e, w, e, e, w, e, e, e, e, w, e, e, w},
                 {w, w, e, w, e, w, w, e, w, w, e, w, w, w, e, w, w, e, w, w},
@@ -80,12 +79,12 @@ public class MazeGeneratorImpl implements MazeGenerator {
                 {w, w, w, w, e, e, e, e, e, w, w, w, w, w, w, w, w, w, x, w},
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
         };
-        return layout;
+
     }
 
     private CellType[][] buildMaze3() {
 
-        final CellType[][] layout = new CellType[][] {
+        return new CellType[][] {
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
                 {w, s, e, w, e, w, e, e, e, w, e, e, w, e, w, e, e, e, e, w},
                 {w, e, w, w, e, w, w, w, e, w, w, w, w, e, w, w, w, e, w, w},
@@ -107,7 +106,7 @@ public class MazeGeneratorImpl implements MazeGenerator {
                 {w, e, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, x, w},
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
         };
-        return layout;
+
     }
 
 }

@@ -15,7 +15,7 @@ import it.unibo.uniboparty.view.minigames.mazegame.api.GameObserver;
  * Implementation of the MazeModel interface.
  */
 public class MazeModelImpl implements MazeModel {
-    private static final int MINUTE_MILLIS = 30000;
+    private static final int MINUTE_MILLIS = 30_000;
     private static final int MAX_MOVES_NUM = 65;
     private final MazeGridImpl grid;
     private final Player player;
@@ -24,10 +24,10 @@ public class MazeModelImpl implements MazeModel {
 
     private boolean win;
     private boolean lose;
-    private int maxMoves = MAX_MOVES_NUM;
+    private final int maxMoves = MAX_MOVES_NUM;
     private int currentMoves;
     private final long startTimeMillis;
-    private long timeLimitMillis = MINUTE_MILLIS;
+    private final long timeLimitMillis = MINUTE_MILLIS;
  
     /**
      * Constructor for MazeModelImpl that generates a new maze.
@@ -83,10 +83,21 @@ public class MazeModelImpl implements MazeModel {
         int newCol = this.player.getCol();
 
         switch (dir) {
-            case UP -> newRow--; 
-            case DOWN -> newRow++; 
-            case LEFT -> newCol--; 
-            case RIGHT -> newCol++; 
+            case UP: 
+                newRow--; 
+                break;
+            case DOWN: 
+                newRow++; 
+                break;
+            case LEFT: 
+                newCol--; 
+                break;
+            case RIGHT: 
+                newCol++; 
+                break;
+            default:
+
+                break;
         }
         if (!isInside(newRow, newCol)) {
             return false;
@@ -112,7 +123,6 @@ public class MazeModelImpl implements MazeModel {
     private void checkEndConditions() {
         if (checkWin()) {
             win = true;
-            return;
         }
     }
 

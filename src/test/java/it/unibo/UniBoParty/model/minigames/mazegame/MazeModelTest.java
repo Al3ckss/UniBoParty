@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * Test class for MazeModelImpl.
  */
-public class MazeModelTest {
+class MazeModelTest {
     private static final int MAX_MOVES_EXPECTED = 65;
     private MazeModelImpl model;
     private TestObserver observer;

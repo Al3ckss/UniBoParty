@@ -48,6 +48,7 @@ public class MazeControllerImpl implements MazeController {
                     case KeyEvent.VK_DOWN -> model.movePlayer(Direction.DOWN);
                     case KeyEvent.VK_LEFT -> model.movePlayer(Direction.LEFT);
                     case KeyEvent.VK_RIGHT -> model.movePlayer(Direction.RIGHT);
+                    default -> { }
                 }
             }
         });

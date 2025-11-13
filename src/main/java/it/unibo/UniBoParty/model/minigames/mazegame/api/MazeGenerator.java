@@ -5,6 +5,7 @@ import it.unibo.uniboparty.utilities.CellType;
 /**
  * Interface for generating mazes.
  */
+@SuppressWarnings("PMD.ImplicitFunctionalInterface")
 public interface MazeGenerator {
     /**
      * Generates a maze.

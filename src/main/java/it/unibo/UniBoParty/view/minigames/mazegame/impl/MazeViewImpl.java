@@ -13,7 +13,7 @@ import it.unibo.uniboparty.view.minigames.mazegame.api.MazeView;
  * Implementation of the MazeView interface.
  */
 public class MazeViewImpl extends JFrame implements MazeView {
-
+    private static final long serialVersionUID = 1L;
     private static final int CELL_SIZE = 40;
     private static final int FRAME_WIDTH_INSET = 16;
     private static final int FRAME_HEIGHT_INSET = 39;
@@ -21,7 +21,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
     private static final int PLAYER_PADDING = 5;
     private static final int PLAYER_DIAMETER_INSET = 10;
     private MazeModel model;
-    private MazePanel mazePanel;
+    final private MazePanel mazePanel;
 
     /**
      * Constructor for MazeViewImpl.
@@ -31,11 +31,18 @@ public class MazeViewImpl extends JFrame implements MazeView {
     public MazeViewImpl(final MazeModel model) {
         this.model = model;
         this.mazePanel = new MazePanel();
+        setupFrame();
+    }
 
+    /**
+     * Setup the JFrame properties.
+     */
+    private void setupFrame() {
         setTitle("Maze Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final int cellSize = CELL_SIZE;
-        setSize(model.getCols() * cellSize + FRAME_WIDTH_INSET, model.getRows() * cellSize + FRAME_HEIGHT_INSET);
+
+        setSize(model.getCols() * CELL_SIZE + FRAME_WIDTH_INSET, model.getRows() * CELL_SIZE + FRAME_HEIGHT_INSET); 
+        
         setLocationRelativeTo(null); 
         add(mazePanel);
 

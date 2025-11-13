@@ -11,7 +11,7 @@ public class PlayerImpl implements Player {
     private int row;
     private int col;
     private int moves;
-    private MazeGrid grid;
+    final private MazeGrid grid;
 
     /**
      * Constructor for PlayerImpl.
