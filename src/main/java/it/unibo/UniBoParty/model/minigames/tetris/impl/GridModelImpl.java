@@ -12,7 +12,7 @@ public final class GridModelImpl implements GridModel {
     private final boolean[][] grid;
     private final List<ModelListener> listeners = new ArrayList<>();
 
-    GridModelImpl(int rows, int cols) {
+    public GridModelImpl(int rows, int cols) {
         this.rows = rows; this.cols = cols;
         this.grid = new boolean[rows][cols];
     }
