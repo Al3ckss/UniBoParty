@@ -1,7 +1,7 @@
 package it.unibo.uniboparty.model.minigames.mazegame.api;
 
 /**
- * Represents a player in the maze game 
+ * Represents a player in the maze game.
  */
  public interface Player {
     /**
@@ -37,6 +37,7 @@ package it.unibo.uniboparty.model.minigames.mazegame.api;
      * Increment the number of moves made by the player.
      */
     void incrementMoves();
+
     /**
      * Get the current cell where the player is located.
      * 

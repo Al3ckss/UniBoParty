@@ -18,7 +18,7 @@ public class CellImpl implements Cell {
      * @param type rapprezenting the type of the cell
      */
     
-     public CellImpl(final int row, final int col, final CellType type) {
+    public CellImpl(final int row, final int col, final CellType type) {
         this.row = row;
         this.col = col;
         this.type = type;

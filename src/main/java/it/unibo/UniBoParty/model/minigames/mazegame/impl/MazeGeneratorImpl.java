@@ -20,7 +20,7 @@ public class MazeGeneratorImpl implements MazeGenerator {
      */
     @Override
     public CellType[][] generate() {
-        
+
         final int index = random.nextInt(3); 
         return switch (index) {
             case 0 -> buildMaze1();
@@ -57,8 +57,8 @@ public class MazeGeneratorImpl implements MazeGenerator {
         return layout;
     }
 
-    final private CellType[][] buildMaze2() {
-        CellType[][] layout = new CellType[][] {
+    private CellType[][] buildMaze2() {
+        final CellType[][] layout = new CellType[][] {
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
                 {w, s, e, w, e, e, e, e, w, e, e, w, e, e, e, e, w, e, e, w},
                 {w, w, e, w, e, w, w, e, w, w, e, w, w, w, e, w, w, e, w, w},
@@ -83,9 +83,9 @@ public class MazeGeneratorImpl implements MazeGenerator {
         return layout;
     }
 
-    final private CellType[][] buildMaze3() {
+    private CellType[][] buildMaze3() {
 
-        CellType[][] layout = new CellType[][] {
+        final CellType[][] layout = new CellType[][] {
                 {w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w, w},
                 {w, s, e, w, e, w, e, e, e, w, e, e, w, e, w, e, e, e, e, w},
                 {w, e, w, w, e, w, w, w, e, w, w, w, w, e, w, w, w, e, w, w},

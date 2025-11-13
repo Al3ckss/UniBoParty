@@ -1,7 +1,7 @@
 package it.unibo.uniboparty.view.minigames.mazegame.impl;
+
 import java.awt.Color;
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,11 +14,11 @@ import it.unibo.uniboparty.view.minigames.mazegame.api.MazeView;
  */
 public class MazeViewImpl extends JFrame implements MazeView {
 
+    private static final int CELL_SIZE = 40;
     private MazeModel model;
     private MazePanel mazePanel;
-    private static final int CELL_SIZE = 40;
 
-    public MazeViewImpl(MazeModel model) {
+    public MazeViewImpl(final MazeModel model) {
         this.model = model;
         this.mazePanel = new MazePanel();
 
@@ -32,6 +32,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
         setVisible(true);
         requestFocus();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -52,8 +53,8 @@ public class MazeViewImpl extends JFrame implements MazeView {
      * {@inheritDoc}
      */
     @Override
-    public void render(MazeModel model) {
-        this.model = model;
+    public void render(MazeModel newModel) {
+        this.model = newModel;
         mazePanel.repaint();
     }
 

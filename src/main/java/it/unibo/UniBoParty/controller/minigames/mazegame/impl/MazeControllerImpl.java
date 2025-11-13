@@ -18,7 +18,7 @@ public class MazeControllerImpl implements MazeController {
 
     private final MazeModel model;
     private final MazeViewImpl view;
-    
+
     /**
      * Constructor for MazeControllerImpl.
      */

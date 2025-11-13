@@ -65,7 +65,7 @@ public interface MazeModel {
      * @return an int rappresenting the maximum number of moves allowed
      */
     int getMaxMoves();  
-    
+
     /**
      * Get the start time in milliseconds.
      * 
@@ -77,14 +77,14 @@ public interface MazeModel {
      * Get the time limit in milliseconds.
      * 
      * @return a long rappresenting time limit in milliseconds
-    */
+     */
     long getTimeLimitMillis();  
     
-   /**
-    * Add an observer to the model.
-    * 
-    * @param o the observer to add
-    */
+    /**
+     * Add an observer to the model.
+     * 
+     * @param o the observer to add
+     */
     void addObserver(GameObserver o);
 
     /**
@@ -108,6 +108,5 @@ public interface MazeModel {
      */
     boolean checkLose();
 
-    
 }
 

@@ -151,7 +151,7 @@ public class MazeModelImpl implements MazeModel {
      */
 
     @Override
-    public void addObserver( final GameObserver o) {
+    public void addObserver(final GameObserver o) {
         this.observers.add(o);
     }
 
