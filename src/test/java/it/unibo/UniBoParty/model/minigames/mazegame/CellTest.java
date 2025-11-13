@@ -1,6 +1,5 @@
 package it.unibo.uniboparty.model.minigames.mazegame;
 
-
 import org.junit.jupiter.api.Test;
 import it.unibo.uniboparty.model.minigames.mazegame.impl.CellImpl;
 import it.unibo.uniboparty.utilities.CellType;

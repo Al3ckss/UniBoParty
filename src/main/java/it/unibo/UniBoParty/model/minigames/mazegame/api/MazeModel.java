@@ -10,85 +10,100 @@ import it.unibo.uniboparty.view.minigames.mazegame.api.GameObserver;
  */
 public interface MazeModel {
     /**
-     * Get maze dimensions (number of rows)
+     * Get maze dimensions (number of rows).
+     * 
      * @return an int rappresenting number of rows
      */
     int getRows();
 
     /**
-     * Get maze dimensions (number of columns)
+     * Get maze dimensions (number of columns).
+     * 
      * @return an int rappresenting number of columns
      */
     int getCols();
 
     /**
-     * Get a specific cell
+     * Get a specific cell.
+     * 
      * @param row current row
      * @param col current col
      * @return a cell at the given position
      */
     Cell getCell(int row, int col);
 
-   /**
-    * Get the player
-    * @return a Player object representing the player
-    */
+    /**
+     * Get the player.
+     * 
+     * @return a Player object representing the player
+     */
     Player getPlayer();
 
     /**
-     * Move the player in the given direction
+     * Move the player in the given direction.
+     * 
      * @param dir the direction to move
      * @return true if the move was successful, false otherwise
      */
     boolean movePlayer(Direction dir);
 
     /**
-     * Get the current number of moves made by the player
+     * Get the current number of moves made by the player.
+     * 
      * @return an int rappresenting current moves
      */
     int getCurrentMoves();
 
     /**
-     * Reset the game to the initial state
+     * Reset the game to the initial state.
      */
     void reset();
 
     /**
-     * get the maximum number of moves allowed
+     * get the maximum number of moves allowed.
+     * 
      * @return an int rappresenting the maximum number of moves allowed
      */
     int getMaxMoves();  
     
     /**
-     * Get the start time in milliseconds
+     * Get the start time in milliseconds.
+     * 
      * @return a long rappresenting start time in milliseconds
      */
     long getStartTimeMillis();
 
     /**
-     * Get the time limit in milliseconds
+     * Get the time limit in milliseconds.
+     * 
      * @return a long rappresenting time limit in milliseconds
     */
     long getTimeLimitMillis();  
     
    /**
-    * Add an observer to the model
+    * Add an observer to the model.
+    * 
+    * @param o the observer to add
     */
     void addObserver(GameObserver o);
 
-    /*
-     * Remove an observer from the model
+    /**
+     * Remove an observer from the model.
+     * 
+     * @param o the observer to remove
      */
     void removeObserver(GameObserver o);
 
     /**
-     * Check if the player has won
+     * Check if the player has won.
+     * 
      * @return true if the player has won, false otherwise
      */
     boolean checkWin();
 
     /**
-     * Check if the player has lost
+     * Check if the player has lost.
+     * 
      * @return true if the player has lost, false otherwise
      */
     boolean checkLose();

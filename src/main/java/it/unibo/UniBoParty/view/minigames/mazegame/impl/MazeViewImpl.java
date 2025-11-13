@@ -1,17 +1,22 @@
 package it.unibo.uniboparty.view.minigames.mazegame.impl;
+import java.awt.Color;
+import java.awt.Graphics;
 
-import javax.swing.*;
-
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import it.unibo.uniboparty.model.minigames.mazegame.api.Cell;
 import it.unibo.uniboparty.model.minigames.mazegame.api.MazeModel;
 import it.unibo.uniboparty.view.minigames.mazegame.api.MazeView;
 
-import java.awt.*;
-
+/**
+ * Implementation of the MazeView interface.
+ */
 public class MazeViewImpl extends JFrame implements MazeView {
 
     private MazeModel model;
     private MazePanel mazePanel;
+    private static final int CELL_SIZE = 40;
 
     public MazeViewImpl(MazeModel model) {
         this.model = model;
@@ -19,7 +24,7 @@ public class MazeViewImpl extends JFrame implements MazeView {
 
         setTitle("Maze Game");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int cellSize = 40;
+        final int cellSize = CELL_SIZE;
         setSize(model.getCols() * cellSize + 16, model.getRows() * cellSize + 39);
         setLocationRelativeTo(null); // centra la finestra
         add(mazePanel);

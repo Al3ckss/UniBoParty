@@ -92,7 +92,7 @@ public class MazeModelImpl implements MazeModel {
             return false;
         }
 
-        Cell target = getCell(newRow, newCol);
+       final Cell target = getCell(newRow, newCol);
         if (target.getType() == CellType.WALL) {
             return false;
         }
@@ -151,7 +151,7 @@ public class MazeModelImpl implements MazeModel {
      */
 
     @Override
-    public void addObserver(GameObserver o) {
+    public void addObserver( final GameObserver o) {
         this.observers.add(o);
     }
 
@@ -168,8 +168,9 @@ public class MazeModelImpl implements MazeModel {
      */
     @Override
     public void reset() {
-        if (grid == null)
+        if (grid == null) {
             return;
+        }
         player.setPosition(grid.getStartRow(), grid.getStartCol());
         currentMoves = 0;
         win = false;
@@ -198,8 +199,8 @@ public class MazeModelImpl implements MazeModel {
      */
     @Override
     public boolean checkLose() {
-        boolean movesExceeded = this.player.getMoves() >= this.getMaxMoves();
-        boolean timeExceeded = (System.currentTimeMillis() - this.getStartTimeMillis()) >= this.getTimeLimitMillis();
+        final boolean movesExceeded = this.player.getMoves() >= this.getMaxMoves();
+        final boolean timeExceeded = (System.currentTimeMillis() - this.getStartTimeMillis()) >= this.getTimeLimitMillis();
         return movesExceeded || timeExceeded;
     }
 

@@ -4,10 +4,10 @@ import it.unibo.uniboparty.utilities.CellType;
 
 public interface MazeGenerator {
     /**
-     * Generates a maze
+     * Generates a maze.
+     * 
      * @return a maze as a 2D array of CellType
      */
     CellType[][] generate();
 
-    
 }

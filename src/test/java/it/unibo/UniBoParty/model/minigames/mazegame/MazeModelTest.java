@@ -66,8 +66,8 @@ public class MazeModelTest {
     }
  
     /**
-    * Test the reset functionality of the MazeModelImpl.
-    */
+     * Test the reset functionality of the MazeModelImpl.
+     */
     @Test
     void testResetFunctionality() {
         final int initialRow = model.getPlayer().getRow();
