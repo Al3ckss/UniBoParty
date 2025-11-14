@@ -17,7 +17,7 @@ final class HUD extends JPanel implements ModelListener {
     private final TetrisModel model;
     private final JLabel scoreLbl = new JLabel("Score: 0");
 
-    public HUD(TetrisModel model) {
+    HUD(final TetrisModel model) {
         this.model = model;
         scoreLbl.setForeground(Color.WHITE);
         scoreLbl.setFont(new Font("Arial", Font.BOLD, 16));
@@ -33,7 +33,7 @@ final class HUD extends JPanel implements ModelListener {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void onModelChanged() {

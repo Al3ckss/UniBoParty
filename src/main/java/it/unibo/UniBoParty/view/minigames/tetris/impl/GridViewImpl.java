@@ -21,10 +21,10 @@ final class GridViewImpl extends JPanel implements ModelListener {
 
     /**
      * Creates a new {@code GridViewImpl} instance.
-     * @param model
-     * @param cellSize
+     * @param model the Tetris model
+     * @param cellSize the size of each cell 
      */
-    public GridViewImpl(TetrisModel model, int cellSize) {
+    GridViewImpl(final TetrisModel model, final int cellSize) {
         this.model = model;
         this.cellSize = cellSize;
         setPreferredSize(new Dimension(model.getGrid().getCols() * cellSize, model.getGrid().getRows() * cellSize));
@@ -33,9 +33,9 @@ final class GridViewImpl extends JPanel implements ModelListener {
 
         addMouseListener(new MouseAdapter() {
             @Override 
-            public void mouseClicked(MouseEvent e) {
-                int c = e.getX() / cellSize;
-                int r = e.getY() / cellSize;
+            public void mouseClicked(final MouseEvent e) {
+                final int c = e.getX() / cellSize;
+                final int r = e.getY() / cellSize;
                 model.tryPlaceAt(r, c);
             }
         });
@@ -44,7 +44,7 @@ final class GridViewImpl extends JPanel implements ModelListener {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override 
     public void onModelChanged() { 
@@ -52,28 +52,27 @@ final class GridViewImpl extends JPanel implements ModelListener {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override 
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
+        final Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        
         for (int r = 0; r < model.getGrid().getRows(); r++) {
             for (int c = 0; c < model.getGrid().getCols(); c++) {
-                int x = c * cellSize; int y = r * cellSize;
+                final int x = c * cellSize;
+                final int y = r * cellSize;
                 g2.setColor(new Color(0x1E1E1E));
-                g2.fillRoundRect(x+1, y+1, cellSize-2, cellSize-2, 8, 8);
+                g2.fillRoundRect(x + 1, y + 1, cellSize - 2, cellSize - 2, 8, 8);
                 if (model.getGrid().isOccupied(r, c)) {
                     g2.setColor(new Color(0x6AA84F));
-                    g2.fillRoundRect(x+3, y+3, cellSize-6, cellSize-6, 10, 10);
+                    g2.fillRoundRect(x + 3, y + 3, cellSize - 6, cellSize - 6, 10, 10);
                 }
             }
         }
 
-        
         PieceImpl sel = model.getSelected();
         if (sel != null) {
             Point mouse = getMousePosition();
@@ -87,7 +86,7 @@ final class GridViewImpl extends JPanel implements ModelListener {
                     final int x = c * cellSize; 
                     final int y = r * cellSize;
                     g2.setColor(new Color(can ? 0x88FFFFFF : 0x88FF0000, true));
-                    g2.fillRoundRect(x+3, y + 3, cellSize - 6, cellSize - 6, 10, 10);
+                    g2.fillRoundRect(x + 3, y + 3, cellSize - 6, cellSize - 6, 10, 10);
                 }
             }
         }

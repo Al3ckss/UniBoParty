@@ -1,4 +1,5 @@
 package it.unibo.uniboparty.model.minigames.tetris.api;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.util.List;
@@ -42,5 +43,4 @@ public interface Piece {
      * @return the color of the piece
      */
     Color getColor();
-    
 }

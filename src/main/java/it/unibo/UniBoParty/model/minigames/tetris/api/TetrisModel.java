@@ -129,8 +129,4 @@ public interface TetrisModel {
      */
     void tryPlaceAt(int r, int c);
 
-
-
-
-    
 }

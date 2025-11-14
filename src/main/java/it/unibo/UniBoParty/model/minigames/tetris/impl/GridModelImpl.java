@@ -18,6 +18,7 @@ public final class GridModelImpl implements GridModel {
 
     /**
      * Creates a new GridModelImpl instance with the specified dimensions.
+     * 
      * @param rows the number of rows
      * @param cols the number of columns
      */
@@ -28,7 +29,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void addListener(final ModelListener l) { 
@@ -36,7 +37,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void removeListener(final ModelListener l) { 
@@ -44,7 +45,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void fireChange() {
@@ -54,7 +55,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public boolean isOccupied(final int r, final int c) { 
@@ -62,7 +63,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public boolean canPlace(final PieceImpl piece, final int topR, final int leftC) {
@@ -80,11 +81,13 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void place(final PieceImpl piece, final int topR, final int leftC) {
-        if (!canPlace(piece, topR, leftC)) throw new IllegalArgumentException("Invalid placement");
+        if (!canPlace(piece, topR, leftC)) {
+             throw new IllegalArgumentException("Invalid placement");
+        }
         for (final Point rel : piece.getCells()) {
             grid[topR + rel.y][leftC + rel.x] = true;
         }
@@ -93,13 +96,13 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public int clearFullLines() {
 
-        java.util.List<Integer> fullRows = new ArrayList<>();
-        java.util.List<Integer> fullCols = new ArrayList<>();
+        final List<Integer> fullRows = new ArrayList<>();
+        final List<Integer> fullCols = new ArrayList<>();
 
         for (int r = 0; r < rows; r++) {
             boolean full = true;
@@ -117,7 +120,8 @@ public final class GridModelImpl implements GridModel {
             boolean full = true;
             for (int r = 0; r < rows; r++) {
                 if (!grid[r][c]) {
-                    { full = false; break; }
+                      full = false; 
+                      break;
                 }
             }
             if (full) fullCols.add(c);
@@ -136,18 +140,18 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void reset() {
-        for (int r = 0; r < rows; r++){
+        for (int r = 0; r < rows; r++) {
             Arrays.fill(grid[r], false);
         }
         fireChange();
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public int getRows() {
@@ -155,7 +159,7 @@ public final class GridModelImpl implements GridModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public int getCols() {

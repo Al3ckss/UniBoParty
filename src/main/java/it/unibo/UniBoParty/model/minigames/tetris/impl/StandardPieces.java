@@ -9,10 +9,10 @@ import java.util.List;
  * Standard Tetris pieces definitions.
  */
 public final class StandardPieces {
+    public static final List<PieceImpl> ALL;
+
     private StandardPieces() {
     }
-    public static final List<PieceImpl> ALL;
-    
     private static Color pick(final int idx) {
         final Color[] palette = {
             new Color(0x4CAF50), new Color(0x2196F3), new Color(0xFF9800),
@@ -30,7 +30,7 @@ public final class StandardPieces {
         list.add(PieceImpl.of(new int[][]{{0, 0}, {0, 1}}, "DominoH", pick(1)));
         list.add(PieceImpl.of(new int[][]{{0, 0}, {1, 0}}, "DominoV", pick(2)));
 
-        list.add(PieceImpl.of(new int[][]{{0, 0} ,{0, 1}, {0, 2}}, "I3H", pick(3)));
+        list.add(PieceImpl.of(new int[][]{{0, 0}, {0, 1}, {0, 2}}, "I3H", pick(3)));
         list.add(PieceImpl.of(new int[][]{{0, 0}, {1, 0}, {2, 0}}, "I3V", pick(4)));
         list.add(PieceImpl.of(new int[][]{{0, 0}, {1, 0}, {1, 1}}, "L3", pick(5)));
 

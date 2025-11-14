@@ -16,13 +16,13 @@ public final class TetrisModelImpl implements TetrisModel {
     private final Random rng = new Random();
     private final List<PieceImpl> rack;
     private PieceImpl selected;
-    public int score;
+    private int score;
 
     /**
      * Creates a new TetrisModelImpl instance with the specified grid dimensions.
      * 
-     * @param rows
-     * @param cols
+     * @param rows the number of rows
+     * @param cols the number of columns
      */
     public TetrisModelImpl(final int rows, final int cols) {
         this.grid = new GridModelImpl(rows, cols);
@@ -33,7 +33,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void newRack() {
@@ -45,43 +45,44 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void consumePiece(final PieceImpl p) {
         rack.remove(p);
-        if (rack.isEmpty())
+        if (rack.isEmpty()) {
             newRack();
+        }
         notifyAllListeners();
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
-    public void award(int cellsPlaced, int linesCleared) {
+    public void award(final int cellsPlaced, final int linesCleared) {
         score += cellsPlaced + (linesCleared * 10);
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public boolean hasAnyMove() {
-        for (PieceImpl p : rack) {
+        for (final PieceImpl p : rack) {
             for (int r = 0; r < grid.getRows(); r++) {
                 for (int c = 0; c < grid.getCols(); c++) {
                     if (grid.canPlace(p, r, c)) {
                         return true;
                     }
                 }
-            }            
+            }          
         }
         return false;
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
 
@@ -91,7 +92,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     // Delegate listeners to grid to keep it simple
@@ -100,7 +101,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void notifyAllListeners() {
@@ -108,7 +109,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public boolean checkPlacement(final PieceImpl p, final int r, final int c) {
@@ -116,15 +117,15 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
-    public void askPlacement(PieceImpl p, int r, int c) {
+    public void askPlacement(final PieceImpl p, final int r, final int c) {
         this.grid.place(p, r, c);
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public int getScore() {
@@ -132,7 +133,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public int askClearFullLines() {
@@ -140,7 +141,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public GridModel getGrid() {
@@ -148,7 +149,7 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public PieceImpl[] getRack() {
@@ -156,15 +157,15 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
-    public void selectPiece(PieceImpl p) {
+    public void selectPiece(final PieceImpl p) {
         selected = p;
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public PieceImpl getSelected() {
@@ -172,13 +173,13 @@ public final class TetrisModelImpl implements TetrisModel {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
-    public void tryPlaceAt(int r, int c) {
+    public void tryPlaceAt(final int r, final int c) {
         if (this.selected == null) {
             return;
-        }    
+        }
         if (this.grid.canPlace(this.selected, r, c)) {
             final int cellsPlaced = this.selected.getCells().size();
             this.grid.place(this.selected, r, c);
@@ -191,5 +192,4 @@ public final class TetrisModelImpl implements TetrisModel {
         }
     }
 
-   
 }

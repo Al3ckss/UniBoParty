@@ -7,7 +7,10 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public final class GameViewImpl extends JFrame implements GameView{
+/**
+ * Implementation of the Tetris game view.
+ */
+public final class GameViewImpl extends JFrame implements GameView {
     private final GridViewImpl gridView;
     private final RackViewImpl rackView;
     private final HUD hud;
@@ -15,9 +18,9 @@ public final class GameViewImpl extends JFrame implements GameView{
     /**
      * Creates a new {@code GameViewImpl} instance, initializing the game window with its components.
      * 
-     * @param model 
+     * @param model the Tetris model
      */
-    public GameViewImpl(TetrisModel model) {
+    public GameViewImpl(final TetrisModel model) {
         super("Block Blast!");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -34,7 +37,6 @@ public final class GameViewImpl extends JFrame implements GameView{
         pack();
         setLocationRelativeTo(null);
 
-        
         new Timer(40, e -> gridView.repaint()).start();
     }
 

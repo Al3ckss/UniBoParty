@@ -8,9 +8,9 @@ import it.unibo.uniboparty.model.minigames.tetris.impl.TetrisModelImpl;
 import it.unibo.uniboparty.view.minigames.tetris.impl.GameViewImpl;
 import it.unibo.uniboparty.view.minigames.tetris.api.GameView;
 
-    /**
-     * Implementation of the Tetris game controller.
-     */
+/**
+ * Implementation of the Tetris game controller.
+ */
 public final class TetrisControllerImpl implements TetrisController {
     private static final int GRID_SIZE = 8;
 
@@ -34,14 +34,14 @@ public final class TetrisControllerImpl implements TetrisController {
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     public void startGame() {
         view.setVisible(true);
     }
 
     /**
-     * {@InheritDoc}
+     * {@InheritDoc}.
      */
     @Override
     public void checkGameOver() {
@@ -50,9 +50,9 @@ public final class TetrisControllerImpl implements TetrisController {
             JOptionPane.showMessageDialog(null, "No moves available. Score: " + model.getScore(),
                     "Game Over", JOptionPane.INFORMATION_MESSAGE);
             view.dispose();
-            
+  
         }
-        if (model.getScore() > 100 ) {
+        if (model.getScore() > 100) {
             JOptionPane.showMessageDialog(null, "You Win. Score: " + model.getScore(),
                     "Game Over", JOptionPane.INFORMATION_MESSAGE);
             view.dispose();
