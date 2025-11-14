@@ -34,13 +34,14 @@ public final class PieceImpl implements Piece {
      */
     public static PieceImpl of(int[][] coords, String name, Color color) {
         List<Point> pts = new ArrayList<>();
-        for (int[] rc : coords) pts.add(new Point(rc[1], rc[0])); // store as (x=col, y=row)
+        for (final int[] rc : coords) pts.add(new Point(rc[1], rc[0])); // store as (x=col, y=row)
         return new PieceImpl(pts, name, color);
     }
 
     /**
     * {@InheritDoc}
     */
+    @Override
     public int width()  { 
         return cells.stream().mapToInt(p -> p.x).max().orElse(0) + 1; 
     }

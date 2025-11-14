@@ -24,7 +24,7 @@ public final class TetrisModelImpl implements TetrisModel {
      * @param rows
      * @param cols
      */
-    public TetrisModelImpl(int rows, int cols) {
+    public TetrisModelImpl(final int rows, final int cols) {
         this.grid = new GridModelImpl(rows, cols);
         this.score = 0;
         this.rack = new ArrayList<>();
@@ -38,8 +38,9 @@ public final class TetrisModelImpl implements TetrisModel {
     @Override
     public void newRack() {
         rack.clear();
-        while (rack.size() < 3)
+        while (rack.size() < 3) {
             rack.add(randomPiece());
+        }
         notifyAllListeners();
     }
 
@@ -47,7 +48,7 @@ public final class TetrisModelImpl implements TetrisModel {
      * {@InheritDoc}
      */
     @Override
-    public void consumePiece(PieceImpl p) {
+    public void consumePiece(final PieceImpl p) {
         rack.remove(p);
         if (rack.isEmpty())
             newRack();
@@ -68,10 +69,13 @@ public final class TetrisModelImpl implements TetrisModel {
     @Override
     public boolean hasAnyMove() {
         for (PieceImpl p : rack) {
-            for (int r = 0; r < grid.getRows(); r++)
-                for (int c = 0; c < grid.getCols(); c++)
-                    if (grid.canPlace(p, r, c))
+            for (int r = 0; r < grid.getRows(); r++) {
+                for (int c = 0; c < grid.getCols(); c++) {
+                    if (grid.canPlace(p, r, c)) {
                         return true;
+                    }
+                }
+            }            
         }
         return false;
     }
@@ -82,7 +86,7 @@ public final class TetrisModelImpl implements TetrisModel {
     @Override
 
     public PieceImpl randomPiece() {
-        java.util.List<PieceImpl> bag = StandardPieces.ALL;
+        final List<PieceImpl> bag = StandardPieces.ALL;
         return bag.get(rng.nextInt(bag.size()));
     }
 
@@ -91,7 +95,7 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     // Delegate listeners to grid to keep it simple
-    public void addListener(ModelListener l) {
+    public void addListener(final ModelListener l) {
         grid.addListener(l);
     }
 
@@ -107,7 +111,7 @@ public final class TetrisModelImpl implements TetrisModel {
      * {@InheritDoc}
      */
     @Override
-    public boolean checkPlacement(PieceImpl p, int r, int c) {
+    public boolean checkPlacement(final PieceImpl p, final int r, final int c) {
         return this.grid.canPlace(p, r, c);
     }
 
@@ -172,12 +176,13 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     public void tryPlaceAt(int r, int c) {
-        if (this.selected == null)
+        if (this.selected == null) {
             return;
+        }    
         if (this.grid.canPlace(this.selected, r, c)) {
-            int cellsPlaced = this.selected.getCells().size();
+            final int cellsPlaced = this.selected.getCells().size();
             this.grid.place(this.selected, r, c);
-            int linesCleared = this.grid.clearFullLines();
+            final int linesCleared = this.grid.clearFullLines();
             award(cellsPlaced, linesCleared);
             consumePiece(this.selected);
             this.selected = null;

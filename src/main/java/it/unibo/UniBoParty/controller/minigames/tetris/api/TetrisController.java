@@ -1,5 +1,10 @@
 package it.unibo.uniboparty.controller.minigames.tetris.api;
 
+/**
+ * Interface representing the controller for the Tetris game.
+ * The controller is responsible for managing the game flow and interactions
+ * between the model and the view.
+ */
 public interface TetrisController {
     /**
      * Checks whether the game is over.

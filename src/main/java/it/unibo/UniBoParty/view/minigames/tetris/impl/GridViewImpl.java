@@ -78,13 +78,14 @@ final class GridViewImpl extends JPanel implements ModelListener {
         if (sel != null) {
             Point mouse = getMousePosition();
             if (mouse != null) {
-                int baseC = mouse.x / cellSize;
-                int baseR = mouse.y / cellSize;
-                boolean can = model.getGrid().canPlace(sel, baseR, baseC);
+                final int baseC = mouse.x / cellSize;
+                final int baseR = mouse.y / cellSize;
+                final boolean can = model.getGrid().canPlace(sel, baseR, baseC);
                 for (Point rel : sel.getCells()) {
-                    int r = baseR + rel.y, c = baseC + rel.x;
+                    final int r = baseR + rel.y, c = baseC + rel.x;
                     if (r < 0 || r >= model.getGrid().getRows() || c < 0 || c >= model.getGrid().getCols()) continue;
-                    int x = c * cellSize; int y = r * cellSize;
+                    final int x = c * cellSize; 
+                    final int y = r * cellSize;
                     g2.setColor(new Color(can ? 0x88FFFFFF : 0x88FF0000, true));
                     g2.fillRoundRect(x+3, y + 3, cellSize - 6, cellSize - 6, 10, 10);
                 }

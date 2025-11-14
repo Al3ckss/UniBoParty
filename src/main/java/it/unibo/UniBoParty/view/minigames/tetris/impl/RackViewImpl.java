@@ -58,17 +58,18 @@ final class RackViewImpl extends JPanel implements Rackview, ModelListener {
      * {@InheritDoc}
      */
     public Icon renderIcon(PieceImpl p) {
-        int cell = 16;
-        int pad = 3;
-        int w = p.width()*cell + pad*2;
-        int h = p.height()*cell + pad*2;
-        Image img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D) img.getGraphics();
+        final int cell = 16;
+        final int pad = 3;
+        final int w = p.width()*cell + pad*2;
+        final int h = p.height()*cell + pad*2;
+        final Image img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2 = (Graphics2D) img.getGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(new Color(0,0,0,0)); g2.fillRect(0,0,w,h);
         g2.setColor(p.getColor());
-        for (Point rel : p.getCells()) {
-            int x = pad + rel.x*cell; int y = pad + rel.y*cell;
+        for (final Point rel : p.getCells()) {
+            final int x = pad + rel.x*cell;
+            final int y = pad + rel.y*cell;
             g2.fillRoundRect(x+1, y+1, cell-2, cell-2, 6, 6);
         }
         g2.dispose();
