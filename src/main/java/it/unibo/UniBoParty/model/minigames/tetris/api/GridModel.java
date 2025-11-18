@@ -81,4 +81,11 @@ public interface GridModel {
      * @return the number of columns
      */
     int getCols();
+
+    /**
+     * Create a copy of the grid.
+     * @return the copy created
+     */
+    public GridModel copy();
+
 }

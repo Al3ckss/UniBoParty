@@ -27,6 +27,17 @@ public final class GridModelImpl implements GridModel {
         this.cols = cols;
         this.grid = new boolean[rows][cols];
     }
+    /**
+     * used when i need to return a copy.
+     * @param rows2 the number of row
+     * @param cols2 the number of columns
+     * @param newGrid the grid that needs to be copied
+     */
+    public GridModelImpl(int rows2, int cols2, boolean[][] newGrid) {
+        this.rows = rows2; 
+        this.cols = cols2;
+        this.grid = newGrid;
+    }
 
     /**
      * {@InheritDoc}.
@@ -167,5 +178,18 @@ public final class GridModelImpl implements GridModel {
     @Override
     public int getCols() {
         return cols; 
+    }
+
+    /**
+     * {@InheritDoc}.
+     */
+    @Override
+    public GridModel copy() {
+        final boolean[][] newGrid = new boolean[rows][cols];
+
+        for (int r = 0; r < rows; r++) {
+            System.arraycopy(this.grid[r], 0, newGrid[r], 0, cols);
+        }
+        return new GridModelImpl(rows, cols, newGrid);
     }
 }

@@ -145,7 +145,7 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     public GridModel getGrid() {
-        return this.grid;
+        return this.grid.copy();
     }
 
     /**
