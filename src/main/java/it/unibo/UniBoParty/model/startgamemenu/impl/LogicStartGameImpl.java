@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * based on the number of players present (from 3 to 5, inclusive).
  */
 public class LogicStartGameImpl implements LogicStartGame {
-
 	private List<String> players = new ArrayList<>();
 
 	/**
