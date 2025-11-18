@@ -28,6 +28,9 @@ import java.awt.event.ActionEvent;
  * It allows the user to enter player names and start the game.
  */
 public class StartGameGui extends JFrame {
+    private static final String FONT_NAME = "Comic Sans MS";
+    private static final Font LABEL_FONT = new Font(FONT_NAME, Font.BOLD, 22);
+    private static final Font FIELD_FONT = new Font(FONT_NAME, Font.PLAIN, 20);
     private final JButton startButton;
     private final JButton exitButton;
     private final List<JTextField> playerFields;
@@ -79,10 +82,11 @@ public class StartGameGui extends JFrame {
         playerFields = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {
             final JLabel label = new JLabel("Giocatore " + i + ": ");
-            label.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
+            label.setFont(LABEL_FONT);
             label.setForeground(Color.BLACK);
 
             final JTextField field = new JTextField();
+            field.setFont(FIELD_FONT);
             field.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
             field.setBackground(new Color(255, 255, 255, 220));
             field.setBorder(BorderFactory.createLineBorder(Color.PINK, 2, true));
