@@ -28,11 +28,14 @@ import java.awt.event.ActionEvent;
  * It allows the user to enter player names and start the game.
  */
 public class StartGameGui extends JFrame {
- private final JButton startButton;
+    private final JButton startButton;
     private final JButton exitButton;
     private final List<JTextField> playerFields;
     private final LogicStartGame logic;
 
+    /**
+     * Constructs and initializes the game start menu GUI window.
+     */
     public StartGameGui() {
         this.logic = new LogicStartGameImpl();
 
@@ -43,7 +46,7 @@ public class StartGameGui extends JFrame {
 
         final Image background = new ImageIcon(
         "/Users/caterinatorelli/Desktop/uniboparty/src/main/resources/background.png").getImage();
-        final Image logo = new ImageIcon(   "/Users/caterinatorelli/Desktop/uniboparty/src/main/resources/logo.png").getImage();
+        final Image logo = new ImageIcon("/Users/caterinatorelli/Desktop/uniboparty/src/main/resources/logo.png").getImage();
 
         final JPanel mainPanel = new JPanel() {
             @Override
@@ -59,9 +62,9 @@ public class StartGameGui extends JFrame {
             @Override
             protected void paintComponent(final Graphics g) {
                 super.paintComponent(g);
-                final  int width = 500;
+                final int width = 500;
                 final int height = 120;
-                int x = (getWidth() - width) / 2;
+                final int x = (getWidth() - width) / 2;
                 g.drawImage(logo, x, 10, width, height, this);
             }
         };
