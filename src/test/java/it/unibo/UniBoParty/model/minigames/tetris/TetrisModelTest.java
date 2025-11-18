@@ -20,6 +20,7 @@ class TetrisModelTest {
 
     private static final int ROWS = 5;
     private static final int COLS = 5;
+    private static final int SCORE_PER_LINE = 10;
     private TetrisModelImpl model;
     private TestListener listener;
 
@@ -69,9 +70,10 @@ class TetrisModelTest {
     void testAwardScore() {
         model.award(1, 0); // 1 cella piazzata
         assertEquals(1, model.getScore());
-        
-        model.award(4, 2); // 4 celle piazzate + 2 linee * 10 = 24
-        assertEquals(25, model.getScore());
+
+        final int expectedScore = model.getScore() + 4 + 2 * SCORE_PER_LINE;
+        model.award(4, 2); 
+        assertEquals(expectedScore, model.getScore());
     }
 
     /**
@@ -157,7 +159,12 @@ class TetrisModelTest {
             callCount++;
         }
 
-        int getCallCount() { return callCount; }
-        void reset() { callCount = 0; }
+        int getCallCount() { 
+            return callCount;
+        }
+
+        void reset() { 
+            callCount = 0;
+        }
     }
 }

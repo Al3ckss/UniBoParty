@@ -119,7 +119,7 @@ class GridModelTest {
         }
 
         final int cleared = grid.clearFullLines();
-        
+
         assertEquals(1, cleared);
 
         for (int c = 0; c < COLS; c++) {
