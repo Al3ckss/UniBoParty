@@ -1,7 +1,7 @@
 package it.unibo.uniboparty.application;
 
-import it.unibo.uniboparty.controller.minigames.tetris.api.TetrisController;
-import it.unibo.uniboparty.controller.minigames.tetris.impl.TetrisControllerImpl;
+import javax.swing.SwingUtilities;
+import it.unibo.uniboparty.view.startgamemenu.StartGameGui;
 
 /**
  * Main application class for UniBoParty.
@@ -21,7 +21,6 @@ public final class MainApp {
      * @param args command-line arguments
      */
     public static void main(final String[] args) {
-        final TetrisController controller = new TetrisControllerImpl();
-        controller.startGame();
+        SwingUtilities.invokeLater(() -> new StartGameGui().setVisible(true));
     }
 }
