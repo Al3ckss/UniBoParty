@@ -24,7 +24,7 @@ final class GridViewImpl extends JPanel implements ModelListener {
     private static final int DARK_GRAY = 0x121212;
     private static final int ARC_WIDTH_HEIGHT = 10;
     private static final int CELL_PADDING_TOTAL = 6;
-    private final TetrisModel model;
+    private final transient TetrisModel model;
     private final int cellSize;
 
     /**

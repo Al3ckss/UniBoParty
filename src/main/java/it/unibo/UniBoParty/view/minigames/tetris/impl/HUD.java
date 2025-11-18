@@ -16,7 +16,7 @@ import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 final class HUD extends JPanel implements ModelListener {
     private static final long serialVersionUID = 1L;
     private static final int BLACK = 0x0F0F0F;
-    private final TetrisModel model;
+    private final transient TetrisModel model;
     private final JLabel scoreLbl = new JLabel("Score: 0");
 
     HUD(final TetrisModel model) {

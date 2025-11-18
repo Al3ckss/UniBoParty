@@ -25,7 +25,7 @@ final class RackViewImpl extends JPanel implements Rackview, ModelListener {
     private static final int DARK_GRAY = 0x0F0F0F;
     private static final int DIMENSION_HEIGHT = 150;
     private static final int DIMENSION_WIDTH = 200;
-    private final TetrisModel model;
+    private final transient TetrisModel model;
 
     /**
      * Creates a new {@code RackViewImpl} instance.
