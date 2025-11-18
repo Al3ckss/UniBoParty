@@ -36,6 +36,7 @@ public final class TetrisControllerImpl implements TetrisController {
     /**
      * {@InheritDoc}.
      */
+    @Override
     public void startGame() {
         view.setVisible(true);
     }

@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 final class RackViewImpl extends JPanel implements Rackview, ModelListener {
+    private static final long serialVersionUID = 1L;
     private static final int ARC_WIDTH_HEIGTH = 6;
     private static final int DARK_GRAY = 0x0F0F0F;
     private static final int DIMENSION_HEIGHT = 150;
@@ -44,6 +45,7 @@ final class RackViewImpl extends JPanel implements Rackview, ModelListener {
     /**
      * {@InheritDoc}.
      */
+    @Override
     public void refresh() {
         removeAll();
         final ButtonGroup group = new ButtonGroup();
@@ -61,6 +63,7 @@ final class RackViewImpl extends JPanel implements Rackview, ModelListener {
     /**
      * {@InheritDoc}.
      */
+    @Override
     public Icon renderIcon(final PieceImpl p) {
         final int cell = 16;
         final int pad = 3;

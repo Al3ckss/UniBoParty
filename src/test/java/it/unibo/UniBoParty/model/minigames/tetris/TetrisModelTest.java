@@ -10,23 +10,18 @@ import it.unibo.uniboparty.model.minigames.tetris.impl.TetrisModelImpl;
 import it.unibo.uniboparty.model.minigames.tetris.impl.StandardPieces; 
 import java.awt.Point;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class TetrisModelTest {
-    private TetrisModelImpl model;
-    private TestListener listener;
+
     private static final int ROWS = 5;
     private static final int COLS = 5;
-
-    static class TestListener implements ModelListener {
-        private int callCount;
-        @Override
-        public void onModelChanged() {
-            callCount++;
-        }
-        int getCallCount() { return callCount; }
-        void reset() { callCount = 0; }
-    }
+    private TetrisModelImpl model;
+    private TestListener listener;
 
     @BeforeEach
     void setUp() {
@@ -120,7 +115,7 @@ class TetrisModelTest {
         final PieceImpl pieceToPlace = model.getRack()[0];
         model.selectPiece(pieceToPlace);
         listener.reset();
-    
+
         model.tryPlaceAt(0, 0); 
 
         final GridModel grid = model.getGrid();
@@ -152,5 +147,17 @@ class TetrisModelTest {
         assertTrue(List.of(model.getRack()).contains(pieceToPlace));
 
         assertEquals(0, model.getScore());
+    }
+
+    static class TestListener implements ModelListener {
+        private int callCount;
+
+        @Override
+        public void onModelChanged() {
+            callCount++;
+        }
+
+        int getCallCount() { return callCount; }
+        void reset() { callCount = 0; }
     }
 }

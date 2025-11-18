@@ -14,6 +14,7 @@ import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
  * Heads-Up Display (HUD) component for displaying game information such as score.
  */
 final class HUD extends JPanel implements ModelListener {
+    private static final long serialVersionUID = 1L;
     private static final int BLACK = 0x0F0F0F;
     private final TetrisModel model;
     private final JLabel scoreLbl = new JLabel("Score: 0");

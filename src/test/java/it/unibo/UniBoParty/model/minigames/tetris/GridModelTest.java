@@ -102,7 +102,7 @@ class GridModelTest {
     void testClearFullLinesNoLines() {
 
         grid.place(dot, TEST_ROWANDCOL, TEST_ROWANDCOL);
-        
+
         final int cleared = grid.clearFullLines();
         assertEquals(0, cleared);
         assertTrue(grid.isOccupied(TEST_ROWANDCOL, TEST_ROWANDCOL)); // La cella deve rimanere
@@ -178,10 +178,12 @@ class GridModelTest {
  */
 static class TestListener implements ModelListener {
      private int callCount;
+
     @Override
     public void onModelChanged() {
         callCount++;
     }
+
     int getCallCount() {
         return callCount;
     }

@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 final class GridViewImpl extends JPanel implements ModelListener {
+    private static final long serialVersionUID = 1L;
     private static final int RED = 0x88FF0000;
     private static final int WHITE = 0x88FFFFFF;
     private static final int GREY = 0x1E1E1E;
@@ -75,7 +76,8 @@ final class GridViewImpl extends JPanel implements ModelListener {
                 g2.setColor(new Color(GREY));
                 if (model.getGrid().isOccupied(r, c)) {
                     g2.setColor(new Color(DARK_GREEN));
-                    g2.fillRoundRect(x + 3, y + 3, cellSize - CELL_PADDING_TOTAL, cellSize - CELL_PADDING_TOTAL, ARC_WIDTH_HEIGHT, ARC_WIDTH_HEIGHT);
+                    g2.fillRoundRect(x + 3, y + 3, cellSize - CELL_PADDING_TOTAL, 
+                    cellSize - CELL_PADDING_TOTAL, ARC_WIDTH_HEIGHT, ARC_WIDTH_HEIGHT);
                 }
             }
         }
