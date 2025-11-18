@@ -87,7 +87,7 @@ public class StartGameGui extends JFrame {
 
             final JTextField field = new JTextField();
             field.setFont(FIELD_FONT);
-            field.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+            field.setFont(new Font(FONT_NAME, Font.PLAIN, 20));
             field.setBackground(new Color(255, 255, 255, 220));
             field.setBorder(BorderFactory.createLineBorder(Color.PINK, 2, true));
 
@@ -114,7 +114,7 @@ public class StartGameGui extends JFrame {
     private JButton createButton(final String text, final Color color) {
         final JButton button = new JButton(text);
         button.setBackground(color);
-        button.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        button.setFont(new Font(FONT_NAME, Font.BOLD, 20));
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
         button.setPreferredSize(new Dimension(220, 60));
