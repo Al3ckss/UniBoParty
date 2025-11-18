@@ -27,13 +27,15 @@ public final class GridModelImpl implements GridModel {
         this.cols = cols;
         this.grid = new boolean[rows][cols];
     }
+
     /**
      * used when i need to return a copy.
+     * 
      * @param rows2 the number of row
      * @param cols2 the number of columns
      * @param newGrid the grid that needs to be copied
      */
-    public GridModelImpl(int rows2, int cols2, boolean[][] newGrid) {
+    public GridModelImpl(final int rows2, final int cols2, final boolean[][] newGrid) {
         this.rows = rows2; 
         this.cols = cols2;
         this.grid = newGrid;

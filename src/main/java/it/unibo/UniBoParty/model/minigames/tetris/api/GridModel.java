@@ -84,8 +84,9 @@ public interface GridModel {
 
     /**
      * Create a copy of the grid.
+     * 
      * @return the copy created
      */
-    public GridModel copy();
+    GridModel copy();
 
 }
