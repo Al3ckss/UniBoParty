@@ -32,7 +32,7 @@ public class LogicStartGameImpl implements LogicStartGame {
      */
     @Override
     public List<String> getPlayers() {
-        return this.players;
+        return List.copyOf(this.players);
     }
 
     /**
@@ -42,7 +42,7 @@ public class LogicStartGameImpl implements LogicStartGame {
     public void setPlayers(final List<String> players) {
         this.players = new ArrayList<>();
         for (final String player : players) {
-            if (player != null && !player.trim().isEmpty()) {
+            if (player != null && !player.trim().isBlank()) {
                 this.players.add(player.trim());
             }
         }

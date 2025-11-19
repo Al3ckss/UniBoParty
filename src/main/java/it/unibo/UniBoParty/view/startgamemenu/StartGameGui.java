@@ -27,7 +27,9 @@ import java.awt.event.ActionEvent;
  * Represents the Graphical User Interface (GUI) window for the "Unibo Party" game start menu.
  * It allows the user to enter player names and start the game.
  */
-public class StartGameGui extends JFrame {
+public final class StartGameGui extends JFrame {
+    private static final long serialVersionUID = 1L; 
+
     private static final String FONT_NAME = "Comic Sans MS";
     private static final int WINDOW_WIDTH = 800;
     private static final int WINDOW_HEIGHT = 600;
@@ -40,16 +42,16 @@ public class StartGameGui extends JFrame {
     private static final int SIDE_PADDING = 150;
     private static final int BUTTON_WIDTH = 220;
     private static final int BUTTON_HEIGHT = 60;
-    private static final int SIZE = 20;
+    private static final int PLAYER_FIELD_FONT_SIZE = 20; 
     private static final Color FIELD_BG_COLOR = new Color(255, 255, 255, 220);
     private static final Color START_GAME_COLOR = new Color(144, 238, 144);
     private static final Color EXIT_GAME_COLOR = new Color(255, 99, 71);
     private static final Font LABEL_FONT = new Font(FONT_NAME, Font.BOLD, 22);
-    private static final Font FIELD_FONT = new Font(FONT_NAME, Font.PLAIN, 20);
+    private static final Font FIELD_FONT = new Font(FONT_NAME, Font.PLAIN, PLAYER_FIELD_FONT_SIZE); 
     private final JButton startButton;
     private final JButton exitButton;
     private final List<JTextField> playerFields;
-    private final LogicStartGame logic;
+    private final transient LogicStartGame logic;
 
     /**
      * Constructs and initializes the game start menu GUI window.
@@ -58,7 +60,7 @@ public class StartGameGui extends JFrame {
         this.logic = new LogicStartGameImpl();
 
         setTitle("Unibo Party");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE); 
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
 
@@ -102,7 +104,6 @@ public class StartGameGui extends JFrame {
 
             final JTextField field = new JTextField();
             field.setFont(FIELD_FONT);
-            field.setFont(new Font(FONT_NAME, Font.PLAIN, SIZE));
             field.setBackground(FIELD_BG_COLOR);
             field.setBorder(BorderFactory.createLineBorder(Color.PINK, 2, true));
 
@@ -123,19 +124,20 @@ public class StartGameGui extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         startButton.addActionListener(this::onStartPressed);
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButton.addActionListener(e -> this.dispose());
     }
 
     private JButton createButton(final String text, final Color color) {
         final JButton button = new JButton(text);
         button.setBackground(color);
-        button.setFont(new Font(FONT_NAME, Font.BOLD, SIZE));
+        button.setFont(new Font(FONT_NAME, Font.BOLD, PLAYER_FIELD_FONT_SIZE)); 
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3, true));
         button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         return button;
     }
 
+    @SuppressWarnings("unused")
     private void onStartPressed(final ActionEvent e) {
         final List<String> names = new ArrayList<>();
         for (final JTextField f : playerFields) {
