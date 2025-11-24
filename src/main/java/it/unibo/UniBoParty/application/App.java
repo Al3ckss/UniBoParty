@@ -1,4 +1,4 @@
-package dinosaurgame;
+package it.unibo.uniboparty.application;
 
 import dinosaurgame.controller.ControllerImpl;
 import dinosaurgame.model.ModelImpl;
