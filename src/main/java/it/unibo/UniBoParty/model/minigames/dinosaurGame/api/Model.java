@@ -1,6 +1,10 @@
 package it.unibo.UniBoParty.model.minigames.dinosaurGame.api;
 
 import java.util.List;
+
+import it.unibo.UniBoParty.model.minigames.dinosaurGame.impl.GameState;
+import it.unibo.UniBoParty.model.minigames.dinosaurGame.impl.ObstacleImpl;
+
 /**
  * Interfaccia che definisce le operazioni principali del modello del gioco.
  * Il modello gestisce il dinosauro, gli ostacoli e la logica del gioco.
@@ -66,5 +70,12 @@ public interface Model {
      *
      * @return lista di oggetti Obstacle
      */
-    List<Obstacle> getObstacles();
+    List<ObstacleImpl> getObstacles();
+
+    /**
+     * Restituisce lo stato corrente del gioco (RUNNING o GAME_OVER).
+     *
+     * @return stato del gioco
+     */
+    GameState getGameState();
 }
