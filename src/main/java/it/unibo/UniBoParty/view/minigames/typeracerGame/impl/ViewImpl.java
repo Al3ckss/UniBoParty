@@ -1,4 +1,4 @@
-package it.unibo.UniBoParty.view.minigames.typeracerGame.impl;
+package it.unibo.uniboparty.view.minigames.typeracergame.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,8 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import it.unibo.UniBoParty.model.minigames.typeracerGame.impl.GameConfig;
-import it.unibo.UniBoParty.view.minigames.typeracerGame.api.View;
+import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameConfig;
+import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
 
 public class ViewImpl implements View {
 
@@ -23,13 +23,13 @@ public class ViewImpl implements View {
         SwingUtilities.invokeLater(() -> {
             frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
 
-            label1.setFont(new Font("Arial", Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            timeLabel.setFont(new Font("Arial", Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            textField.setFont(new Font("Arial", Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
+            label1.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+            timeLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+            textField.setFont(new Font(GameConfig.DEFAULT_FONT, Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
 
-            label1.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, 100));
-            timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, 100));
-            textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, 60));
+            label1.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT));
+            timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT));
+            textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT));
 
             frame.add(label1, BorderLayout.NORTH);
             frame.add(timeLabel, BorderLayout.CENTER);
@@ -42,12 +42,12 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public void setLabel1(String text) {
+    public void setLabel1(final String text) {
         label1.setText(text);
     }
 
     @Override
-    public void updateTimeLabel(int t) {
+    public void updateTimeLabel(final int t) {
         timeLabel.setText("Tempo rimanente: " + t);
         timeLabel.revalidate();
         timeLabel.repaint();

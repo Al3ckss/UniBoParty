@@ -1,31 +1,41 @@
-package it.unibo.UniBoParty.model.minigames.dinosaurGame.impl;
+package it.unibo.uniboparty.model.minigames.dinosaurgame.impl;
 
 import java.util.ArrayList;
 
-import it.unibo.UniBoParty.model.minigames.dinosaurGame.api.Model;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.api.Model;
 
+/**
+ * Implementation of the model handling game logic, physics and obstacles.
+ */
 public class ModelImpl implements Model {
 
-    private int dinoX = GameConfig.INIT_DINO_X;
+    private final int dinoX = GameConfig.INIT_DINO_X;
     private int dinoY = GameConfig.GROUND_Y;
-    private int dinoWidth = GameConfig.DINO_WIDTH;
-    private int dinoHeight = GameConfig.DINO_HEIGHT;
 
-    private double velY = 0;
+    private final int dinoWidth = GameConfig.DINO_WIDTH;
+    private final int dinoHeight = GameConfig.DINO_HEIGHT;
+
+    private double velY;
     private final double gravity = GameConfig.GRAVITY;
-    private int nearestX = 0;
 
-    private boolean isJumping = false;
-    private boolean isHoldingJump = false;
+    private int nearestX;
+    private boolean isJumping;
+    private boolean isHoldingJump;
 
-    private int difficulty = 0;
+    private int difficulty;
 
-    public ArrayList<ObstacleImpl> obstacles = new ArrayList<>();
+    /**
+     * List of active obstacles in the game.
+     */
+    public final ArrayList<ObstacleImpl> obstacles = new ArrayList<>();
 
     private GameState gameState = GameState.RUNNING;
 
+    /**
+     * Creates the model and initializes the starting obstacles.
+     */
     public ModelImpl() {
-        int lastX = 600;
+        int lastX = GameConfig.PANEL_WIDTH;
         for (int i = 0; i < GameConfig.NUM_INITIAL_OBSTACLES; i++) {
             ObstacleImpl o = ObstacleFactory.create(
                 lastX,
@@ -41,14 +51,16 @@ public class ModelImpl implements Model {
 
     @Override
     public void update() {
-        if (gameState == GameState.GAME_OVER) return;
+        if (gameState == GameState.GAME_OVER) {
+            return;
+        }
 
         difficulty++;
         nearestX = 0;
 
         if (isJumping) {
             dinoY += velY;
-            velY += isHoldingJump ? gravity * 0.65 : gravity;
+            velY += isHoldingJump ? gravity * GameConfig.JUMP_GRAVITY : gravity;
         }
 
         if (dinoY >= GameConfig.GROUND_Y) {
@@ -57,30 +69,32 @@ public class ModelImpl implements Model {
             isJumping = false;
         }
 
-        for (ObstacleImpl o : obstacles) {
-            if (o.getObstX() > nearestX) nearestX = o.getObstX();
+        for (final ObstacleImpl o : obstacles) {
+            if (o.getObstX() > nearestX) {
+                nearestX = o.getObstX();
+            }
         }
 
         for (int i = 0; i < obstacles.size(); i++) {
-            ObstacleImpl o = obstacles.get(i);
+            final ObstacleImpl o = obstacles.get(i);
             o.moveObstacle();
+
             if (o.getObstX() + o.getObstWidth() < 0) {
-                obstacles.set(i,
-                    ObstacleFactory.create(
+                obstacles.set(i, ObstacleFactory.create(
                         nearestX,
                         GameConfig.GROUND_Y,
                         GameConfig.INIT_OBSTACLE_MIN_DISTANCE,
                         GameConfig.INIT_OBSTACLE_MAX_VARIATION,
-                        GameConfig.OBSTACLE_INITIAL_SPEED + (difficulty / GameConfig.DIFFICULTY_INCREMENT_INTERVAL)
-                    )
-                );
+                        GameConfig.OBSTACLE_INITIAL_SPEED
+                                + (difficulty / GameConfig.DIFFICULTY_INCREMENT_INTERVAL)
+                ));
             }
         }
 
-        for (ObstacleImpl o : obstacles) {
-            boolean overlapX = dinoX + dinoWidth > o.getObstX()
-                            && dinoX < o.getObstX() + o.getObstWidth();
-            boolean overlapY = dinoY > o.getObstY() - o.getObstHeight();
+        for (final ObstacleImpl o : obstacles) {
+            final boolean overlapX = dinoX + dinoWidth > o.getObstX()
+                    && dinoX < o.getObstX() + o.getObstWidth();
+            final boolean overlapY = dinoY > o.getObstY() - o.getObstHeight();
 
             if (overlapX && overlapY) {
                 gameState = GameState.GAME_OVER;
@@ -89,10 +103,9 @@ public class ModelImpl implements Model {
         }
 
         if (difficulty % GameConfig.DIFFICULTY_INCREMENT_INTERVAL == 0) {
-            for (ObstacleImpl o : obstacles) {
+            for (final ObstacleImpl o : obstacles) {
                 o.setObstSpeed(o.getObstSpeed() + 1);
             }
-            System.out.println("Difficulty Up");
         }
     }
 

@@ -1,8 +1,10 @@
-package it.unibo.UniBoParty.model.minigames.dinosaurGame.impl;
+package it.unibo.uniboparty.model.minigames.dinosaurgame.impl;
 
 import java.util.Random;
 
 public class ObstacleFactory {
+
+    private ObstacleFactory(){ };
 
     private static final int[][] OBSTACLE_TYPES = {
         {20, 50},
@@ -13,17 +15,17 @@ public class ObstacleFactory {
     private static final Random random = new Random();
 
     public static ObstacleImpl create(
-            int startX,
-            int groundY,
-            int minDistance,
-            int maxVariation,
-            int speed
+            final int startX,
+            final int groundY,
+            final int minDistance,
+            final int maxVariation,
+            final int speed
     ) {
-        int[] type = OBSTACLE_TYPES[random.nextInt(OBSTACLE_TYPES.length)];
-        int width = type[0];
-        int height = type[1];
+        final int[] type = OBSTACLE_TYPES[random.nextInt(OBSTACLE_TYPES.length)];
+        final int width = type[0];
+        final int height = type[1];
 
-        int x = startX + minDistance + random.nextInt(maxVariation);
+        final int x = startX + minDistance + random.nextInt(maxVariation);
 
         return new ObstacleImpl(x, groundY, width, height, speed);
     }

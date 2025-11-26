@@ -1,11 +1,11 @@
-package it.unibo.UniBoParty.model.minigames.typeracerGame.impl;
+package it.unibo.uniboparty.model.minigames.typeracergame.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
 
 public final class WordList {
-    private WordList() {}
+    private WordList() {    }
 
     public static final List<String> WORDS = Arrays.asList(
         "auto", "casa", "sole", "luna", "mare", "vento", "pioggia", "neve", "montagna", "fiume",

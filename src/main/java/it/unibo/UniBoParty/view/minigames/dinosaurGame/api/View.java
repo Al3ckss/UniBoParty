@@ -1,21 +1,21 @@
-package it.unibo.UniBoParty.view.minigames.dinosaurGame.api;
+package it.unibo.uniboparty.view.minigames.dinosaurgame.api;
 
 import javax.swing.JPanel;
 
 /**
- * Interfaccia che definisce le operazioni principali della vista del gioco.
+ * Interface defining the main operations of the game view.
  */
 public interface View {
 
     /**
-     * Ridisegna la vista aggiornata del gioco.
+     * Repaints the updated game view.
      */
     void repaint();
 
     /**
-     * Restituisce il pannello principale dove vengono disegnati dinosauro e ostacoli.
+     * Returns the main panel where the dinosaur and obstacles are drawn.
      *
-     * @return il JPanel principale della vista.
+     * @return the main JPanel of the view
      */
     JPanel getPanel();
 }

@@ -1,81 +1,68 @@
-package it.unibo.UniBoParty.model.minigames.dinosaurGame.api;
+package it.unibo.uniboparty.model.minigames.dinosaurgame.api;
 
 import java.util.List;
 
-import it.unibo.UniBoParty.model.minigames.dinosaurGame.impl.GameState;
-import it.unibo.UniBoParty.model.minigames.dinosaurGame.impl.ObstacleImpl;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.GameState;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ObstacleImpl;
 
 /**
- * Interfaccia che definisce le operazioni principali del modello del gioco.
- * Il modello gestisce il dinosauro, gli ostacoli e la logica del gioco.
+ * Defines the main operations of the game model.
+ * The model manages the dinosaur, obstacles, and game logic.
  */
 public interface Model {
 
     /**
-     * Inizia il salto del dinosauro.
-     * Se il dinosauro è già in aria, il metodo non ha effetto.
+     * Starts the dinosaur's jump.
+     * If the dinosaur is already in the air, the method has no effect.
      */
     void jump();
 
     /**
-     * Segnala il rilascio del tasto salto.
-     * Permette di implementare salti variabili, più brevi se il tasto viene rilasciato subito.
+     * Signals that the jump key has been released.
+     * Allows shorter, variable jumps depending on release time.
      */
     void releaseJump();
 
     /**
-     * Aggiorna lo stato del gioco.
-     * <p>
-     * Operazioni principali:
+     * Updates the state of the game.
+     *
+     * <p>Main operations:</p>
      * <ul>
-     *   <li>Applica la gravità e aggiorna la posizione verticale del dinosauro.</li>
-     *   <li>Muove gli ostacoli e genera nuovi ostacoli quando escono dallo schermo.</li>
-     *   <li>Controlla le collisioni tra dinosauro e ostacoli.</li>
-     *   <li>Incrementa la difficoltà aumentando la velocità degli ostacoli a intervalli regolari.</li>
+     *   <li>Applies gravity and updates the dinosaur's vertical position.</li>
+     *   <li>Moves obstacles and generates new ones when old ones leave the screen.</li>
+     *   <li>Checks collisions between the dinosaur and obstacles.</li>
+     *   <li>Increases difficulty by speeding up obstacles at regular intervals.</li>
      * </ul>
-     * </p>
      */
     void update();
 
     /**
-     * Restituisce la posizione X del dinosauro sullo schermo.
-     *
-     * @return coordinata X del dinosauro
+     * @return the dinosaur's X coordinate.
      */
     int getDinoX();
 
     /**
-     * Restituisce la posizione Y del dinosauro sullo schermo.
-     *
-     * @return coordinata Y del dinosauro
+     * @return the dinosaur's Y coordinate.
      */
     int getDinoY();
 
     /**
-     * Restituisce la larghezza del dinosauro.
-     *
-     * @return larghezza in pixel
+     * @return the dinosaur's width in pixels.
      */
     int getDinoWidth();
 
     /**
-     * Restituisce l'altezza del dinosauro.
-     *
-     * @return altezza in pixel
+     * @return the dinosaur's height in pixels.
      */
     int getDinoHeight();
 
     /**
-     * Restituisce la lista degli ostacoli attualmente presenti nel gioco.
-     *
-     * @return lista di oggetti Obstacle
+     * @return the list of active obstacles.
      */
     List<ObstacleImpl> getObstacles();
 
     /**
-     * Restituisce lo stato corrente del gioco (RUNNING o GAME_OVER).
-     *
-     * @return stato del gioco
+     * @return the current game state (RUNNING or GAME_OVER).
      */
     GameState getGameState();
 }

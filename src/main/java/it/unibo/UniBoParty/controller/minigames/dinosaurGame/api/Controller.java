@@ -1,18 +1,18 @@
-package it.unibo.UniBoParty.controller.minigames.dinosaurGame.api;
+package it.unibo.uniboparty.controller.minigames.dinosaurgame.api;
 
 /**
- * Interfaccia per il controller del gioco.
- * Permette di gestire l’avvio, la pausa e la gestione degli input.
+ * Interface for the game controller.
+ * Handles game start, stop and input management.
  */
 public interface Controller {
 
     /**
-     * Avvia il controller e il ciclo di gioco.
+     * Starts the controller and the game loop.
      */
     void start();
 
     /**
-     * Ferma il ciclo di gioco e i timer.
+     * Stops the game loop and timers.
      */
     void stop();
 }

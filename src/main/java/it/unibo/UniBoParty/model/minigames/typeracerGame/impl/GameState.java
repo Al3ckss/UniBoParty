@@ -1,7 +1,8 @@
-package it.unibo.UniBoParty.model.minigames.typeracerGame.impl;
+package it.unibo.uniboparty.model.minigames.typeracergame.impl;
 
 /**
  * Enum dei possibili stati del gioco TypeRacer.
+ * 
  * <p>
  * Elenca i vari stati
  */

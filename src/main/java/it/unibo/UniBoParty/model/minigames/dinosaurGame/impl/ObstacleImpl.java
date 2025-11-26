@@ -1,14 +1,15 @@
-package it.unibo.UniBoParty.model.minigames.dinosaurGame.impl;
+package it.unibo.uniboparty.model.minigames.dinosaurgame.impl;
 
-import it.unibo.UniBoParty.model.minigames.dinosaurGame.api.Obstacle;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.api.Obstacle;
 
 public class ObstacleImpl implements Obstacle {
 
-    private int obstX, obstY;
-    private int obstWidth, obstHeight;
+    private int obstX;
+    private final int obstY;
+    private final int obstWidth, obstHeight;
     private int obstSpeed;
 
-    public ObstacleImpl(int obstX, int obstY, int obstWidth, int obstHeight, int obstSpeed) {
+    public ObstacleImpl(final int obstX, final int obstY, final int obstWidth, final int obstHeight, final int obstSpeed) {
         this.obstX = obstX;
         this.obstY = obstY;
         this.obstWidth = obstWidth;

@@ -1,13 +1,14 @@
-package it.unibo.UniBoParty.controller.minigames.typeracerGame.impl;
+package it.unibo.uniboparty.controller.minigames.typeracergame.impl;
 
 import javax.swing.Timer;
-import javax.swing.SwingUtilities;
 
-import it.unibo.UniBoParty.model.minigames.typeracerGame.api.Model;
-import it.unibo.UniBoParty.view.minigames.typeracerGame.api.View;
-import it.unibo.UniBoParty.model.minigames.typeracerGame.impl.GameConfig;
-import it.unibo.UniBoParty.model.minigames.typeracerGame.impl.GameState;
-import it.unibo.UniBoParty.controller.minigames.typeracerGame.api.Controller;
+import it.unibo.uniboparty.controller.minigames.typeracergame.api.Controller;
+import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
+import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameConfig;
+import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState;
+import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
+
+import javax.swing.SwingUtilities;
 
 public class ControllerImpl implements Controller {
 
@@ -15,13 +16,13 @@ public class ControllerImpl implements Controller {
     private final View view;
     private Timer timer;
 
-    public ControllerImpl(Model model, View view) {
+    public ControllerImpl(final Model model, final View view) {
         this.model = model;
         this.view = view;
 
         model.setState(GameState.RUNNING);
 
-        timer = new Timer(GameConfig.TIMER_DELAY_MS, e ->{
+        timer = new Timer(GameConfig.TIMER_DELAY_MS, e -> {
             if (model.getState() == GameState.RUNNING) {
                 model.decreaseTime();
                 SwingUtilities.invokeLater(() -> view.updateTimeLabel(model.getTime()));
@@ -40,10 +41,10 @@ public class ControllerImpl implements Controller {
 
     private void setupInputField() {
         view.getTextField().addActionListener(e -> {
-            if (model.getState() != GameState.RUNNING) return;
+            if (model.getState() != GameState.RUNNING) { return; }
 
-            String typed = view.getTextField().getText();
-            String current = model.getCurrentWord();
+            final String typed = view.getTextField().getText();
+            final String current = model.getCurrentWord();
 
             if (typed.equals(current)) {
                 model.incrementPoints();

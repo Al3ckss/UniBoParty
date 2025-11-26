@@ -1,6 +1,6 @@
-package it.unibo.UniBoParty.model.minigames.typeracerGame.api;
+package it.unibo.uniboparty.model.minigames.typeracergame.api;
 
-import it.unibo.UniBoParty.model.minigames.typeracerGame.impl.GameState;
+import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState;
 
 /**
  * Rappresenta la logica di gioco principale del TypeRacer.

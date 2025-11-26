@@ -1,18 +1,18 @@
-package it.unibo.UniBoParty.model.minigames.typeracerGame.impl;
+package it.unibo.uniboparty.model.minigames.typeracergame.impl;
 
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.UniBoParty.model.minigames.typeracerGame.api.Model;
+import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
 
 public class ModelImpl implements Model {
 
-    private int points = 0;
+    private int points;
     private int time = GameConfig.INITIAL_TIME_SECONDS;
     private GameState state = GameState.READY;
 
     private final Random random = new Random();
-    private final List<String> words = WordList.WORDS;
+    private static final List<String> words = WordList.WORDS;
 
     private String currentWord;
 
@@ -45,7 +45,10 @@ public class ModelImpl implements Model {
     public void decreaseTime() {
         if (time > 0) {
             time--;
-            if (time == 0) state = GameState.GAME_OVER;
+            
+            if (time == 0) {
+                state = GameState.GAME_OVER;
+            }
         }
     }
 

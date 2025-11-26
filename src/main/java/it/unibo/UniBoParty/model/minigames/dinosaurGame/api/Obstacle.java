@@ -1,62 +1,54 @@
-package it.unibo.UniBoParty.model.minigames.dinosaurGame.api;
+package it.unibo.uniboparty.model.minigames.dinosaurgame.api;
 
 /**
- * Interfaccia che definisce le operazioni principali di un ostacolo.
- * Un ostacolo ha posizione, dimensioni e velocità di movimento.
+ * Interface defining the main operations of an obstacle.
+ * An obstacle has position, size, and movement speed.
  */
 public interface Obstacle {
 
     /**
-     * Muove l'ostacolo verso sinistra secondo la sua velocità.
+     * Moves the obstacle to the left according to its speed.
+     *
+     * @return the new X position
      */
     int moveObstacle();
 
     /**
-     * Restituisce la posizione X corrente dell'ostacolo.
-     *
-     * @return coordinata X
+     * @return the current X position of the obstacle
      */
     int getObstX();
 
     /**
-     * Imposta la posizione X dell'ostacolo.
+     * Sets the X position of the obstacle.
      *
-     * @param x nuova coordinata X
+     * @param x new X coordinate
      */
     void setObstX(int x);
 
     /**
-     * Restituisce la posizione Y dell'ostacolo.
-     *
-     * @return coordinata Y
+     * @return the Y position of the obstacle
      */
     int getObstY();
 
     /**
-     * Restituisce la larghezza dell'ostacolo.
-     *
-     * @return larghezza in pixel
+     * @return the width of the obstacle in pixels
      */
     int getObstWidth();
 
     /**
-     * Restituisce l'altezza dell'ostacolo.
-     *
-     * @return altezza in pixel
+     * @return the height of the obstacle in pixels
      */
     int getObstHeight();
 
     /**
-     * Restituisce la velocità dell'ostacolo in pixel per aggiornamento.
-     *
-     * @return velocità
+     * @return the obstacle movement speed in pixels per update
      */
     int getObstSpeed();
 
     /**
-     * Imposta la velocità dell'ostacolo.
+     * Sets the movement speed of the obstacle.
      *
-     * @param speed nuova velocità
+     * @param speed new speed
      */
     void setObstSpeed(int speed);
 }
