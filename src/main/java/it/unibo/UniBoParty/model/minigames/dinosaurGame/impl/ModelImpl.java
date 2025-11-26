@@ -145,7 +145,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public List<ObstacleImpl> getObstacles() {
-        return obstacles;
+        return new ArrayList<>(obstacles);
     }
 
     @Override

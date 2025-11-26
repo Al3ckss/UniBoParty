@@ -60,11 +60,11 @@ public final class ViewImpl implements View {
 
     @Override
     public JLabel getLabel1() {
-        return label1;
+        return new JLabel(label1.getText());
     }
 
     @Override
     public JTextField getTextField() {
-        return textField;
+        return new JTextField(textField.getText());
     }
 }

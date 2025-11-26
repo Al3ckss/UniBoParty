@@ -1,5 +1,6 @@
 package it.unibo.uniboparty.controller.minigames.dinosaurgame.impl;
 
+import java.util.Objects;
 import javax.swing.Timer;
 
 import it.unibo.uniboparty.controller.minigames.dinosaurgame.api.Controller;
@@ -31,8 +32,8 @@ public final class ControllerImpl implements Controller {
      * @param view the game view
      */
     public ControllerImpl(final ModelImpl model, final ViewImpl view) {
-        this.model = model;
-        this.view = view;
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.view = Objects.requireNonNull(view, "View cannot be null");
 
         setupTimer();
         setupKeyListener();

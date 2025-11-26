@@ -1,5 +1,6 @@
 package it.unibo.uniboparty.controller.minigames.typeracergame.impl;
 
+import java.util.Objects;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
@@ -38,8 +39,8 @@ public final class ControllerImpl implements Controller {
      * @param view the game view to update
      */
     public ControllerImpl(final Model model, final View view) {
-        this.model = model;
-        this.view = view;
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.view = Objects.requireNonNull(view, "View cannot be null");
 
         model.setState(GameState.RUNNING);
 
