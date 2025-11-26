@@ -17,7 +17,7 @@ import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
  * It manages the game loop via a Timer and updates the UI as the game progresses.
  * It also handles user input.
  */
-public class ControllerImpl implements Controller {
+public final class ControllerImpl implements Controller {
 
     /**
      * Reference to the game model.
@@ -32,11 +32,6 @@ public class ControllerImpl implements Controller {
     private final View view;
 
     /**
-     * Timer used to run the game loop.
-     */
-    private Timer t;
-
-    /**
      * Creates a Typeracer controller that connects a model and a view.
      *
      * @param model the game model to control
@@ -48,21 +43,25 @@ public class ControllerImpl implements Controller {
 
         model.setState(GameState.RUNNING);
 
-        t = new Timer(GameConfig.TIMER_DELAY_MS, e -> {
+        // Timer is now local and final, no warnings
+        final Timer timer = new Timer(GameConfig.TIMER_DELAY_MS, null);
+        timer.addActionListener(e -> {
             if (model.getState() == GameState.RUNNING) {
                 model.decreaseTime();
                 SwingUtilities.invokeLater(() -> view.updateTimeLabel(model.getTime()));
 
                 if (model.getTime() <= 0) {
                     model.gameOver();
-                    SwingUtilities.invokeLater(() -> view.setLabel1("Tempo Finito. Punti: " + model.getPoints()));
-                    t.stop();
+                    SwingUtilities.invokeLater(() ->
+                        view.setLabel1("Tempo Finito. Punti: " + model.getPoints())
+                    );
+                    timer.stop(); // safe because final
                 }
             }
         });
 
         setupInputField();
-        t.start();
+        timer.start();
     }
 
     /**
