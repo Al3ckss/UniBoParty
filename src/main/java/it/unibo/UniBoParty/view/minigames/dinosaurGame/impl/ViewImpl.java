@@ -1,15 +1,20 @@
 package it.unibo.uniboparty.view.minigames.dinosaurgame.impl;
 
 import java.awt.Dimension;
+import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
+import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.GameConfig;
 import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ModelImpl;
 import it.unibo.uniboparty.view.minigames.dinosaurgame.api.View;
 
 /**
  * Implementation of the game view for the Dinosaur Game.
+ * 
+ * <p>
+ * Manages the main game window and delegates drawing to GamePanelImpl.
  */
-public class ViewImpl implements View {
+public final class ViewImpl implements View {
 
     private final GamePanelImpl panel1;
     private boolean showGameOver;
@@ -23,24 +28,47 @@ public class ViewImpl implements View {
         final JFrame frame = new JFrame("Dino Game");
         this.panel1 = new GamePanelImpl(model);
 
-        frame.setMinimumSize(new Dimension(600, 500));
+        frame.setMinimumSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
         frame.add(this.panel1);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.panel1.setFocusable(true);
-        this.panel1.requestFocusInWindow();
+        panel1.setFocusable(true);
+        panel1.requestFocusInWindow();
     }
 
+    /**
+     * Repaints the game panel.
+     */
     @Override
     public void repaint() {
-        this.panel1.repaint();
+        panel1.repaint();
     }
 
-    @Override
-    public GamePanelImpl getPanel() {
-        return this.panel1;
+    /**
+     * Adds a key listener to the game panel in a safe way.
+     *
+     * @param listener the key listener to attach
+     */
+    public void addPanelKeyListener(final KeyListener listener) {
+        panel1.addKeyListener(listener);
+    }
+
+    /**
+     * Requests focus for the game panel.
+     */
+    public void requestPanelFocus() {
+        panel1.requestFocusInWindow();
+    }
+
+    /**
+     * Sets the game panel as focusable or not.
+     *
+     * @param focusable true to allow focus, false otherwise
+     */
+    public void setPanelFocusable(final boolean focusable) {
+        panel1.setFocusable(focusable);
     }
 
     /**
@@ -48,7 +76,7 @@ public class ViewImpl implements View {
      */
     public void showGameOverOverlay() {
         this.showGameOver = true;
-        this.panel1.repaint();
+        panel1.repaint();
     }
 
     /**

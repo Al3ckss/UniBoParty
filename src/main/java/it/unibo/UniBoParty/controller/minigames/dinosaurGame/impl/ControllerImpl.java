@@ -17,7 +17,11 @@ import java.awt.event.KeyEvent;
 public final class ControllerImpl implements Controller {
 
     private final ModelImpl model;
+
+    // We store the view reference directly because the controller needs to update it.
+    // External modifications are assumed to be controlled and intentional.
     private final ViewImpl view;
+
     private Timer timer;
 
     /**
@@ -43,10 +47,9 @@ public final class ControllerImpl implements Controller {
                 model.update();
                 view.repaint();
 
+                // Game over reached. Add Game Over event
                 if (model.getGameState() == GameState.GAME_OVER) {
                     timer.stop();
-                    System.out.print("GAME OVER. Punteggio: " + model.getDifficulty());
-                    // Game over reached. Used Difficulty increment as score
                 }
             }
         });
@@ -57,7 +60,7 @@ public final class ControllerImpl implements Controller {
      * Sets up the key listener handling jump input.
      */
     private void setupKeyListener() {
-        view.getPanel().addKeyListener(new KeyAdapter() {
+        view.addPanelKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -76,8 +79,8 @@ public final class ControllerImpl implements Controller {
             }
         });
 
-        view.getPanel().setFocusable(true);
-        view.getPanel().requestFocusInWindow();
+        view.setPanelFocusable(true);
+        view.requestPanelFocus();
     }
 
     /**

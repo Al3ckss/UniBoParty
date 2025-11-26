@@ -14,8 +14,14 @@ public class ObstacleImpl implements Obstacle {
     private int obstSpeed;
 
     /**
-    *  Implementation of the Obstacle's properties.
-    */
+     * Implementation of obstacle class.
+     * 
+     * @param obstX      the x-coordinate of the obstacle's position
+     * @param obstY      the y-coordinate of the obstacle's position (ground level)
+     * @param obstWidth  the width of the obstacle
+     * @param obstHeight the height of the obstacle
+     * @param obstSpeed  the speed at which the obstacle moves
+     */
     public ObstacleImpl(final int obstX, final int obstY, final int obstWidth, final int obstHeight, final int obstSpeed) {
         this.obstX = obstX;
         this.obstY = obstY;
@@ -25,43 +31,43 @@ public class ObstacleImpl implements Obstacle {
     }
 
     @Override
-    public int moveObstacle() {
+    public final int moveObstacle() {
         obstX -= obstSpeed;
         return obstX;
     }
 
     @Override
-    public int getObstX() {
+    public final int getObstX() {
         return obstX;
     }
 
     @Override
-    public void setObstX(final int obstX) {
+    public final void setObstX(final int obstX) {
         this.obstX = obstX;
     }
 
     @Override
-    public int getObstY() {
+    public final int getObstY() {
         return obstY;
     }
 
     @Override
-    public int getObstWidth() {
+    public final int getObstWidth() {
         return obstWidth;
     }
 
     @Override
-    public int getObstHeight() {
+    public final int getObstHeight() {
         return obstHeight;
     }
 
     @Override
-    public int getObstSpeed() {
+    public final int getObstSpeed() {
         return obstSpeed;
     }
 
     @Override
-    public void setObstSpeed(final int obstSpeed) {
+    public final void setObstSpeed(final int obstSpeed) {
         this.obstSpeed = obstSpeed;
     }
 }

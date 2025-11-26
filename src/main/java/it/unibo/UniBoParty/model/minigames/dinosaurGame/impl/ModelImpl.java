@@ -8,29 +8,28 @@ import it.unibo.uniboparty.model.minigames.dinosaurgame.api.Model;
 /**
  * Implementation of the model handling game logic, physics and obstacles.
  */
-public class ModelImpl implements Model {
+public final class ModelImpl implements Model {
 
+    // Constants for the dinosaur
     private static final int DINO_X = GameConfig.INIT_DINO_X;
-    private int dinoY = GameConfig.GROUND_Y;
-
     private static final int DINO_WIDTH = GameConfig.DINO_WIDTH;
     private static final int DINO_HEIGHT = GameConfig.DINO_HEIGHT;
 
-    private double velY;
+    // Physics constants
     private static final double GRAVITY = GameConfig.GRAVITY;
 
-    private int nearestX;
+    // Dinosaur state
+    private int dinoY = GameConfig.GROUND_Y;
+    private double velY;
     private boolean isJumping;
     private boolean isHoldingJump;
 
+    // Game state
     private int difficulty;
-
-    /**
-     * List of active obstacles in the game.
-     */
-    public final List<ObstacleImpl> obstacles = new ArrayList<>();
-
     private GameState gameState = GameState.RUNNING;
+
+    // Active obstacles
+    private final List<ObstacleImpl> obstacles = new ArrayList<>();
 
     /**
      * Creates the model and initializes the starting obstacles.
@@ -57,7 +56,7 @@ public class ModelImpl implements Model {
         }
 
         difficulty++;
-        nearestX = 0;
+        int nearestX = 0; // now a local variable
 
         if (isJumping) {
             dinoY += velY;
@@ -158,6 +157,4 @@ public class ModelImpl implements Model {
     public int getDifficulty() {
         return difficulty;
     }
-
-    
 }

@@ -8,7 +8,7 @@ import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
 /**
  * Implementation of the game mechanics.
  */
-public class ModelImpl implements Model {
+public final class ModelImpl implements Model {
 
     private static final List<String> WORDS = WordList.WORDS;
 
@@ -47,7 +47,7 @@ public class ModelImpl implements Model {
     @Override
     public void decreaseTime() {
         if (time > 0) {
-            time--;            
+            time--;
             if (time == 0) {
                 state = GameState.GAME_OVER;
             }

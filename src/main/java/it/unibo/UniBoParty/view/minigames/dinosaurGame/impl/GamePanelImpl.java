@@ -14,6 +14,7 @@ import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ObstacleImpl;
  */
 public class GamePanelImpl extends JPanel {
 
+    private static final long serialVersionUID = 1L;
     private static final int PANEL_WIDTH = GameConfig.PANEL_WIDTH;
     private static final int PANEL_HEIGHT = GameConfig.PANEL_HEIGHT;
     private static final int GROUND_HEIGHT = 50;
@@ -23,25 +24,16 @@ public class GamePanelImpl extends JPanel {
     private static final Color DINO_COLOR = Color.BLACK;
     private static final Color OBSTACLE_COLOR = Color.GREEN;
 
-    private final ModelImpl model;
+    private final transient ModelImpl model;
 
     /**
      * Creates a game panel bound to a model.
+     * Non chiama metodi overridable nel costruttore per evitare warning.
      *
      * @param model the game model
      */
     public GamePanelImpl(final ModelImpl model) {
         this.model = model;
-        setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        setBackground(BACKGROUND_COLOR);
-        initFocusable();
-    }
-
-    /**
-     * Initializes focusability in a safe way to avoid calling overridable methods in constructor.
-     */
-    private void initFocusable() {
-        setFocusable(true);
     }
 
     /**
@@ -51,9 +43,11 @@ public class GamePanelImpl extends JPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
+        // Disegna il terreno
         g.setColor(GROUND_COLOR);
         g.fillRect(0, PANEL_HEIGHT - GROUND_HEIGHT, PANEL_WIDTH, GROUND_HEIGHT);
 
+        // Disegna il dinosauro
         g.setColor(DINO_COLOR);
         g.fillRect(
             model.getDinoX(),
@@ -62,6 +56,7 @@ public class GamePanelImpl extends JPanel {
             model.getDinoHeight()
         );
 
+        // Disegna gli ostacoli
         g.setColor(OBSTACLE_COLOR);
         for (final ObstacleImpl o : model.getObstacles()) {
             g.fillRect(
@@ -71,5 +66,15 @@ public class GamePanelImpl extends JPanel {
                 o.getObstHeight()
             );
         }
+    }
+
+    /**
+     * Initializes the panel settings safely after construction.
+     * This avoids calling overridable methods in the constructor.
+     */
+    public void initPanel() {
+        setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        setBackground(BACKGROUND_COLOR);
+        setFocusable(true);
     }
 }

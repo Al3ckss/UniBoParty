@@ -7,11 +7,18 @@ import it.unibo.uniboparty.view.minigames.dinosaurgame.impl.ViewImpl;
 /**
  * Main class to run the game.
  */
-class App {
+final class App {
 
     /**
-    * Main file that creates an instance of the Model, View, Controller
-    */
+     * Prevents instantiation of this utility-like class.
+     */
+    private App() { }
+
+    /**
+     * Main method that creates an instance of the Model, View, and Controller.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(final String[] args) {
         final ModelImpl model = new ModelImpl();
         final ViewImpl view = new ViewImpl(model);

@@ -3,30 +3,29 @@ package it.unibo.uniboparty.model.minigames.dinosaurgame.impl;
 import java.util.Random;
 
 /**
- * Factory to create obstacles
+ * Factory to create obstacles.
  */
 public final class ObstacleFactory {
 
-    
     private static final Random RANDOM = new Random();
-    
+
     private static final int[][] OBSTACLE_TYPES = {
         {20, 50},
         {50, 40},
-        {35, 70}
+        {35, 70},
     };
 
     private ObstacleFactory() { }
-    
+
     /**
-     * Creates an obstacle.
+     * Creates a new obstacle with random type and position.
      * 
-     * @param startX
-     * @param groundY
-     * @param minDistance
-     * @param maxVariation
-     * @param speed
-     * @return
+     * @param startX      the x-coordinate to start from
+     * @param groundY     the y-coordinate of the ground level
+     * @param minDistance the minimum horizontal distance from startX
+     * @param maxVariation maximum additional random variation in horizontal distance
+     * @param speed       the speed of the obstacle
+     * @return a newly created ObstacleImpl instance
      */
     public static ObstacleImpl create(
             final int startX,
