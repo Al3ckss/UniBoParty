@@ -1,5 +1,6 @@
 package it.unibo.uniboparty.application;
 
+import it.unibo.uniboparty.controller.end_screen.impl.LeaderboardControllerImpl;
 import it.unibo.uniboparty.controller.minigames.hangman.impl.HangmanControllerImpl;
 import it.unibo.uniboparty.controller.minigames.sudoku.impl.SudokuControllerImpl;
 import java.util.logging.Level;
@@ -12,6 +13,7 @@ import javax.swing.SwingUtilities;
  */
 public final class GameLauncher {
 
+    private static final String UTILITY = "Utility class";
     private static final Logger LOGGER = Logger.getLogger(GameLauncher.class.getName());
 
     private GameLauncher() {
@@ -25,7 +27,7 @@ public final class GameLauncher {
      */
     public static void main(final String[] args) {
         SwingUtilities.invokeLater(() -> {
-            final String[] options = {"Sudoku", "Impiccato"};
+            final String[] options = {"Sudoku", "Impiccato", "Classifica"};
             final int choice = JOptionPane.showOptionDialog(
                     null,
                     "Quale gioco vuoi avviare?",
@@ -44,6 +46,9 @@ public final class GameLauncher {
                 case 1:
                     HangmanLauncher.startHangman();
                     break;
+                case 2:
+                    LeaderboardLauncher.startLeaderboard();
+                    break;
                 default:
                     LOGGER.log(Level.INFO, "Application closed by user.");
                     System.exit(0);
@@ -59,7 +64,7 @@ public final class GameLauncher {
     public static final class SudokuLauncher {
 
         private SudokuLauncher() {
-            throw new UnsupportedOperationException("Utility class");
+            throw new UnsupportedOperationException(UTILITY);
         }
 
         /**
@@ -76,7 +81,7 @@ public final class GameLauncher {
     public static final class HangmanLauncher {
 
         private HangmanLauncher() {
-            throw new UnsupportedOperationException("Utility class");
+            throw new UnsupportedOperationException(UTILITY);
         }
 
         /**
@@ -85,6 +90,23 @@ public final class GameLauncher {
         public static void startHangman() {
             // Corretto: Usa l'interfaccia (IHangman...) come tipo
             SwingUtilities.invokeLater(HangmanControllerImpl::new);
+        }
+    }
+
+    /**
+     * Helper per avviare la Classifica.
+     */
+    public static final class LeaderboardLauncher {
+
+        private LeaderboardLauncher() {
+            throw new UnsupportedOperationException(UTILITY);
+        }
+
+        /**
+         * Helper to start the leaderboard.
+         */
+        public static void startLeaderboard() {
+            SwingUtilities.invokeLater(LeaderboardControllerImpl::new);
         }
     }
 }
