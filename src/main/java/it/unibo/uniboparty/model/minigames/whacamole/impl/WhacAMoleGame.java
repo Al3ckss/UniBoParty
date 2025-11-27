@@ -1,17 +1,22 @@
-package it.unibo.uniboparty.model.minigames.whacamole;
+package it.unibo.uniboparty.model.minigames.whacamole.impl;
 
 import java.util.Random;
 
+import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGameState;
 import it.unibo.uniboparty.model.minigames.whacamole.api.WhacAMoleModel;
-import it.unibo.uniboparty.model.minigames.whacamole.impl.WhacAMoleGameState;
 
 /**
  * Core game logic for the Whac-A-Mole game.
- * 
+ *
+ * <p>
  * This class is responsible for:
- * - managing the score and remaining time,
- * -deciding when and where a mole or bomn appears,
- * - applying the effects of a hit on a hole.
+ * <ul>
+ *   <li>managing the score and the remaining time,</li>
+ *   <li>deciding when and where a mole or a bomb appears,</li>
+ *   <li>applying the effects of a hit on a hole.</li>
+ * </ul>
+ * It does not know anything about the GUI.
+ * </p>
  */
 public class WhacAMoleGame implements WhacAMoleModel {
     
@@ -31,12 +36,14 @@ public class WhacAMoleGame implements WhacAMoleModel {
     private boolean gameOver;
 
     /**
-     * Index (0..TOTAL_HOLES-1) of the currently visible mole/bomb, or -1 if none is visible.
+     * Index (0..TOTAL_HOLES-1) of the currently visible mole/bomb,
+     * or -1 if none is visible.
      */
     private int currentMoleIndex;
 
     /**
-     * True if the currently visible object is a bomb, false if it's a mole.
+     * {@code true} if the currently visible object is a bomb,
+     * {@code false} if it is a mole.
      */
     private boolean currentIsBomb;
 
@@ -46,7 +53,7 @@ public class WhacAMoleGame implements WhacAMoleModel {
     private long moleVisibleMillis;
 
     /**
-     * How long since there was no mole visible (in milliseconds).
+     * How long there has been no mole visible (in milliseconds).
      * Used to decide when to spawn a new one.
      */
     private long timeSinceNoMole;
@@ -66,6 +73,7 @@ public class WhacAMoleGame implements WhacAMoleModel {
 
     /**
      * Starts a new match from scratch.
+     * Resets score, time and internal state.
      */
     @Override
     public void startGame() {
@@ -81,39 +89,45 @@ public class WhacAMoleGame implements WhacAMoleModel {
 
     /**
      * Updates the game state according to the time elapsed.
-     * It is expected that this method is called periodically (every 100ms) by the Controller.
-     * @param elapsedMillis number of milliseconds passed since last tick.
+     *
+     * <p>
+     * It is expected that this method is called periodically (for example every 100ms)
+     * by the Controller.
+     * </p>
+     *
+     * @param elapsedMillis number of milliseconds passed since last tick
      */
-    public void tick(long elapsedMillis) {
-        if(this.gameOver) {
-            // If the match is already over, ignore further updates
-            return; 
+    @Override
+    public void tick(final long elapsedMillis) {
+        if (this.gameOver) {
+            // if the match is already over, ignore further updates
+            return;
         }
 
         // 1. Update global game timer
         this.timeLeftMillis -= elapsedMillis;
-        if(this.timeLeftMillis <= 0) {
+        if (this.timeLeftMillis <= 0) {
             this.timeLeftMillis = 0;
             endGame();
             return;
         }
 
-        // 2. Handle the durrent mole/bomb visibility
-        if(this.currentMoleIndex != -1) {
-            // There is a visible object: update how long it has been visible
+        // 2. Handle the current mole/bomb visibility
+        if (this.currentMoleIndex != -1) {
+            // there is a visible object: update how long it has been visible
             this.moleVisibleMillis += elapsedMillis;
 
-            // If it has been visible for too long, hide it
-            if(this.moleVisibleMillis >= MOLE_LIFETIME_MILLIS) {
+            // if it has been visible for too long, hide it
+            if (this.moleVisibleMillis >= MOLE_LIFETIME_MILLIS) {
                 removeMole();
             }
 
         } else {
-            // No mole visible: update time since last mole
+            // no mole visible: update time since last mole
             this.timeSinceNoMole += elapsedMillis;
 
-            // After some time, spawn a new mole/bomb at random
-            if(this.timeSinceNoMole >= MIN_TIME_BETWEEN_MOLES) {
+            // after some time, spawn a new mole/bomb at random
+            if (this.timeSinceNoMole >= MIN_TIME_BETWEEN_MOLES) {
                 spawnNewMoleRandom();
             }
         }
@@ -121,39 +135,44 @@ public class WhacAMoleGame implements WhacAMoleModel {
 
     /**
      * Tries to hit the hole at the given index.
-     * @param index the hole index clicked by the player.
-     * @return true if a mole or bomb was present and the hit was valid, false otherwise.
+     *
+     * @param index the hole index clicked by the player
+     * @return {@code true} if a mole or bomb was present and the hit was valid,
+     *         {@code false} otherwise
      */
-    public boolean hitHole(int index) {
-        if(this.gameOver) {
-            // Ignores clicks if the game is over
-            return false; 
+    @Override
+    public boolean hitHole(final int index) {
+        if (this.gameOver) {
+            // ignore clicks if the game is over
+            return false;
         }
 
-        if(index == this.currentMoleIndex && this.currentMoleIndex != -1) {
+        if (index == this.currentMoleIndex && this.currentMoleIndex != -1) {
 
             // The player hit the current visible object
-            if(this.currentIsBomb) {
-                // Bomb penalty: decrease score, but do not go below zero
+            if (this.currentIsBomb) {
+                // bomb penalty: decrease score, but do not go below zero
                 this.score -= BOMB_PENALTY;
-                if(this.score < 0) {
+                if (this.score < 0) {
                     this.score = 0;
                 }
             } else {
-                // Mole hit: +1 point
+                // mole hit: +1 point
                 this.score++;
             }
             removeMole();
             return true;
 
         } else {
-            // Clicked on an empty or wrong hole
+            // clicked on an empty or wrong hole
             return false;
         }
     }
 
     /**
      * Returns an immutable snapshot of the current game state.
+     *
+     * @return a {@link WhacAMoleGameState} with score, time left and mole position
      */
     @Override
     public WhacAMoleGameState getGameState() {
@@ -181,7 +200,7 @@ public class WhacAMoleGame implements WhacAMoleModel {
     private void spawnNewMoleRandom() {
         this.currentMoleIndex = this.random.nextInt(TOTAL_HOLES);
 
-        double r = this.random.nextDouble();
+        final double r = this.random.nextDouble();
         this.currentIsBomb = (r < BOMB_PROBABILITY);
         this.moleVisibleMillis = 0;
         this.timeSinceNoMole = 0;
@@ -195,8 +214,11 @@ public class WhacAMoleGame implements WhacAMoleModel {
         this.moleVisibleMillis = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCurrentMoleABomb() {
-        return currentIsBomb;
+        return this.currentIsBomb;
     }
 }

@@ -1,26 +1,39 @@
 package it.unibo.uniboparty.application;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
+import it.unibo.uniboparty.view.minigames.whacamole.api.WhacAMoleView;
 import it.unibo.uniboparty.view.minigames.whacamole.impl.WhacAMoleViewImpl;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+
 
 /**
- * Simple launcher for the Whac-A-Mole minigame.
+ * Simple Swing application launcher for the Whac-A-Mole minigame.
  */
-public class WhacAMoleApp extends Application {
+public class WhacAMoleApp {
 
-    @Override
-    public void start(Stage stage) {
-        WhacAMoleViewImpl root = new WhacAMoleViewImpl();
+    private static final int FRAME_WIDTH = 400;
+    private static final int FRAME_HEIGHT = 500;
 
-        Scene scene = new Scene(root, 400, 500);
-        stage.setScene(scene);
-        stage.setTitle("Whac-A-Mole");
-        stage.show();
+    private WhacAMoleApp() {
+
     }
 
     public static void main(String[] args) {
-        launch(args);
+        SwingUtilities.invokeLater
+        (WhacAMoleApp::createAndShowWindow);
+    }
+
+    private static void createAndShowWindow() {
+        final JFrame frame = new JFrame("Whac-A-Mole");
+
+        final WhacAMoleView view = new WhacAMoleViewImpl();
+
+        frame.setContentPane((WhacAMoleViewImpl) view);
+
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
 }

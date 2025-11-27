@@ -1,78 +1,103 @@
 package it.unibo.uniboparty.controller.minigames.whacamole.impl;
 
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import it.unibo.uniboparty.controller.minigames.whacamole.api.WhacAMoleController;
-import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGame;
-import it.unibo.uniboparty.model.minigames.whacamole.impl.WhacAMoleGameState;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
+import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGameState;
+import it.unibo.uniboparty.model.minigames.whacamole.impl.WhacAMoleGame;
 
 /**
- * Default implementation of the WhacAMoleController interface.
- * This controller:
- * - owns a concrete Model instance,
- * - starts and stops an internal timer to periodically update the game logic,
- * - translates user input from the View into actions on the Model,
- * - exposes read-only game state information to the View.
+ * Default Swing implementation of the {@link WhacAMoleController} interface.
+ * 
+ * <p>
+ * This Controller:
+ * <ul>
+ *     <li>owns a concrete Model instance,</li>
+ *     <li>starts and stops an internal Swing {@link Timer} to
+ *         periodically update the game logic,</li>
+ *     <li>translates user input (hole clicks) into actions on the Model,</li>
+ *     <li>exposes read-only game state information to the View.</li>
+ * </ul>
+ * </p>
  */
-public class WhacAMoleControllerImpl implements WhacAMoleController {
+public final class WhacAMoleControllerImpl implements WhacAMoleController {
 
-    private static final long TICK_MILLIS = 100;
+    /** Interval between two logic updates (in milliseconds). */
+    private static final int TICK_MILLIS = 100;
     
     private final WhacAMoleGame game;
-    private Timeline gameLoop;
+    private Timer gameLoop;
 
     /**
-     * Creates a new controller with a default game model.
+     * Creates a new controller with its own game Model.
      */
     public WhacAMoleControllerImpl() {
         this.game = new WhacAMoleGame();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startGame() {
-        game.startGame();
+        this.game.startGame();
 
-        // Timeline that periodically advances the game logic
-        gameLoop = new Timeline(
-            new KeyFrame(Duration.millis(TICK_MILLIS), e -> { 
-                updateGameLogic(TICK_MILLIS);
-            })
-        );
-        gameLoop.setCycleCount(Timeline.INDEFINITE);
-        gameLoop.play();
-    }
-
-    public void stopGameLoopIfOver() {
-        if(game.getGameState().isGameOver() && gameLoop != null) {
-            gameLoop.stop();
+        // If a previous loop exists, stop it before starting a new one
+        if (this.gameLoop != null) {
+            this.gameLoop.stop();
         }
+
+        // Create a periodic task that advances the game logic
+        final ActionListener task = e -> {
+            updateGameLogic(TICK_MILLIS);
+            stopIfGameOver();
+        };
+
+        this.gameLoop = new Timer(TICK_MILLIS, task);
+        this.gameLoop.start();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void updateGameLogic(long elapsedMillis) {
-        game.tick(elapsedMillis);
+    public void updateGameLogic(final long elapsedMillis) {
+        this.game.tick(elapsedMillis);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void onHoleClicked(int index) {
-        game.hitHole(index);
+    public void onHoleClicked(final int index) {
+        this.game.hitHole(index);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public WhacAMoleGameState getState() {
-        return game.getGameState();
+        return this.game.getGameState();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCurrentObjectABomb() {
-        return game.isCurrentMoleABomb();
+        return this.game.isCurrentMoleABomb();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stopIfGameOver() {
-        if (gameLoop != null && game.getGameState().isGameOver()) {
-            gameLoop.stop();
+        if (this.gameLoop != null && this.game.getGameState().isGameOver()) {
+            this.gameLoop.stop();
         }
     }
 }
