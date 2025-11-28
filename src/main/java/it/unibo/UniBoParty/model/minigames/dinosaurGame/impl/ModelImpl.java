@@ -56,7 +56,7 @@ public final class ModelImpl implements Model {
         }
 
         difficulty++;
-        int nearestX = 0; // now a local variable
+        int nearestX = 0;
 
         if (isJumping) {
             dinoY += velY;
@@ -69,28 +69,39 @@ public final class ModelImpl implements Model {
             isJumping = false;
         }
 
+        // find farthest obstacle x (nearest to spawn)
         for (final ObstacleImpl o : obstacles) {
             if (o.getObstX() > nearestX) {
                 nearestX = o.getObstX();
             }
         }
 
-        for (int i = 0; i < obstacles.size(); i++) {
-            final ObstacleImpl o = obstacles.get(i);
+        for (final ObstacleImpl o : obstacles) {
             o.moveObstacle();
 
             if (o.getObstX() + o.getObstWidth() < 0) {
-                obstacles.set(i, ObstacleFactory.create(
-                        nearestX,
-                        GameConfig.GROUND_Y,
-                        GameConfig.INIT_OBSTACLE_MIN_DISTANCE,
-                        GameConfig.INIT_OBSTACLE_MAX_VARIATION,
-                        GameConfig.OBSTACLE_INITIAL_SPEED
-                                + (difficulty / GameConfig.DIFFICULTY_INCREMENT_INTERVAL)
-                ));
+                final int newSpeed = GameConfig.OBSTACLE_INITIAL_SPEED
+                        + (difficulty / GameConfig.DIFFICULTY_INCREMENT_INTERVAL);
+
+                final ObstacleImpl replacement = ObstacleFactory.create(
+                    nearestX,
+                    GameConfig.GROUND_Y,
+                    GameConfig.INIT_OBSTACLE_MIN_DISTANCE,
+                    GameConfig.INIT_OBSTACLE_MAX_VARIATION,
+                    newSpeed
+                );
+
+                o.reset(
+                    replacement.getObstX(),
+                    replacement.getObstY(),
+                    replacement.getObstWidth(),
+                    replacement.getObstHeight(),
+                    replacement.getObstSpeed()
+                );
             }
         }
 
+        // collision detection
         for (final ObstacleImpl o : obstacles) {
             final boolean overlapX = DINO_X + DINO_WIDTH > o.getObstX()
                     && DINO_X < o.getObstX() + o.getObstWidth();
@@ -102,6 +113,7 @@ public final class ModelImpl implements Model {
             }
         }
 
+        // increase obstacle speed periodically
         if (difficulty % GameConfig.DIFFICULTY_INCREMENT_INTERVAL == 0) {
             for (final ObstacleImpl o : obstacles) {
                 o.setObstSpeed(o.getObstSpeed() + 1);

@@ -1,10 +1,7 @@
 package it.unibo.uniboparty.model.minigames.typeracergame.impl;
 
 /**
- * Enum dei possibili stati del gioco TypeRacer.
- * 
- * <p>
- * Elenca i vari stati
+ * Enum of the possible states of TypeRacer.
  */
 public enum GameState {
     READY,
