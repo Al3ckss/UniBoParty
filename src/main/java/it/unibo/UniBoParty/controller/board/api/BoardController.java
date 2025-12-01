@@ -20,13 +20,13 @@ public interface BoardController {
     CellType getCellTypeAt(int index);
 
     /**
-     * @param index the position of the cel
+     * @param index the position of the cell.
      * @return the minigame id associated with that cell, or {@code null} if none
      */
     MinigameId getMinigameAt(int index);
 
     /**
-     * Called when the player lands on a given position
+     * Called when the player lands on a given position.
      * 
      * @param position the index of the cell where the player has landed
      * @return the minigame id if the cell triggers a minigame, {@code null} oterwise

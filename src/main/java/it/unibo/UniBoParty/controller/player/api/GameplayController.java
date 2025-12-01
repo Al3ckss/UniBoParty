@@ -23,7 +23,7 @@ public interface GameplayController {
      * Handles minigame launching.
      *
      * @param id the id of the minigame the player landed on
-     * @param id the id of the minigame the player landed on
+     * @param currentPlayer the player that needs to play the game
      */
-    void startMinigame(final MinigameId id, final PlayerManager currentPlayer);
+    void startMinigame(MinigameId id, PlayerManager currentPlayer);
 }

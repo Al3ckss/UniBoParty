@@ -37,9 +37,9 @@ public class GameplayControllerImpl implements GameplayController {
     public final void onDiceRolled(final int steps) {
 
         //TODO add player handling for multiple players (currentPlayerIndex on PlayerManager)
-        
+
         final int newPos = playerManager.moveCurrentPlayer(steps, boardController.getBoardSize());
-        
+
         boardView.setPlayerPosition(newPos);
 
         final MinigameId mg = boardController.onPlayerLanded(newPos);

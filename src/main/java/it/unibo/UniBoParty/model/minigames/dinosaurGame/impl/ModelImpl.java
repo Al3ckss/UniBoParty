@@ -2,8 +2,10 @@ package it.unibo.uniboparty.model.minigames.dinosaurgame.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import it.unibo.uniboparty.model.minigames.dinosaurgame.api.Model;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.api.GameObserver;
 
 /**
  * Implementation of the model handling game logic, physics and obstacles.
@@ -30,6 +32,9 @@ public final class ModelImpl implements Model {
 
     // Active obstacles
     private final List<ObstacleImpl> obstacles = new ArrayList<>();
+
+    // Observer list
+    private final List<GameObserver> observers = new CopyOnWriteArrayList<>();
 
     /**
      * Creates the model and initializes the starting obstacles.
@@ -119,6 +124,11 @@ public final class ModelImpl implements Model {
                 o.setObstSpeed(o.getObstSpeed() + 1);
             }
         }
+
+        // Notify observers
+        for (final GameObserver observer : observers) {
+            observer.modelUpdated();
+        }
     }
 
     @Override
@@ -168,5 +178,25 @@ public final class ModelImpl implements Model {
     @Override
     public int getDifficulty() {
         return difficulty;
+    }
+
+    // Observer methods
+
+    /**
+     * Adds Observer.
+     * 
+     * @param observer the DinoRun's Observer
+     */
+    public void addObserver(final GameObserver observer) {
+        observers.add(observer);
+    }
+
+    /**
+     * Removes Observer.
+     * 
+     * @param observer the DinoRun's Observer
+     */
+    public void removeObserver(final GameObserver observer) {
+        observers.remove(observer);
     }
 }

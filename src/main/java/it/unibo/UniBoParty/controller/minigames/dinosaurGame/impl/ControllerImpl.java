@@ -20,7 +20,6 @@ public final class ControllerImpl implements Controller {
     private final ModelImpl model;
 
     // We store the view reference directly because the controller needs to update it.
-    // External modifications are assumed to be controlled and intentional.
     private final ViewImpl view;
 
     private Timer timer;
@@ -46,9 +45,8 @@ public final class ControllerImpl implements Controller {
         timer = new Timer(GameConfig.TIMER_DELAY_MS, e -> {
             if (model.getGameState() == GameState.RUNNING) {
                 model.update();
-                view.repaint();
 
-                // Game over reached. Add Game Over event
+                // Stop timer if game over
                 if (model.getGameState() == GameState.GAME_OVER) {
                     timer.stop();
                 }

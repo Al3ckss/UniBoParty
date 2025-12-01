@@ -46,12 +46,12 @@ public interface Model {
     /**
      * Returns the current state of the game.
      *
-     * @return stato di gioco
+     * @return current GameState
      */
     GameState getState();
 
     /**
-     * Sets the game's states.
+     * Sets the game's state.
      *
      * @param state new GameState
      */
@@ -61,4 +61,18 @@ public interface Model {
      * Ends the match and sets the game state to GAME_OVER.
      */
     void gameOver();
+
+    /**
+     * Adds an observer that will be notified when the model updates.
+     *
+     * @param observer the observer to add
+     */
+    void addObserver(GameObserver observer);
+
+    /**
+     * Removes an observer previously added.
+     *
+     * @param observer the observer to remove
+     */
+    void removeObserver(GameObserver observer);
 }
