@@ -42,8 +42,6 @@ public final class GameplayControllerImpl implements GameplayController {
         final int currentPlayer = playerManager.getCurrentPlayerIndex();
         final int newPos = playerManager.moveCurrentPlayer(steps, boardController.getBoardSize());
 
-        // Update the view with the specific player index so multiple
-        // players can be displayed concurrently.
         boardView.setPlayerPosition(currentPlayer);
 
         final MinigameId mg = boardController.onPlayerLanded(newPos);
@@ -63,6 +61,7 @@ public final class GameplayControllerImpl implements GameplayController {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
             value = "UC_USELESS_VOID_METHOD",
             justification = "Method will be implemented by team members handling minigames"
+            //TODO remove this once startMinigame has been implemented
     )
     @Override
     public void startMinigame(final MinigameId id) {
