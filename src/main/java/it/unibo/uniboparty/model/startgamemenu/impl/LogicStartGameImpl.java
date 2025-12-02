@@ -1,7 +1,9 @@
 package it.unibo.uniboparty.model.startgamemenu.impl;
 
 import java.util.List;
+
 import it.unibo.uniboparty.model.startgamemenu.api.LogicStartGame;
+
 import java.util.ArrayList;
 
 /**
@@ -14,18 +16,6 @@ public class LogicStartGameImpl implements LogicStartGame {
     private static final int MIN_PLAYERS = 2;
     private static final int MAX_PLAYERS = 4;
     private List<String> players = new ArrayList<>();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getStartMessage() {
-        if (canStartGame()) {
-            return "Gioco avviato con " + players.size() + " giocatori!";
-        } else {
-            return "Inserisci da 2 a 4 giocatori per iniziare!";
-        }
-    }
 
     /**
      * {@inheritDoc}

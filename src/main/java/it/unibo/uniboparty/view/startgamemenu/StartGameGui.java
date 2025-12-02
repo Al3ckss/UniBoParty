@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -147,13 +148,19 @@ public final class StartGameGui extends JFrame {
         }
 
         logic.setPlayers(names);
-        final JFrame frame = new JFrame("UniBo Party - Board");
-        frame.setContentPane(new BoardViewImpl());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        this.dispose();
-        //JOptionPane.showMessageDialog(this, logic.getStartMessage());
+        if (logic.canStartGame()) {
+            final JFrame frame = new JFrame("UniBo Party - Board");
+            frame.setContentPane(new BoardViewImpl());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+            frame.setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Inserisci da 2 a 4 giocatori per iniziare!",
+                "Numero di giocatori non valido",
+                JOptionPane.WARNING_MESSAGE);
+        }
     }
 }
