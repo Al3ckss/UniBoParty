@@ -1,6 +1,8 @@
 package it.unibo.uniboparty.model.minigames.whacamole;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import it.unibo.uniboparty.model.minigames.whacamole.impl.WhacAMoleGame;
 class WhacAMoleGameTest {
 
     private static final long GAME_DURATION = 30_000L;
+    private static final long EXTRA_TICK = 5_000L;
 
     private WhacAMoleModel model;
 
@@ -22,7 +25,7 @@ class WhacAMoleGameTest {
     @Test
     void testStartGameInitializesState() {
         this.model.startGame();
-        WhacAMoleGameState state = this.model.getGameState();
+        final WhacAMoleGameState state = this.model.getGameState();
 
         assertEquals(0, state.getScore());
         assertFalse(state.isGameOver());
@@ -37,7 +40,7 @@ class WhacAMoleGameTest {
 
         this.model.tick(GAME_DURATION + 1_000L);
 
-        WhacAMoleGameState state = this.model.getGameState();
+        final WhacAMoleGameState state = this.model.getGameState();
         assertTrue(state.isGameOver());
         assertEquals(0L, state.getTimeLeftMillis());
     }
@@ -47,10 +50,10 @@ class WhacAMoleGameTest {
         this.model.startGame();
 
         this.model.tick(GAME_DURATION + 1_000L);
-        WhacAMoleGameState stateAfterEnd = this.model.getGameState();
+        final WhacAMoleGameState stateAfterEnd = this.model.getGameState();
 
-        this.model.tick(5_000L);
-        WhacAMoleGameState stateAfterExtraTick = this.model.getGameState();
+        this.model.tick(EXTRA_TICK);
+        final WhacAMoleGameState stateAfterExtraTick = this.model.getGameState();
 
         assertEquals(stateAfterEnd.getScore(), stateAfterExtraTick.getScore());
         assertEquals(stateAfterEnd.isGameOver(), stateAfterExtraTick.isGameOver());
@@ -64,16 +67,16 @@ class WhacAMoleGameTest {
 
         this.model.tick(1_000L);
 
-        WhacAMoleGameState state = this.model.getGameState();
-        int currentIndex = state.getCurrentMoleIndex();
+        final WhacAMoleGameState state = this.model.getGameState();
+        final int currentIndex = state.getCurrentMoleIndex();
 
         assertTrue(currentIndex >= 0 && currentIndex < state.getTotalHoles());
 
-        int oldScore = state.getScore();
-        boolean wasBomb = this.model.isCurrentObjectABomb();
+        final int oldScore = state.getScore();
+        final boolean wasBomb = this.model.isCurrentObjectABomb();
 
-        boolean hitResult = this.model.hitHole(currentIndex);
-        WhacAMoleGameState stateAfterHit = this.model.getGameState();
+        final boolean hitResult = this.model.hitHole(currentIndex);
+        final WhacAMoleGameState stateAfterHit = this.model.getGameState();
 
         assertTrue(hitResult);
         assertEquals(-1, stateAfterHit.getCurrentMoleIndex());
@@ -91,16 +94,16 @@ class WhacAMoleGameTest {
         this.model.startGame();
         this.model.tick(1_000L);
 
-        WhacAMoleGameState state = this.model.getGameState();
-        int currentIndex = state.getCurrentMoleIndex();
+        final WhacAMoleGameState state = this.model.getGameState();
+        final int currentIndex = state.getCurrentMoleIndex();
 
         assertTrue(currentIndex >= 0 && currentIndex < state.getTotalHoles());
 
-        int wrongIndex = (currentIndex + 1) % state.getTotalHoles();
-        int oldScore = state.getScore();
+        final int wrongIndex = (currentIndex + 1) % state.getTotalHoles();
+        final int oldScore = state.getScore();
 
-        boolean hitResult = this.model.hitHole(wrongIndex);
-        WhacAMoleGameState stateAfterHit = this.model.getGameState();
+        final boolean hitResult = this.model.hitHole(wrongIndex);
+        final WhacAMoleGameState stateAfterHit = this.model.getGameState();
 
         assertFalse(hitResult);
         assertEquals(oldScore, stateAfterHit.getScore());
@@ -110,10 +113,10 @@ class WhacAMoleGameTest {
     @Test
     void testIsCurrentObjectABombIsFalseWhenNoMoleVisible() {
         this.model.startGame();
-        WhacAMoleGameState state = this.model.getGameState();
+        final WhacAMoleGameState state = this.model.getGameState();
 
         assertEquals(-1, state.getCurrentMoleIndex());
         assertFalse(this.model.isCurrentObjectABomb(),
-                "isCurrentObjectABomb() should be false when no object is visible");
+            "isCurrentObjectABomb() should be false when no object is visible");
     }
 }

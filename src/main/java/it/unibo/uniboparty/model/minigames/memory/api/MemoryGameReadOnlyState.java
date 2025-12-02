@@ -6,7 +6,8 @@ import java.util.List;
  * Immutable and read-only snapshot of the Memory game state.
  * 
  * <p>
- * The Controller and the View use this interface to safely read information about the current match without modifying the Model.
+ * The Controller and the View use this interface to safely read information
+ * about the current match without modifying the Model.
  * </p>
  */
 public interface MemoryGameReadOnlyState {

@@ -44,8 +44,7 @@ public interface WhacAMoleModel {
     /**
      * Indicates whether the current visible object is a bomb.
      * 
-     * @return {@code true} if the current visible object is a bomb,
-     * {@code false} if it is a mole or if nothing is visible
+     * @return {@code true} if the current visible object is a bomb, {@code false} if it is a mole or if nothing is visible
      */
     boolean isCurrentObjectABomb();
 }

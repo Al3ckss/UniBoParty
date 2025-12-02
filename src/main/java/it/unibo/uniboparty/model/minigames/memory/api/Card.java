@@ -4,9 +4,11 @@ package it.unibo.uniboparty.model.minigames.memory.api;
  * Writable Memory card.
  * 
  * <p>
- * This interface extends {@link CardReadOnly} by adding the methods needed to modify the card state {reveal or hide}. 
- * The View usually interacts only with read-only interface, while the Controller and the Model use this writable version.
- * </p> 
+ * This interface extends {@link CardReadOnly} by adding the methods
+ * needed to modify the card state (reveal or hide).
+ * The View usually interacts only with read-only interface,
+ * while the Controller and the Model use this writable version.
+ * </p>
  */
 public interface Card extends CardReadOnly {
 

@@ -1,5 +1,7 @@
 package it.unibo.uniboparty.view.minigames.memory.impl;
 
+import java.util.List;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -155,7 +157,7 @@ public final class MemoryGameViewImpl extends JPanel implements MemoryGameView {
     public void render(final MemoryGameReadOnlyState state) {
         setStatusMessage(state.getMessage());
 
-        final java.util.List<CardReadOnly> cards = state.getCards();
+        final List<CardReadOnly> cards = state.getCards();
 
         // Update every button according to the card at the same position
         for (int r = 0; r < ROWS; r++) {

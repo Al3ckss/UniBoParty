@@ -22,8 +22,7 @@ public final class WhacAMoleGameState {
      * @param score current player score
      * @param timeLeftMillis time left before the game ends (in milliseconds)
      * @param gameOver {@code true} if the game is over
-     * @param currentMoleIndex index (0..totalHoles-1) of the current mole/bomb,
-     * or -1 if none is visible
+     * @param currentMoleIndex index (0..totalHoles-1) of the current mole/bomb, or -1 if none is visible
      * @param totalHoles total number of holes in the grid
      */
     public WhacAMoleGameState(

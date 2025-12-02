@@ -3,11 +3,12 @@ package it.unibo.uniboparty.model.minigames.memory.api;
 import java.util.List;
 
 /**
- * Main modl API for the Memory game.
+ * Main model API for the Memory game.
  * 
  * <p>
  * This interface defines the core logic of the game:
- * flipping cards, checking for matches, resolving mismatches, and tracking the overall game progress.
+ * flipping cards, checking for matches, resolving mismatches,
+ * and tracking the overall game progress.
  * </p>
  */
 public interface MemoryGameModel {
@@ -16,7 +17,8 @@ public interface MemoryGameModel {
      * Tries to reveal the card at the given index.
      * 
      * <p>
-     * The move is valid only if the card is currently hidden and the game is not waiting for a mismatch to be resolved.
+     * The move is valid only if the card is currently hidden
+     * and the game is not waiting for a mismatch to be resolved.
      * </p>
      * 
      * @param index the position of the card inside the deck

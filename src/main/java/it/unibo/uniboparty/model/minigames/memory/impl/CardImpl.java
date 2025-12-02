@@ -4,7 +4,7 @@ import it.unibo.uniboparty.model.minigames.memory.api.Card;
 import it.unibo.uniboparty.model.minigames.memory.api.Symbol;
 
 /**
- * Default implememtation of the {@link Card} interface.
+ * Default implementation of the {@link Card} interface.
  * 
  * <p>
  * A card has:

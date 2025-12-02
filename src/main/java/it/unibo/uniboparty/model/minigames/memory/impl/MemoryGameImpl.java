@@ -11,7 +11,8 @@ import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
  * 
  * <p>
  * This class contains the core logic of the Memory game:
- * flipping cards, checking for matches, tracking the game state and exposing a read-only snapshot for the UI.
+ * flipping cards, checking for matches, tracking the game state and exposing
+ * a read-only snapshot for the UI.
  * </p> 
  */
 public final class MemoryGameImpl implements MemoryGameModel {
@@ -106,7 +107,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
         if (this.firstSelectedCard == null) {
             this.firstSelectedCard = selected;
             this.secondSelectedCard = null;
-            this.lastMessage = "Oh nice. Now try to find its twin.";
+            this.lastMessage = "Kudos! Now try to find its twin.";
             return true;
         }
 
@@ -120,7 +121,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
             this.matchedPairs++;
 
             if (this.isGameOver()) {
-                this.lastMessage = "Congratulation! You win in " + this.moves + " moves!";
+                this.lastMessage = "Congratulations! You win in " + this.moves + " moves!";
             } else {
                 this.lastMessage = "It's a match!";
             }
@@ -131,7 +132,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
             // NO MATCH:
             // Keep both cards visible and wait for resolveMismatch()
             this.mismatchPending = true;
-            this.lastMessage = "No match. Memorize them!";
+            this.lastMessage = "No match. Try to remember these cards.";
             // We do not close the turn here
             // endTurn() will be called later in resolveMismatch()
         }
@@ -152,7 +153,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
         this.mismatchPending = false;
 
         if (this.isGameOver()) {
-            this.lastMessage = "You won in " + this.moves + " moves!";
+            this.lastMessage = "You found all pairs in " + this.moves + " moves!";
         } else {
             this.lastMessage = "Try again!";
         }
@@ -169,13 +170,13 @@ public final class MemoryGameImpl implements MemoryGameModel {
      /**
       * Checks if the two given cards form a matching pair.
       * 
-      * @param a first card
-      * @param b second card
+      * @param first first card
+      * @param second second card
       * @return {@code true} if the two cards match, {@code false} otherwise
       */
-     private boolean checkForMatch(final Card a, final Card b) {
+     private boolean checkForMatch(final Card first, final Card second) {
         // We can use == here because Symbol is an enum
-        return a.getSymbol() == b.getSymbol();
+        return first.getSymbol() == second.getSymbol();
      }
 
      /**

@@ -5,7 +5,7 @@ package it.unibo.uniboparty.model.minigames.memory.api;
  * 
  * <p>
  * Each symbol corresponds to an image file stored inside
- * {@code /images/memory/}, identified by the {@code imageKey}.
+ * {@code /images/memory/}, identified by its {@code imageKey}.
  * </p>
  */
 public enum Symbol {
@@ -31,6 +31,15 @@ public enum Symbol {
      */
     Symbol(final String imageKey) {
         this.imageKey = imageKey;
+    }
+
+    /**
+     * Returns the key used to load the associated image.
+     * 
+     * @return the image key
+     */
+    public String getImageKey() {
+        return this.imageKey;
     }
 
     /**

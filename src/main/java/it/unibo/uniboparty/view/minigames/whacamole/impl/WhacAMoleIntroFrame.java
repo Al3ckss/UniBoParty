@@ -4,7 +4,20 @@ import javax.swing.JFrame;
 
 import it.unibo.uniboparty.utilities.AbstractMinigameIntroFrame;
 
+/**
+ * Intro window for the Whac-A-Mole minigame.
+ */
 public final class WhacAMoleIntroFrame extends AbstractMinigameIntroFrame {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Creates the Whac-A-Mole intro frame and initializes its UI.
+     */
+    public WhacAMoleIntroFrame() {
+        super();
+        this.initIntroFrame();
+    }
 
     @Override
     protected String getMinigameTitle() {
@@ -24,7 +37,7 @@ public final class WhacAMoleIntroFrame extends AbstractMinigameIntroFrame {
     @Override
     protected JFrame createGameFrame() {
         final JFrame gameFrame = new JFrame("Whac-A-Mole - Game");
-        gameFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        gameFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gameFrame.setContentPane(new WhacAMoleViewImpl());
         gameFrame.pack();
         return gameFrame;

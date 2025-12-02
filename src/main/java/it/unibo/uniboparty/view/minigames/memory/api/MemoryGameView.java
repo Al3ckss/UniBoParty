@@ -4,10 +4,11 @@ import it.unibo.uniboparty.controller.minigames.memory.api.MemoryGameController;
 import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
 
 /**
- * View API for the Memory game.
+ * Public View API for the Memory game.
  * 
  * <p>
- * The View is responsible for showing the cards on the screen and updating the UI whenever the Model changes.
+ * The View is responsible for showing the cards on the screen
+ * and updating the UI whenever the Model changes.
  * It does not contain game logic.
  * </p>
  */
@@ -43,10 +44,11 @@ public interface MemoryGameView {
      * Enables/disables all buttons/cells in the grid.
      * 
      * <p>
-     * This is used during mismatch delays, to avoid clicks whent two revealed cards are momentarily shown to the user.
+     * This is used during mismatch delays,
+     * to avoid clicks when two revealed cards are momentarily shown to the user.
      * </p>
      * 
-     * @param disabled true to disable all buttons, false to enable them
+     * @param disabled {@code true} to disable all buttons, {@code false} to enable them
      */
     void setAllButtonsDisabled(boolean disabled);
 }

@@ -32,8 +32,11 @@ public final class MinigameIntroPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+    /** Font size of the title label. */
+    private static final float TITLE_FONT_SIZE = 26f;
+
     /** Background image used for the intro screen. May be {@code null} if not found. */
-    private final Image backgroundImage;
+    private final transient Image backgroundImage;
 
     /**
      * Creates a new intro panel for a minigame.
@@ -53,7 +56,7 @@ public final class MinigameIntroPanel extends JPanel {
         this.backgroundImage = url != null ? new ImageIcon(url).getImage() : null;
 
         final JLabel title = new JLabel(titleText, JLabel.CENTER);
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 26f));
+        title.setFont(title.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
         title.setOpaque(false);
         this.add(title, BorderLayout.NORTH);
 

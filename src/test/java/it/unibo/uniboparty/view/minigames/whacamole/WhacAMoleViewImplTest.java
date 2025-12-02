@@ -1,6 +1,8 @@
 package it.unibo.uniboparty.view.minigames.whacamole;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -15,57 +17,55 @@ class WhacAMoleViewImplTest {
 
     @Test
     void testViewCanBeCreated() {
-        WhacAMoleViewImpl view = new WhacAMoleViewImpl();
+        final WhacAMoleViewImpl view = new WhacAMoleViewImpl();
         assertNotNull(view, "The view instance should not be null");
     }
 
     @Test
     void testGetFinalScoreDoesNotThrowAndIsNonNegative() {
-        WhacAMoleViewImpl view = new WhacAMoleViewImpl();
+        final WhacAMoleViewImpl view = new WhacAMoleViewImpl();
 
-        try {
-            int score = view.getFinalScore();
-            assertTrue(score >= 0, "Final score should never be negative");
-        } catch (Exception e) {
-            fail("getFinalScore() should not throw exceptions");
-        }
+        // If getFinalScore() throws, the test fails automaticamente
+        final int score = view.getFinalScore();
+        assertTrue(score >= 0, "Final score should never be negative");
     }
 
     @Test
     void testStartButtonCanBeClickedWithoutErrors() {
-        WhacAMoleViewImpl view = new WhacAMoleViewImpl();
+        final WhacAMoleViewImpl view = new WhacAMoleViewImpl();
 
-        JButton startButton = findButtonByText(view, "Start Game");
+        final JButton startButton = findButtonByText(view, "Start Game");
         assertNotNull(startButton, "Start button should be present in the view");
 
-        try {
-            startButton.doClick();
-        } catch (Exception e) {
-            fail("Clicking the Start button should not throw exceptions");
-        }
+        // Se doClick() lancia un'eccezione, il test fallisce automaticamente
+        startButton.doClick();
     }
 
     @Test
     void testStartButtonGetsDisabledAfterClick() {
-        WhacAMoleViewImpl view = new WhacAMoleViewImpl();
+        final WhacAMoleViewImpl view = new WhacAMoleViewImpl();
 
-        JButton startButton = findButtonByText(view, "Start Game");
+        final JButton startButton = findButtonByText(view, "Start Game");
         assertNotNull(startButton, "Start button should be present in the view");
 
         startButton.doClick();
 
-        assertFalse(startButton.isEnabled(), 
-            "After clicking Start, the button should be disabled");
+        assertFalse(
+            startButton.isEnabled(),
+            "After clicking Start, the button should be disabled"
+        );
     }
 
     private JButton findButtonByText(final Container root, final String text) {
-        for (Component c : root.getComponents()) {
-            if (c instanceof JButton b) {
-                if (text.equals(b.getText())) {
-                    return b;
+        for (final Component component : root.getComponents()) {
+            if (component instanceof JButton) {
+                final JButton button = (JButton) component;
+                if (text.equals(button.getText())) {
+                    return button;
                 }
-            } else if (c instanceof Container child) {
-                JButton result = findButtonByText(child, text);
+            } else if (component instanceof Container) {
+                final Container child = (Container) component;
+                final JButton result = findButtonByText(child, text);
                 if (result != null) {
                     return result;
                 }
