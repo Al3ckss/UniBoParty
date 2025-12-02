@@ -2,6 +2,7 @@ package it.unibo.uniboparty.view.minigames.typeracergame.api;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
 
 /**
@@ -38,6 +39,26 @@ public interface View {
      * @return textfield di input
      */
     JTextField getTextField();
+
+    /**
+     * Registers an ActionListener on the internal text field.
+     * This avoids external code directly mutating the UI component.
+     *
+     * @param listener the listener to register
+     */
+    void addTextFieldActionListener(ActionListener listener);
+
+    /**
+     * Returns the current text inside the input field.
+     *
+     * @return the field text
+     */
+    String getTextFieldText();
+
+    /**
+     * Clears the input field text on the Event Dispatch Thread.
+     */
+    void clearTextField();
 
     /**
      * Binds the view to the given model and registers the view as observer.

@@ -1,6 +1,5 @@
 package it.unibo.uniboparty.controller.player.api;
 
-import it.unibo.uniboparty.model.player.api.PlayerManager;
 import it.unibo.uniboparty.utilities.MinigameId;
 
 /**
@@ -23,7 +22,6 @@ public interface GameplayController {
      * Handles minigame launching.
      *
      * @param id the id of the minigame the player landed on
-     * @param currentPlayer the player that needs to play the game
      */
-    void startMinigame(MinigameId id, PlayerManager currentPlayer);
+    void startMinigame(MinigameId id);
 }

@@ -2,10 +2,10 @@ package it.unibo.uniboparty.controller.minigames.typeracergame.impl;
 
 import java.util.Objects;
 import javax.swing.Timer;
-import javax.swing.SwingUtilities;
 
 import it.unibo.uniboparty.controller.minigames.typeracergame.api.Controller;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
+import it.unibo.uniboparty.model.minigames.typeracergame.api.GameObserver;
 import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameConfig;
 import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState;
 import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
@@ -22,8 +22,8 @@ import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
  */
 public final class ControllerImpl implements Controller {
 
-    private final Model model;
-    private final View view;
+    private final ModelDelegate model;
+    private final ViewDelegate view;
     private Timer timer;
 
     /**
@@ -34,8 +34,11 @@ public final class ControllerImpl implements Controller {
      * @param view the TypeRacer's view
      */
     public ControllerImpl(final Model model, final View view) {
-        this.model = Objects.requireNonNull(model);
-        this.view = Objects.requireNonNull(view);
+        Objects.requireNonNull(model);
+        Objects.requireNonNull(view);
+
+        this.model = new ModelDelegate(model);
+        this.view = new ViewDelegate(view);
 
         model.setState(GameState.RUNNING);
         // bind the view to the model so the view will observe updates
@@ -61,19 +64,142 @@ public final class ControllerImpl implements Controller {
     }
 
     private void setupInputField() {
-        view.getTextField().addActionListener(e -> {
+        view.addTextFieldActionListener(e -> {
             if (model.getState() != GameState.RUNNING) {
                 return;
             }
 
-            final String typed = view.getTextField().getText();
+            final String typed = view.getTextFieldText();
             final String current = model.getCurrentWord();
 
             if (typed.equals(current)) {
                 model.incrementPoints();
                 model.setNewWord();
-                SwingUtilities.invokeLater(() -> view.getTextField().setText(""));
+                view.clearTextField();
             }
         });
+    }
+
+    /**
+     * Wrapper for Model to avoid exposing direct mutable object reference.
+     */
+    private static final class ModelDelegate implements Model {
+        private final Model delegate;
+
+        ModelDelegate(final Model delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public void setNewWord() {
+            delegate.setNewWord();
+        }
+
+        @Override
+        public String getCurrentWord() {
+            return delegate.getCurrentWord();
+        }
+
+        @Override
+        public void incrementPoints() {
+            delegate.incrementPoints();
+        }
+
+        @Override
+        public int getPoints() {
+            return delegate.getPoints();
+        }
+
+        @Override
+        public int getTime() {
+            return delegate.getTime();
+        }
+
+        @Override
+        public void decreaseTime() {
+            delegate.decreaseTime();
+        }
+
+        @Override
+        public GameState getState() {
+            return delegate.getState();
+        }
+
+        @Override
+        public void setState(final GameState state) {
+            delegate.setState(state);
+        }
+
+        @Override
+        public void gameOver() {
+            delegate.gameOver();
+        }
+
+        @Override
+        public void addObserver(final GameObserver observer) {
+            delegate.addObserver(observer);
+        }
+
+        @Override
+        public void removeObserver(final GameObserver observer) {
+            delegate.removeObserver(observer);
+        }
+    }
+
+    /**
+     * Wrapper for View to avoid exposing direct mutable object reference.
+     */
+    private static final class ViewDelegate implements View {
+        private final View delegate;
+
+        ViewDelegate(final View delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public void setLabel1(final String text) {
+            delegate.setLabel1(text);
+        }
+
+        @Override
+        public void updateTimeLabel(final int t) {
+            delegate.updateTimeLabel(t);
+        }
+
+        @Override
+        public javax.swing.JTextField getTextField() {
+            return delegate.getTextField();
+        }
+
+        @Override
+        public javax.swing.JLabel getLabel1() {
+            return delegate.getLabel1();
+        }
+
+        @Override
+        public void bindModel(final Model model) {
+            delegate.bindModel(model);
+        }
+
+        @Override
+        public void addTextFieldActionListener(
+                final java.awt.event.ActionListener listener) {
+            delegate.addTextFieldActionListener(listener);
+        }
+
+        @Override
+        public String getTextFieldText() {
+            return delegate.getTextFieldText();
+        }
+
+        @Override
+        public void clearTextField() {
+            delegate.clearTextField();
+        }
+
+        @Override
+        public void showFinalScore(final int finalScore) {
+            delegate.showFinalScore(finalScore);
+        }
     }
 }

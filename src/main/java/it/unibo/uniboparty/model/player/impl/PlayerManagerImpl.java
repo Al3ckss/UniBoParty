@@ -24,6 +24,9 @@ public final class PlayerManagerImpl implements PlayerManager {
      * @param numberOfPlayers the number of players in the match
      */
     public PlayerManagerImpl(final int numberOfPlayers) {
+        if (numberOfPlayers <= 0) {
+            throw new IllegalArgumentException("numberOfPlayers must be positive");
+        }
         this.numberOfPlayers = numberOfPlayers;
         this.positions = new int[numberOfPlayers];
         this.scores = new int[numberOfPlayers];
@@ -42,11 +45,17 @@ public final class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public int getCurrentPlayerPosition() {
+        if (this.currentPlayerIndex < 0 || this.currentPlayerIndex >= this.numberOfPlayers) {
+            throw new IllegalStateException("Current player index out of range: " + this.currentPlayerIndex);
+        }
         return this.positions[this.currentPlayerIndex];
     }
 
     @Override
     public int getPlayerPosition(final int playerIndex) {
+        if (playerIndex < 0 || playerIndex >= this.numberOfPlayers) {
+            throw new IllegalArgumentException("Invalid player index: " + playerIndex);
+        }
         return this.positions[playerIndex];
     }
 
@@ -70,6 +79,9 @@ public final class PlayerManagerImpl implements PlayerManager {
 
     @Override
     public void addScore(final int playerIndex, final int amount) {
+        if (playerIndex < 0 || playerIndex >= this.numberOfPlayers) {
+            throw new IllegalArgumentException("Invalid player index: " + playerIndex);
+        }
         this.scores[playerIndex] += amount;
     }
 

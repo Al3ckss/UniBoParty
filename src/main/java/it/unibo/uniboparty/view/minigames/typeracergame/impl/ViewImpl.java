@@ -12,16 +12,16 @@ import it.unibo.uniboparty.view.minigames.typeracergame.api.View;
 import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameConfig;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.GameObserver;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * Implementation of Typeracer view.
- * <p>
- * Creates the window and updates it with a new name.
- * </p>
+ * Implementation of the TypeRacer minigame view.
  */
 public final class ViewImpl implements View, GameObserver {
+
+    private static final String TIME_PREFIX = "Remaining time: ";
 
     private final JFrame frame = new JFrame("TypeRacer");
     private final JLabel label1 = new JLabel();
@@ -31,11 +31,16 @@ public final class ViewImpl implements View, GameObserver {
     private Model boundModel;
 
     /**
-     * Constructor of ViewImpl.
-     * 
-     * Initializes the window and updates it.
+     * Empty constructor to allow instantiation without parameters.
      */
     public ViewImpl() {
+        // empty
+    }
+
+    /**
+     * Starts the Window for TypeRacer.
+     */
+    public void initView() {
         SwingUtilities.invokeLater(() -> {
             frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
 
@@ -55,7 +60,6 @@ public final class ViewImpl implements View, GameObserver {
             frame.pack();
             frame.setVisible(true);
 
-            // deregister observer on window close if bound
             frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(final WindowEvent e) {
@@ -66,8 +70,6 @@ public final class ViewImpl implements View, GameObserver {
             });
         });
     }
-
-    private static final String TIME_PREFIX = "Remaining time: ";
 
     @Override
     public void setLabel1(final String text) {
@@ -83,25 +85,50 @@ public final class ViewImpl implements View, GameObserver {
 
     @Override
     public JTextField getTextField() {
-        return textField;
+        final JTextField copy = new JTextField(textField.getText());
+        copy.setEnabled(textField.isEnabled());
+        return copy;
     }
 
     @Override
     public JLabel getLabel1() {
-        return label1;
+        final JLabel copy = new JLabel(label1.getText());
+        copy.setFont(label1.getFont());
+        return copy;
     }
 
     @Override
     public void bindModel(final Model model) {
-        this.boundModel = model;
         if (this.boundModel != null) {
-            this.boundModel.addObserver(this);
-            // initialize view with current state
-            SwingUtilities.invokeLater(() -> {
-                label1.setText(this.boundModel.getCurrentWord());
-                timeLabel.setText(TIME_PREFIX + this.boundModel.getTime());
-            });
+            this.boundModel.removeObserver(this);
         }
+        if (model == null) {
+            this.boundModel = null;
+            return;
+        }
+        // wrap the provided model to avoid storing direct external reference
+        this.boundModel = new ModelDelegate(model);
+        model.addObserver(this);
+        SwingUtilities.invokeLater(() -> {
+            label1.setText(model.getCurrentWord());
+            timeLabel.setText(TIME_PREFIX + model.getTime());
+        });
+    }
+
+    @Override
+    public void addTextFieldActionListener(
+            final java.awt.event.ActionListener listener) {
+        this.textField.addActionListener(listener);
+    }
+
+    @Override
+    public String getTextFieldText() {
+        return this.textField.getText();
+    }
+
+    @Override
+    public void clearTextField() {
+        SwingUtilities.invokeLater(() -> this.textField.setText(""));
     }
 
     @Override
@@ -123,4 +150,69 @@ public final class ViewImpl implements View, GameObserver {
         });
     }
 
+    /**
+     * Wrapper for Model to avoid exposing direct mutable object reference.
+     */
+    private static final class ModelDelegate implements Model {
+        private final Model delegate;
+
+        ModelDelegate(final Model delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public void setNewWord() {
+            delegate.setNewWord();
+        }
+
+        @Override
+        public String getCurrentWord() {
+            return delegate.getCurrentWord();
+        }
+
+        @Override
+        public void incrementPoints() {
+            delegate.incrementPoints();
+        }
+
+        @Override
+        public int getPoints() {
+            return delegate.getPoints();
+        }
+
+        @Override
+        public int getTime() {
+            return delegate.getTime();
+        }
+
+        @Override
+        public void decreaseTime() {
+            delegate.decreaseTime();
+        }
+
+        @Override
+        public it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState getState() {
+            return delegate.getState();
+        }
+
+        @Override
+        public void setState(final it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState state) {
+            delegate.setState(state);
+        }
+
+        @Override
+        public void gameOver() {
+            delegate.gameOver();
+        }
+
+        @Override
+        public void addObserver(final GameObserver observer) {
+            delegate.addObserver(observer);
+        }
+
+        @Override
+        public void removeObserver(final GameObserver observer) {
+            delegate.removeObserver(observer);
+        }
+    }
 }

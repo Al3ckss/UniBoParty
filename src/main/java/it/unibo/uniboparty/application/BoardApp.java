@@ -4,25 +4,35 @@ import it.unibo.uniboparty.controller.minigames.typeracergame.impl.ControllerImp
 import it.unibo.uniboparty.model.minigames.typeracergame.impl.ModelImpl;
 import it.unibo.uniboparty.view.minigames.typeracergame.impl.ViewImpl;
 
-public class BoardApp {
-    public static void main(String[] args) {
-        ModelImpl model = new ModelImpl();
-        ViewImpl view = new ViewImpl();
+/**
+ * Main entry point for the TypeRacer minigame demo.
+ */
+public final class BoardApp {
 
-        // Bind view to model BEFORE initialization so observer is registered
+    private BoardApp() {
+        // utility class
+    }
+
+    /**
+     * Main method to start the game.
+     *
+     * @param args command line arguments (unused)
+     */
+    public static void main(final String[] args) {
+        final ModelImpl model = new ModelImpl();
+        final ViewImpl view = new ViewImpl();
         view.bindModel(model);
-        
-        // Initialize game state
+
         model.setNewWord();
 
         new ControllerImpl(model, view);
-    }
-}
 
-/*DINOSAUR GAME
-    public static void main(String[] args) {
+        /*DINOSAUR GAME
+        public static void main(String[] args) {
         ModelImpl model = new ModelImpl();
         ViewImpl view = new ViewImpl(model);
         new ControllerImpl(model, view);
+        }
+    */
     }
-*/
+}

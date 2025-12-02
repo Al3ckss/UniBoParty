@@ -31,6 +31,8 @@ import it.unibo.uniboparty.view.board.api.BoardView;
  */
 public final class BoardViewImpl extends JPanel implements BoardView {
 
+    private static final long serialVersionUID = 1L;
+
     /** Number of columns of the board. */
     private static final int COLUMNS = 8;
 
@@ -61,14 +63,10 @@ public final class BoardViewImpl extends JPanel implements BoardView {
     /** Background color for normal cells. */
     private static final Color COLOR_NORMAL = Color.decode("#ddddff");
 
-    private final BoardController controller;
+    private final transient BoardController controller;
     private final JPanel boardGrid;
 
-    /**
-     * Logical position of the player (cell index).
-     * Defaults to zero (start cell).
-     */
-    private int playerPosition;
+    private int[] playerPositions = new int[0];
 
     /**
      * Creates the view for the main board using its own model and controller.
@@ -173,8 +171,11 @@ public final class BoardViewImpl extends JPanel implements BoardView {
      * @return the background color to use
      */
     private Color getBackgroundColor(final int index, final int lastIndex, final CellType type) {
-        if (index == this.playerPosition) {
-            return COLOR_PLAYER;
+        // If any player is on this cell, highlight it as player cell.
+        for (final int pos : this.playerPositions) {
+            if (index == pos) {
+                return COLOR_PLAYER;
+            }
         }
         if (index == 0) {
             return COLOR_START;
@@ -194,7 +195,33 @@ public final class BoardViewImpl extends JPanel implements BoardView {
         if (position < 0 || position >= this.controller.getBoardSize()) {
             throw new IllegalArgumentException("Invalid player position: " + position);
         }
-        this.playerPosition = position;
+        // keep playerPositions[0] in sync for backwards compatibility
+        if (this.playerPositions.length == 0) {
+            this.playerPositions = new int[]{position};
+        } else {
+            this.playerPositions[0] = position;
+        }
+        this.refresh();
+    }
+
+    @Override
+    public void setPlayerPosition(final int playerIndex, final int position) {
+        if (position < 0 || position >= this.controller.getBoardSize()) {
+            throw new IllegalArgumentException("Invalid player position: " + position);
+        }
+        if (playerIndex < 0) {
+            throw new IllegalArgumentException("Invalid player index: " + playerIndex);
+        }
+
+        if (playerIndex >= this.playerPositions.length) {
+            final int[] newArr = new int[playerIndex + 1];
+            for (int i = 0; i < newArr.length; i++) {
+                newArr[i] = (i < this.playerPositions.length) ? this.playerPositions[i] : 0;
+            }
+            this.playerPositions = newArr;
+        }
+
+        this.playerPositions[playerIndex] = position;
         this.refresh();
     }
 

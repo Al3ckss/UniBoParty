@@ -21,7 +21,7 @@ public final class ModelImpl implements Model {
     private GameState state = GameState.READY;
     private String currentWord;
 
-    private final CopyOnWriteArrayList<GameObserver> observers = new CopyOnWriteArrayList<>();
+    private final List<GameObserver> observers = new CopyOnWriteArrayList<>();
 
     @Override
     public void setNewWord() {

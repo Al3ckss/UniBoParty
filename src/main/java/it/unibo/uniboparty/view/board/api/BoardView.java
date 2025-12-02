@@ -15,6 +15,14 @@ public interface BoardView {
     void setPlayerPosition(int position);
 
     /**
+     * Updates the logical position of a specific player and refreshes the view.
+     *
+     * @param playerIndex index of the player to update
+     * @param position index of the cell where the player is currently located
+     */
+    void setPlayerPosition(int playerIndex, int position);
+
+    /**
      * @return the controller used by this view
      */
     BoardController getController();
