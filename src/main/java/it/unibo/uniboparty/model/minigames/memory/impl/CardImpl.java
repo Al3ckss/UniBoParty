@@ -15,7 +15,7 @@ import it.unibo.uniboparty.model.minigames.memory.api.Symbol;
  * </ul>
  * </p>
  */
-public class CardImpl implements Card {
+public final class CardImpl implements Card {
 
     private final int id;
     private final Symbol symbol;
@@ -55,7 +55,7 @@ public class CardImpl implements Card {
     @Override
     public boolean isRevealed() {
         return this.revealed;
-    }    
+    }
 
     /**
      * {@inheritDoc}
@@ -70,7 +70,7 @@ public class CardImpl implements Card {
      */
     @Override
     public void hide() {
-        this.revealed = false;        
+        this.revealed = false;
     }
 
     @Override

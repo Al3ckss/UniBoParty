@@ -14,7 +14,7 @@ import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
  * </p>
  */
 public final class MemoryGameState implements MemoryGameReadOnlyState {
-    
+
     private final int matchedPairs;
     private final int totalPairs;
     private final boolean gameOver;
@@ -110,14 +110,14 @@ public final class MemoryGameState implements MemoryGameReadOnlyState {
 
     @Override
     public String toString() {
-        return "MemoryGameState {" +
-              "matchedPairs=" + matchedPairs + 
-              ", totalPairs=" + totalPairs + 
-              ", gameOver=" + gameOver + 
-              ", waitingSecondFlip=" + waitingSecondFlip + 
-              ", cards=" + cards.size() + " cards" + 
-              ", message=" + message + '\'' + 
-              ", moves=" + moves +
-              '}';
+        return "MemoryGameState {"
+                + "matchedPairs=" + this.matchedPairs
+                + ", totalPairs=" + this.totalPairs
+                + ", gameOver=" + this.gameOver
+                + ", waitingSecondFlip=" + this.waitingSecondFlip
+                + ", cards=" + this.cards.size() + " cards"
+                + ", message='" + this.message + '\''
+                + ", moves=" + this.moves
+                + '}';
     }
 }

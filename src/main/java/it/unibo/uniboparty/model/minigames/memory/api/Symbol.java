@@ -29,7 +29,7 @@ public enum Symbol {
      * 
      * @param imageKey the name used to find the image file.
      */
-    Symbol(String imageKey) {
+    Symbol(final String imageKey) {
         this.imageKey = imageKey;
     }
 

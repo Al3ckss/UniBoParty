@@ -1,12 +1,10 @@
 package it.unibo.uniboparty.application;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import it.unibo.uniboparty.controller.minigames.memory.api.MemoryGameController;
 import it.unibo.uniboparty.controller.minigames.memory.impl.MemoryGameControllerImpl;
-import it.unibo.uniboparty.view.minigames.memory.api.MemoryGameView;
-import it.unibo.uniboparty.view.minigames.memory.impl.MemoryGameViewImpl;
 
 /**
  * Simple Swing application that launches the Memory minigame.
@@ -17,7 +15,7 @@ public final class MemoryGameApp {
     private static final int FRAME_HEIGHT = 700;
 
     private MemoryGameApp() {
-        // not called
+        // utility class: no instances
     }
 
     /**
@@ -35,14 +33,14 @@ public final class MemoryGameApp {
     private static void createAndShowWindow() {
         final JFrame frame = new JFrame("Memory Game");
 
-        // Create the view
-        final MemoryGameView view = new MemoryGameViewImpl();
+        // Create the controller (model and view are created inside the controller)
+        final MemoryGameControllerImpl controller = MemoryGameControllerImpl.create();
 
-        // Create the controller (model is created inside the controller)
-        new MemoryGameControllerImpl(view);
+        // Ask the controller for the main panel that contains the view
+        final JPanel mainPanel = controller.createMainPanel();
 
-        // Add the view to the frame
-        frame.setContentPane((MemoryGameViewImpl) view);
+        // Add the panel to the frame
+        frame.setContentPane(mainPanel);
 
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setLocationRelativeTo(null); // center on screen

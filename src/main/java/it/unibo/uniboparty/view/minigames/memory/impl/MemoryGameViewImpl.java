@@ -34,8 +34,15 @@ import it.unibo.uniboparty.view.minigames.memory.api.MemoryGameView;
  */
 public final class MemoryGameViewImpl extends JPanel implements MemoryGameView {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int ROWS = 4;
     private static final int COLS = 4;
+
+    private static final int INFO_PADDING = 5;
+    private static final int STATUS_PADDING = 10;
+    private static final float STATUS_FONT_SIZE = 14f;
+    private static final int GRID_PADDING = 20;
 
     /** Graphic size of the card image in pixels. */
     private static final int CARD_IMG_SIZE = 60;
@@ -50,7 +57,7 @@ public final class MemoryGameViewImpl extends JPanel implements MemoryGameView {
 
     private final ImageIcon questionIcon;
 
-    private MemoryGameController controller;
+    private transient MemoryGameController controller;
 
     /**
      * Creates the Swing UI for the Memory game.
@@ -60,28 +67,37 @@ public final class MemoryGameViewImpl extends JPanel implements MemoryGameView {
 
         // Top info label (time + moves)
         this.infoLabel = new JLabel("Time: 0s | Moves: 0", JLabel.CENTER);
-        this.infoLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        this.infoLabel.setBorder(
+            javax.swing.BorderFactory.createEmptyBorder(
+                INFO_PADDING, INFO_PADDING, INFO_PADDING, INFO_PADDING));
 
         // Bottom status label (messages)
         this.statusLabel = new JLabel("Welcome! Let's play!", JLabel.CENTER);
-        this.statusLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        this.statusLabel.setFont(this.statusLabel.getFont().deriveFont(Font.PLAIN, 14f));
+        this.statusLabel.setBorder(
+            javax.swing.BorderFactory.createEmptyBorder(
+                STATUS_PADDING, STATUS_PADDING, STATUS_PADDING, STATUS_PADDING));
+        this.statusLabel.setFont(
+            this.statusLabel.getFont().deriveFont(Font.PLAIN, STATUS_FONT_SIZE));
         this.statusLabel.setForeground(Color.DARK_GRAY);
 
         // Center grid with 4x4 cards
         this.gridPanel = new JPanel(new GridLayout(ROWS, COLS, 10, 10));
-        this.gridPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.gridPanel.setBorder(
+            javax.swing.BorderFactory.createEmptyBorder(
+                GRID_PADDING, GRID_PADDING, GRID_PADDING, GRID_PADDING));
 
         this.buttons = new JButton[ROWS][COLS];
 
         // Load default "question mark" image for hidden cards
-        this.questionIcon = loadScaledIcon("/images/memory/question.png", CARD_IMG_SIZE, CARD_IMG_SIZE);
+        this.questionIcon = loadScaledIcon("/images/memory/question.png",
+                CARD_IMG_SIZE, CARD_IMG_SIZE);
 
         // Create all card buttons
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 final JButton cardButton = new JButton("?");
-                cardButton.setPreferredSize(new Dimension(CARD_BUTTON_SIZE, CARD_BUTTON_SIZE));
+                cardButton.setPreferredSize(
+                    new Dimension(CARD_BUTTON_SIZE, CARD_BUTTON_SIZE));
                 cardButton.setFocusPainted(false);
                 cardButton.setBackground(Color.LIGHT_GRAY);
 

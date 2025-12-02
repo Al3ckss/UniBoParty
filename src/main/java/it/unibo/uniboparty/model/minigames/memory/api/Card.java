@@ -9,7 +9,7 @@ package it.unibo.uniboparty.model.minigames.memory.api;
  * </p> 
  */
 public interface Card extends CardReadOnly {
-    
+
     /** 
      * {@inheritDoc} 
      */

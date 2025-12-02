@@ -7,11 +7,12 @@ import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
  * View API for the Memory game.
  * 
  * <p>
- * The View is responsible for showing the cards on the screen and updating the UI whenever the Model changes. It does not contain game logic.
+ * The View is responsible for showing the cards on the screen and updating the UI whenever the Model changes.
+ * It does not contain game logic.
  * </p>
  */
 public interface MemoryGameView {
-    
+
     /**
      * Sets the controller that will receive user actions.
      * 

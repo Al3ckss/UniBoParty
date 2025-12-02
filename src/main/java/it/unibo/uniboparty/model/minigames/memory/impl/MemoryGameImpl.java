@@ -15,12 +15,12 @@ import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
  * </p> 
  */
 public final class MemoryGameImpl implements MemoryGameModel {
-    
+
     /**
      * All the cards in the current game.
      */
     private final List<Card> cards; 
-    
+
     /**
      * Total number of pairs in the game.
      */
@@ -29,7 +29,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
     /**
      * Number of pairs matched so far.
      */
-    private int matchedPairs;           
+    private int matchedPairs;
 
     /**
      * First selected card in the current turn.
@@ -44,12 +44,12 @@ public final class MemoryGameImpl implements MemoryGameModel {
     /**
      * {@code true} when the player has just revealed two different cards (mismatch) and they must be hidden again.
      */
-    private boolean mismatchPending;  
+    private boolean mismatchPending;
 
     /**
      * Short feedback message for the player.
      */
-    private String lastMessage;   
+    private String lastMessage;
 
     /**
      * Number of moves made by the player (each move = two flips).
@@ -63,7 +63,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
      * @param deck the list of cards to use in the game
      */
     public MemoryGameImpl(final List<Card> deck) {
-        this.cards = deck;
+        this.cards = List.copyOf(deck);
         this.totalPairs = deck.size() / 2;
         this.matchedPairs = 0;
         this.firstSelectedCard = null;
@@ -80,21 +80,21 @@ public final class MemoryGameImpl implements MemoryGameModel {
      public boolean flipCard(final int index) {
 
         // Do not accept new clicks if there is a mismatch still visible
-        if(this.mismatchPending) {
+        if (this.mismatchPending) {
             this.lastMessage = "Are you in a hurry?";
             return false;
         }
 
         // Check that the index is inside the deck bounds
-        if(!isValidIndex(index)) {
+        if (!isValidIndex(index)) {
             this.lastMessage = "You are not supposed to be here!";
             return false;
         }
 
         final Card selected = this.cards.get(index);
-        
+
         // Ignore clicks on already revealed cards
-        if(selected.isRevealed()) {
+        if (selected.isRevealed()) {
             this.lastMessage = "This card is already revealed. U blind?";
             return false;
         }
@@ -103,7 +103,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
         selected.reveal();
 
         // First card of the turn
-        if(this.firstSelectedCard == null) {
+        if (this.firstSelectedCard == null) {
             this.firstSelectedCard = selected;
             this.secondSelectedCard = null;
             this.lastMessage = "Oh nice. Now try to find its twin.";
@@ -114,12 +114,12 @@ public final class MemoryGameImpl implements MemoryGameModel {
         this.secondSelectedCard = selected;
 
         // Every time you flip the second card, it count as a move
-        this.moves++;         
-        
-        if(checkForMatch(this.firstSelectedCard, this.secondSelectedCard)) {
+        this.moves++;
+
+        if (checkForMatch(this.firstSelectedCard, this.secondSelectedCard)) {
             this.matchedPairs++;
 
-            if(this.isGameOver()) {
+            if (this.isGameOver()) {
                 this.lastMessage = "Congratulation! You win in " + this.moves + " moves!";
             } else {
                 this.lastMessage = "It's a match!";
@@ -135,7 +135,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
             // We do not close the turn here
             // endTurn() will be called later in resolveMismatch()
         }
-        
+
         return true;
      }
 
@@ -144,14 +144,14 @@ public final class MemoryGameImpl implements MemoryGameModel {
       */
      @Override
      public void resolveMismatch() {
-        if(this.mismatchPending && this.firstSelectedCard != null && this.secondSelectedCard != null) {
+        if (this.mismatchPending && this.firstSelectedCard != null && this.secondSelectedCard != null) {
             this.firstSelectedCard.hide();
             this.secondSelectedCard.hide();
         }
         endTurn();
         this.mismatchPending = false;
-        
-        if(this.isGameOver()) {
+
+        if (this.isGameOver()) {
             this.lastMessage = "You won in " + this.moves + " moves!";
         } else {
             this.lastMessage = "Try again!";
@@ -207,7 +207,7 @@ public final class MemoryGameImpl implements MemoryGameModel {
      /**
       * {@inheritDoc}
       */
-    @Override
+     @Override
      public MemoryGameReadOnlyState getGameState() {
         return new MemoryGameState(
             this.matchedPairs,

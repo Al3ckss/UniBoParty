@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  */
 public interface MemoryGameModel {
-    
+
     /**
      * Tries to reveal the card at the given index.
      * 
@@ -23,12 +23,14 @@ public interface MemoryGameModel {
      * @return {@code true} if the card has been flipped successfully; {@code false} if the move is not allowed
      */
     boolean flipCard(int index);
-    
+
     /**
      * Resolves the last mismatch, if any.
      * 
      * <p>
-     * When two flipped cards do not match, the model keeps them revealed until the controller calls this method, which hides them again and closes the turn.
+     * When two flipped cards do not match,
+     * the model keeps them revealed until the controller calls this method,
+     * which hides them again and closes the turn.
      * </p>
      */
     void resolveMismatch();

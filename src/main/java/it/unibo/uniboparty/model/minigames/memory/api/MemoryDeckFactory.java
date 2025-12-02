@@ -2,7 +2,7 @@ package it.unibo.uniboparty.model.minigames.memory.api;
 
 import java.util.List;
 
-/** 
+/**
  * Factory interface for creating Memory game decks.
  * 
  * <p>
@@ -14,9 +14,10 @@ import java.util.List;
  *   <li>shuffling the cards before returning the deck.</li>
  * </ul>
  * </p>
-*/
+ */
+@FunctionalInterface
 public interface MemoryDeckFactory {
-    
+
     /**
      * Creates and shuffles a deck with the given number of pairs.
      * 
