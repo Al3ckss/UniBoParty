@@ -29,11 +29,4 @@ public interface LogicStartGame {
      * @return True if the game can start, False otherwise
      */
     boolean canStartGame();
-
-    /**
-     * Returns a message to show at the user.
-     * 
-     * @return a message to show at the user.
-     */
-    String getStartMessage();
 }
