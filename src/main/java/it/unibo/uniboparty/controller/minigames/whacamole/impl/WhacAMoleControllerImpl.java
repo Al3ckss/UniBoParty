@@ -6,6 +6,7 @@ import javax.swing.Timer;
 
 import it.unibo.uniboparty.controller.minigames.whacamole.api.WhacAMoleController;
 import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGameState;
+import it.unibo.uniboparty.model.minigames.whacamole.api.WhacAMoleModel;
 import it.unibo.uniboparty.model.minigames.whacamole.impl.WhacAMoleGame;
 
 /**
@@ -26,8 +27,8 @@ public final class WhacAMoleControllerImpl implements WhacAMoleController {
 
     /** Interval between two logic updates (in milliseconds). */
     private static final int TICK_MILLIS = 100;
-    
-    private final WhacAMoleGame game;
+
+    private final WhacAMoleModel game;
     private Timer gameLoop;
 
     /**
@@ -88,7 +89,7 @@ public final class WhacAMoleControllerImpl implements WhacAMoleController {
      */
     @Override
     public boolean isCurrentObjectABomb() {
-        return this.game.isCurrentMoleABomb();
+        return this.game.isCurrentObjectABomb();
     }
 
     /**

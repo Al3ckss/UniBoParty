@@ -11,7 +11,7 @@ import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGameState;
  * </p>
  */
 public interface WhacAMoleController {
-    
+
     /**
      * Starts a new game.
      * 

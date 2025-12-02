@@ -18,8 +18,8 @@ import it.unibo.uniboparty.model.minigames.whacamole.api.WhacAMoleModel;
  * It does not know anything about the GUI.
  * </p>
  */
-public class WhacAMoleGame implements WhacAMoleModel {
-    
+public final class WhacAMoleGame implements WhacAMoleModel {
+
     private static final int ROWS = 3;
     private static final int COLS = 3;
     private static final int TOTAL_HOLES = ROWS * COLS;
@@ -201,7 +201,7 @@ public class WhacAMoleGame implements WhacAMoleModel {
         this.currentMoleIndex = this.random.nextInt(TOTAL_HOLES);
 
         final double r = this.random.nextDouble();
-        this.currentIsBomb = (r < BOMB_PROBABILITY);
+        this.currentIsBomb = r < BOMB_PROBABILITY;
         this.moleVisibleMillis = 0;
         this.timeSinceNoMole = 0;
     }
@@ -212,13 +212,14 @@ public class WhacAMoleGame implements WhacAMoleModel {
     private void removeMole() {
         this.currentMoleIndex = -1;
         this.moleVisibleMillis = 0;
+        this.currentIsBomb = false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean isCurrentMoleABomb() {
+    public boolean isCurrentObjectABomb() {
         return this.currentIsBomb;
     }
 }

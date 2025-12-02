@@ -36,6 +36,8 @@ import it.unibo.uniboparty.view.minigames.whacamole.api.WhacAMoleView;
  */
 public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int GRID_ROWS = 3;
     private static final int GRID_COLS = 3;
     private static final int TOTAL_HOLES = GRID_ROWS * GRID_COLS;
@@ -43,7 +45,24 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
     private static final int HOLE_SIZE = 80;
     private static final int UI_REFRESH_MILLIS = 100;
 
-    private final WhacAMoleController controller;
+    private static final int TOP_ROWS = 2;
+    private static final int TOP_COLS = 1;
+    private static final int TOP_GAP = 5;
+
+    private static final int BOTTOM_ROWS = 2;
+    private static final int BOTTOM_COLS = 1;
+    private static final int BOTTOM_GAP = 5;
+
+    private static final int HOLE_GRID_H_GAP = 10;
+    private static final int HOLE_GRID_V_GAP = 10;
+
+    private static final float GAME_OVER_FONT_SIZE = 18f;
+
+    private static final int ICON_SIZE = 60;
+
+    private static final Color MOLE_COLOR = new Color(222, 184, 135);
+
+    private final transient WhacAMoleController controller;
 
     private final JLabel scoreLabel;
     private final JLabel timerLabel;
@@ -77,7 +96,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
         this.startButton = new JButton("Start Game");
 
         this.gameOverLabel = new JLabel("", JLabel.CENTER);
-        this.gameOverLabel.setFont(this.gameOverLabel.getFont().deriveFont(Font.BOLD, 18f));
+        this.gameOverLabel.setFont(
+            this.gameOverLabel.getFont().deriveFont(Font.BOLD, GAME_OVER_FONT_SIZE));
         this.gameOverLabel.setForeground(Color.RED);
         this.gameOverLabel.setVisible(false);
 
@@ -85,8 +105,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
         this.gameStarted = false;
 
         // Load images from resources (same path as in the JavaFX version)
-        this.moleIcon = loadScaledIcon("/images/whacamole/mole.png", 60, 60);
-        this.bombIcon = loadScaledIcon("/images/whacamole/bomb.png", 60, 60);
+        this.moleIcon = loadScaledIcon("/images/whacamole/mole.png", ICON_SIZE, ICON_SIZE);
+        this.bombIcon = loadScaledIcon("/images/whacamole/bomb.png", ICON_SIZE, ICON_SIZE);
 
         final JPanel topPanel = buildTopBar();
         final JPanel gridPanel = buildGrid();
@@ -135,7 +155,7 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
      * @return a panel containing the score and timer labels
      */
     private JPanel buildTopBar() {
-        final JPanel box = new JPanel(new GridLayout(2, 1, 5, 5));
+        final JPanel box = new JPanel(new GridLayout(TOP_ROWS, TOP_COLS, TOP_GAP, TOP_GAP));
         box.add(this.scoreLabel);
         box.add(this.timerLabel);
         return box;
@@ -152,7 +172,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
      * @return the panel containing the grid of hole buttons
      */
     private JPanel buildGrid() {
-        final JPanel grid = new JPanel(new GridLayout(GRID_ROWS, GRID_COLS, 10, 10));
+        final JPanel grid = new JPanel(
+            new GridLayout(GRID_ROWS, GRID_COLS, HOLE_GRID_H_GAP, HOLE_GRID_V_GAP));
 
         int index = 0;
         for (int r = 0; r < GRID_ROWS; r++) {
@@ -192,7 +213,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
      * @return a panel containing the start button and the game over label
      */
     private JPanel buildBottomBar() {
-        final JPanel box = new JPanel(new GridLayout(2, 1, 5, 5));
+        final JPanel box = new JPanel(
+            new GridLayout(BOTTOM_ROWS, BOTTOM_COLS, BOTTOM_GAP, BOTTOM_GAP));
         box.add(this.startButton);
         box.add(this.gameOverLabel);
         return box;
@@ -298,8 +320,7 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
                 if (isBomb) {
                     b.setBackground(Color.RED);
                 } else {
-                    // roughly "burlywood" color
-                    b.setBackground(new Color(222, 184, 135));
+                    b.setBackground(MOLE_COLOR);
                 }
 
                 b.setEnabled(true);

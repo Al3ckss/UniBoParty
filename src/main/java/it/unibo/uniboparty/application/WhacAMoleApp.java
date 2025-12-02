@@ -6,11 +6,10 @@ import javax.swing.SwingUtilities;
 import it.unibo.uniboparty.view.minigames.whacamole.api.WhacAMoleView;
 import it.unibo.uniboparty.view.minigames.whacamole.impl.WhacAMoleViewImpl;
 
-
 /**
  * Simple Swing application launcher for the Whac-A-Mole minigame.
  */
-public class WhacAMoleApp {
+public final class WhacAMoleApp {
 
     private static final int FRAME_WIDTH = 400;
     private static final int FRAME_HEIGHT = 500;
@@ -19,9 +18,13 @@ public class WhacAMoleApp {
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater
-        (WhacAMoleApp::createAndShowWindow);
+    /**
+     * Entry point for the Whac-A-Mole application.
+     * 
+     * @param args command-line arguments
+     */
+    public static void main(final String[] args) {
+        SwingUtilities.invokeLater(WhacAMoleApp::createAndShowWindow);
     }
 
     private static void createAndShowWindow() {

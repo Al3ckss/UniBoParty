@@ -11,7 +11,7 @@ import it.unibo.uniboparty.model.minigames.whacamole.WhacAMoleGameState;
  * </p>
  */
 public interface WhacAMoleModel {
-    
+
     /**
      * Starts a new game from scratch.
      * All scores, timers and internal flags are reset.
@@ -21,7 +21,7 @@ public interface WhacAMoleModel {
     /**
      * Updates the internal game state based on the time that has passed.
      * 
-     * @param elapsedMillis numer of milliseconds passed since last tick.
+     * @param elapsedMillis number of milliseconds passed since last tick.
      */
     void tick(long elapsedMillis);
 
@@ -44,7 +44,8 @@ public interface WhacAMoleModel {
     /**
      * Indicates whether the current visible object is a bomb.
      * 
-     * @return {@code true} if the current visible object is a bomb, {@code false} if it is a mole or if nothing is visible
+     * @return {@code true} if the current visible object is a bomb,
+     * {@code false} if it is a mole or if nothing is visible
      */
-    boolean isCurrentMoleABomb();
+    boolean isCurrentObjectABomb();
 }

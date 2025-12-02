@@ -3,7 +3,7 @@ package it.unibo.uniboparty.model.minigames.whacamole;
 /**
  * Immutable snapshot of the current game state.
  * 
- * <P>
+ * <p>
  * The View uses this class to update the UI without being able
  * to modify the Model directly.
  * </p>
@@ -19,12 +19,12 @@ public final class WhacAMoleGameState {
     /**
      * Creates a new game state snapshot.
      *
-     * @param score            current player score
-     * @param timeLeftMillis   time left before the game ends (in milliseconds)
-     * @param gameOver         {@code true} if the game is over
+     * @param score current player score
+     * @param timeLeftMillis time left before the game ends (in milliseconds)
+     * @param gameOver {@code true} if the game is over
      * @param currentMoleIndex index (0..totalHoles-1) of the current mole/bomb,
-     *                         or -1 if none is visible
-     * @param totalHoles       total number of holes in the grid
+     * or -1 if none is visible
+     * @param totalHoles total number of holes in the grid
      */
     public WhacAMoleGameState(
         final int score,
