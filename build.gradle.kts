@@ -45,7 +45,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.uniboparty.application.MainApp")
+    mainClass.set("it.unibo.sampleapp.RateAMovie")
 }
 
 tasks.test {
