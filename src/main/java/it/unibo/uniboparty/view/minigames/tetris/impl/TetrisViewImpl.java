@@ -5,7 +5,6 @@ import it.unibo.uniboparty.view.minigames.tetris.api.TetrisView;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
 /**
  * Implementation of the Tetris game view.
@@ -24,7 +23,7 @@ public final class TetrisViewImpl extends JFrame implements TetrisView {
      * @param model the Tetris model
      */
     public TetrisViewImpl(final TetrisModel model) {
-        super("Block Blast!");
+        super("Tetris!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -39,8 +38,6 @@ public final class TetrisViewImpl extends JFrame implements TetrisView {
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
-
-        new Timer(DELAY, e -> gridView.repaint()).start();
     }
 
     /**

@@ -36,13 +36,6 @@ public class MazeViewImpl extends JFrame implements MazeView {
     public MazeViewImpl(final MazeModel model) {
         this.model = model;
         this.mazePanel = new MazePanel();
-    }
-
-    /**
-     * Setup the JFrame properties.
-     */
-    @Override
-    public void setupFrame() {
         setTitle("Maze Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
