@@ -1,5 +1,7 @@
 package it.unibo.uniboparty.controller.minigames.tetris.api;
 
+import javax.swing.JFrame;
+
 /**
  * Interface representing the controller for the Tetris game.
  * The controller is responsible for managing the game flow and interactions
@@ -17,4 +19,11 @@ public interface TetrisController {
      * Starts the Tetris game by making the game view visible.
      */
     void startGame();
+
+    /**
+     * Gets the game view associated with this controller.
+     * 
+     * @return the game view
+     */
+    JFrame getView();
 }

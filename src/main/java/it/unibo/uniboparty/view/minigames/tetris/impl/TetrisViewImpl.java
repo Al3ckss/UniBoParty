@@ -1,7 +1,7 @@
 package it.unibo.uniboparty.view.minigames.tetris.impl;
 
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
-import it.unibo.uniboparty.view.minigames.tetris.api.GameView;
+import it.unibo.uniboparty.view.minigames.tetris.api.TetrisView;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -10,7 +10,7 @@ import javax.swing.Timer;
 /**
  * Implementation of the Tetris game view.
  */
-public final class GameViewImpl extends JFrame implements GameView {
+public final class TetrisViewImpl extends JFrame implements TetrisView {
     private static final long serialVersionUID = 1L;
     private static final int CELL_SIZE = 36;
     private static final int DELAY = 40;
@@ -23,7 +23,7 @@ public final class GameViewImpl extends JFrame implements GameView {
      * 
      * @param model the Tetris model
      */
-    public GameViewImpl(final TetrisModel model) {
+    public TetrisViewImpl(final TetrisModel model) {
         super("Block Blast!");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());

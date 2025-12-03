@@ -6,7 +6,7 @@ package it.unibo.uniboparty.view.minigames.tetris.api;
  * of the game state.
  */ 
 
-public interface GameView {
+public interface TetrisView {
     /**
      * Refreshes the game view to reflect the current state of the game.
      * This method should be called whenever the game state changes and the view needs to be updated.
