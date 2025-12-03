@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Dimension;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -49,6 +50,8 @@ public final class MinigameIntroPanel extends JPanel {
         final Runnable onStart
     ) {
         super(new BorderLayout());
+
+        this.setPreferredSize(new Dimension(600, 400));
 
         final URL url = this.getClass().getResource("/background.png");
         this.backgroundImage = url != null ? new ImageIcon(url).getImage() : null;
