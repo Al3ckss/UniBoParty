@@ -5,13 +5,14 @@ import it.unibo.uniboparty.utilities.MinigameId;
 /**
  * Represents the result of a player's turn.
  *
- * Contains:
- * - the new board position reached by the player,
- * - the minigame to start (if any),
- * - whether the game has ended.
+ * <p>
+ * @param newPosition the board position reached by the player after the turn
+ * @param minigameToStart the minigame that should start after moving, or null if none
+ * @param gameEnded true if the game has ended after this turn
  */
 public record TurnResult(
         int newPosition,
         MinigameId minigameToStart,
         boolean gameEnded
-) {}
+) { }
+
