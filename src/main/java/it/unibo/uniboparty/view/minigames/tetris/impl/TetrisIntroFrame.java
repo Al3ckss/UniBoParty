@@ -37,7 +37,7 @@ public final class TetrisIntroFrame extends AbstractMinigameIntroFrame {
     }
 
     @Override
-    protected JFrame createGameFrame() {
+    public JFrame createGameFrame() {
         final TetrisController controller = new TetrisControllerImpl();
         return controller.getView();
     }

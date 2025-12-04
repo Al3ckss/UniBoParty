@@ -9,7 +9,6 @@ import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 import it.unibo.uniboparty.model.minigames.tetris.impl.TetrisModelImpl;
 import it.unibo.uniboparty.view.minigames.tetris.impl.TetrisViewImpl;
-import it.unibo.uniboparty.view.minigames.tetris.api.TetrisView;
 
 /**
  * Implementation of the Tetris game controller.
@@ -18,7 +17,7 @@ public final class TetrisControllerImpl implements TetrisController {
     private static final int GRID_SIZE = 8;
 
     private final TetrisModel model;
-    private final TetrisView view;
+    private final TetrisViewImpl view;
 
     /**
      * Creates a new {@code GameControllerImpl} instance, initializing the game model and view.
@@ -73,6 +72,6 @@ public final class TetrisControllerImpl implements TetrisController {
     )
     @Override
     public JFrame getView() {
-        return (JFrame) this.view;
+        return this.view;
     }
 }

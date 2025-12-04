@@ -5,6 +5,7 @@ import it.unibo.uniboparty.view.minigames.tetris.api.TetrisView;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  * Implementation of the Tetris game view.
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 public final class TetrisViewImpl extends JFrame implements TetrisView {
     private static final long serialVersionUID = 1L;
     private static final int CELL_SIZE = 36;
+    private static final int DELAY = 40;
     private final GridViewImpl gridView;
     private final RackViewImpl rackView;
     private final HUD hud;
@@ -37,6 +39,7 @@ public final class TetrisViewImpl extends JFrame implements TetrisView {
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
+        new Timer(DELAY, e -> gridView.repaint()).start();
     }
 
     /**
