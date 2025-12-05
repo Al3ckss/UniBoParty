@@ -36,8 +36,8 @@ public final class SudokuIntroFrame extends AbstractMinigameIntroFrame {
     @Override
     protected JFrame createGameFrame() {
         final JFrame gameFrame = new JFrame("Sudoku - Game");
-        createGameFrame().setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        createGameFrame().setContentPane(new SudokuViewImpl());
+        gameFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        gameFrame.setContentPane(new SudokuViewImpl());
         gameFrame.pack();
         return gameFrame;
 

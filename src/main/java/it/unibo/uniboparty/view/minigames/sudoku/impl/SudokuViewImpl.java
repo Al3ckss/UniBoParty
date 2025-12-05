@@ -55,7 +55,7 @@ public class SudokuViewImpl extends JFrame implements ISudokuView {
 
     private ImageIcon winIcon;
     private ImageIcon loseIcon;
-    private Image background;
+    private transient Image background;
 
     /**
      * Constructs the Sudoku View.
