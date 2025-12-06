@@ -8,7 +8,6 @@ import it.unibo.uniboparty.model.player.api.Player;
 import it.unibo.uniboparty.model.player.api.PlayerManager;
 import it.unibo.uniboparty.model.player.api.TurnResult;
 import it.unibo.uniboparty.model.player.impl.PlayerManagerImpl;
-import it.unibo.uniboparty.utilities.MinigameId;
 import it.unibo.uniboparty.view.board.api.BoardView;
 import it.unibo.uniboparty.controller.board.api.BoardController;
 
@@ -69,33 +68,8 @@ public final class GameplayControllerImpl implements GameplayController {
 
         // Start minigame if required
         if (result.minigameToStart() != null) {
-            startMinigame(result.minigameToStart());
+            //TODO start minigame
         }
     }
-
-    /**
-     * Starts a minigame based on the landing cell.
-     *
-     * @param id the minigame identifier
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = "UC_USELESS_VOID_METHOD",
-            justification = "Method will be implemented by team members handling minigames"
-    )
-    @Override
-    public void startMinigame(final MinigameId id) {
-        switch (id) {
-            case GAME_1 -> { /* TODO insert game initializer */ }
-            case GAME_2 -> { /* TODO insert game initializer */ }
-            case GAME_3 -> { /* TODO insert game initializer */ }
-            case GAME_4 -> { /* TODO insert game initializer */ }
-            case GAME_5 -> { /* TODO insert game initializer */ }
-            case GAME_6 -> { /* TODO insert game initializer */ }
-            case GAME_7 -> { /* TODO insert game initializer */ }
-            case GAME_8 -> { /* TODO insert game initializer */ }
-        }
-
-        // TODO add score to player after turn ends
-        // TODO start new round after turn ends
-    }
+    // TODO start new round after turn ends
 }

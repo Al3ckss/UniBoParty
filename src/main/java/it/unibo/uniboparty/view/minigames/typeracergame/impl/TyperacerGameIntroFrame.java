@@ -3,7 +3,6 @@ package it.unibo.uniboparty.view.minigames.typeracergame.impl;
 import javax.swing.JFrame;
 
 import it.unibo.uniboparty.utilities.AbstractMinigameIntroFrame;
-import it.unibo.uniboparty.view.minigames.whacamole.impl.WhacAMoleViewImpl;
 
 /**
  * Intro window for the TyperacerGame minigame.
@@ -37,10 +36,8 @@ protected String getRulesText() {
 
     @Override
     protected JFrame createGameFrame() {
-        final JFrame gameFrame = new JFrame("Dinosaur Run");
-        gameFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        gameFrame.setContentPane(new WhacAMoleViewImpl());
-        gameFrame.pack();
+        final ViewImpl view = new ViewImpl();
+        final JFrame gameFrame = view.createGameFrame();
         return gameFrame;
     }
 }

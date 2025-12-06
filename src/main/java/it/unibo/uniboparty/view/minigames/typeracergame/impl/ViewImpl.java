@@ -42,33 +42,46 @@ public final class ViewImpl implements View, GameObserver {
      */
     public void initView() {
         SwingUtilities.invokeLater(() -> {
-            frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
-
-            label1.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            timeLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            textField.setFont(new Font(GameConfig.DEFAULT_FONT, Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
-
-            label1.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
-            timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
-            textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
-
-            frame.add(label1, BorderLayout.NORTH);
-            frame.add(timeLabel, BorderLayout.CENTER);
-            frame.add(textField, BorderLayout.SOUTH);
-
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
+            createGameFrame();
             frame.setVisible(true);
-
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(final WindowEvent e) {
-                    if (boundModel != null) {
-                        boundModel.removeObserver(ViewImpl.this);
-                    }
-                }
-            });
         });
+    }
+
+    /**
+     * Builds and returns the JFrame hosting the TypeRacer UI.
+     * The frame is not shown by this method; callers should call
+     * `setVisible(true)` when appropriate.
+     *
+     * @return the configured {@link JFrame}
+     */
+    public JFrame createGameFrame() {
+        frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
+
+        label1.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+        timeLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+        textField.setFont(new Font(GameConfig.DEFAULT_FONT, Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
+
+        label1.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+        timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+        textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+
+        frame.add(label1, BorderLayout.NORTH);
+        frame.add(timeLabel, BorderLayout.CENTER);
+        frame.add(textField, BorderLayout.SOUTH);
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                if (boundModel != null) {
+                    boundModel.removeObserver(ViewImpl.this);
+                }
+            }
+        });
+
+        return frame;
     }
 
     @Override

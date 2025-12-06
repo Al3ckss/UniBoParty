@@ -1,7 +1,5 @@
 package it.unibo.uniboparty.controller.player.api;
 
-import it.unibo.uniboparty.utilities.MinigameId;
-
 /**
  * Interface of the Gameplay main controller.
  *
@@ -18,10 +16,4 @@ public interface GameplayController {
      */
     void onDiceRolled(int steps);
 
-    /**
-     * Handles minigame launching.
-     *
-     * @param id the id of the minigame the player landed on
-     */
-    void startMinigame(MinigameId id);
 }

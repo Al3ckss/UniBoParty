@@ -21,28 +21,42 @@ import it.unibo.uniboparty.view.minigames.dinosaurgame.api.View;
 public final class ViewImpl implements View, GameObserver {
 
     private final GamePanelImpl panel1;
+    private final JFrame frame;
+    private final it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ModelImpl model;
     private boolean showGameOver;
 
     /**
-     * Creates the view and initializes the main window.
+     * Creates the view and initializes internal components. The returned frame
+     * is not shown automatically; callers should call `createGameFrame()` and
+     * then `setVisible(true)`.
      *
      * @param model the game model used by the panel
      */
     public ViewImpl(final ModelImpl model) {
-        final JFrame frame = new JFrame("Dino Game");
+        this.frame = new JFrame("Dino Game");
         this.panel1 = new GamePanelImpl(model);
-
-        frame.setMinimumSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
-        frame.add(this.panel1);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.model = model;
 
         panel1.setFocusable(true);
         panel1.requestFocusInWindow();
 
-        // Register as observer
-        model.addObserver(this);
+        // Register as observer now so model updates can be observed before
+        // the frame is shown. The window listener that removes the observer
+        // will be added in createGameFrame().
+        this.model.addObserver(this);
+    }
+
+    /**
+     * Build and return the JFrame that hosts the dinosaur game. The frame is
+     * configured but not shown; the caller should call `setVisible(true)`.
+     *
+     * @return configured {@link JFrame}
+     */
+    public JFrame createGameFrame() {
+        frame.setMinimumSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
+        frame.add(this.panel1);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Deregister observer when window is closing to avoid leaks
         frame.addWindowListener(new WindowAdapter() {
@@ -51,6 +65,8 @@ public final class ViewImpl implements View, GameObserver {
                 model.removeObserver(ViewImpl.this);
             }
         });
+
+        return frame;
     }
 
     /**
