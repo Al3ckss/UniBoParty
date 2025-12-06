@@ -69,8 +69,8 @@ public final class StartGameGui extends JFrame {
         setMinimumSize(new Dimension(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT));
 
         final Image background = new ImageIcon(
-        "/Users/caterinatorelli/Desktop/uniboparty/src/main/resources/background.png").getImage();
-        final Image logo = new ImageIcon("/Users/caterinatorelli/Desktop/uniboparty/src/main/resources/logo.png").getImage();
+        "src/main/resources/background.png").getImage();
+        final Image logo = new ImageIcon("src/main/resources/logo.png").getImage();
 
         final JPanel mainPanel = new JPanel() {
             @Override
