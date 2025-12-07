@@ -100,30 +100,29 @@ public final class ViewImpl implements View, GameObserver {
         frameCopy.setBounds(frame.getBounds());
         frameCopy.setDefaultCloseOperation(frame.getDefaultCloseOperation());
         frameCopy.getContentPane().setLayout(new BorderLayout());
-        
-        // Create copies of components
+
         final JLabel label1Copy = new JLabel(label1.getText());
         label1Copy.setFont(label1.getFont());
         label1Copy.setPreferredSize(label1.getPreferredSize());
-        
+
         final JLabel timeLabelCopy = new JLabel(timeLabel.getText());
         timeLabelCopy.setFont(timeLabel.getFont());
         timeLabelCopy.setPreferredSize(timeLabel.getPreferredSize());
-        
+
         final JTextField textFieldCopy = new JTextField(textField.getText());
         textFieldCopy.setFont(textField.getFont());
         textFieldCopy.setPreferredSize(textField.getPreferredSize());
-        
+
         for (final var listener : textField.getActionListeners()) {
             textFieldCopy.addActionListener(listener);
         }
-        
+
         frameCopy.add(label1Copy, BorderLayout.NORTH);
         frameCopy.add(timeLabelCopy, BorderLayout.CENTER);
         frameCopy.add(textFieldCopy, BorderLayout.SOUTH);
-        
+
         frameCopy.pack();
-        
+
         frameCopy.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(final WindowEvent e) {
@@ -132,7 +131,7 @@ public final class ViewImpl implements View, GameObserver {
                 }
             }
         });
-        
+
         return frameCopy;
     }
 
