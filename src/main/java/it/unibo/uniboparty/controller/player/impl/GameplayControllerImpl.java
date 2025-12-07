@@ -7,6 +7,7 @@ import it.unibo.uniboparty.controller.player.api.GameplayController;
 import it.unibo.uniboparty.controller.board.api.BoardController;
 import it.unibo.uniboparty.model.player.api.Player;
 import it.unibo.uniboparty.model.player.api.PlayerManager;
+import it.unibo.uniboparty.model.player.api.TurnResult;
 import it.unibo.uniboparty.model.player.impl.PlayerManagerImpl;
 import it.unibo.uniboparty.utilities.MinigameId;
 import it.unibo.uniboparty.view.board.api.BoardView;
@@ -43,22 +44,25 @@ public final class GameplayControllerImpl implements GameplayController {
 
     @Override
     public void onDiceRolled(final int steps) {
-        this.playerManager.playTurn(steps);
 
-        //TODO notify UI that the match has finished
+        final TurnResult result = this.playerManager.playTurn(steps);
 
+        if (result.gameEnded()) {
+            // TODO: Show final leaderboard with player scores
+        }
     }
 
     @Override
     public void onMinigameFinished(final int result, final MinigameId id) {
         if (result == 2) {
-            return; //minigame is not finished
+            return; // minigame is not finished
         }
 
-        if (result == 1) {
-            this.playerManager.playTurn(1);
-        } else if (result == 0) {
-            this.playerManager.playTurn(-1);
+        final int movement = (result == 1) ? 1 : -1;
+        final TurnResult turnResult = this.playerManager.playTurn(movement);
+
+        if (turnResult.gameEnded()) {
+            // TODO: Show final leaderboard
         }
     }
 }
