@@ -24,6 +24,7 @@ public final class ViewImpl implements View, GameObserver {
     private final JFrame frame;
     private boolean showGameOver;
     private final ModelImpl model;
+
     /**
      * Creates the view and initializes internal components. The returned frame
      * is not shown automatically; callers should call `createGameFrame()` and

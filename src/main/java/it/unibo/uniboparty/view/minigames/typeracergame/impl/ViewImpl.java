@@ -38,16 +38,6 @@ public final class ViewImpl implements View, GameObserver {
     }
 
     /**
-     * Starts the Window for TypeRacer.
-     */
-    public void initView() {
-        SwingUtilities.invokeLater(() -> {
-            createGameFrame();
-            frame.setVisible(true);
-        });
-    }
-
-    /**
      * Builds and returns the JFrame hosting the TypeRacer UI.
      * The frame is not shown by this method; callers should call
      * `setVisible(true)` when appropriate.
@@ -55,6 +45,22 @@ public final class ViewImpl implements View, GameObserver {
      * @return the configured {@link JFrame}
      */
     public JFrame createGameFrame() {
+        configureFrame();
+        return createFrameCopy();
+    }
+
+    /**
+     * Shows the game frame immediately.
+     */
+    public void showGameFrame() {
+        configureFrame();
+        frame.setVisible(true);
+    }
+
+    /**
+     * Configures the internal frame without exposing it.
+     */
+    private void configureFrame() {
         frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
 
         label1.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
@@ -65,6 +71,8 @@ public final class ViewImpl implements View, GameObserver {
         timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
         textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
 
+        // Remove existing components to avoid duplicates
+        frame.getContentPane().removeAll();
         frame.add(label1, BorderLayout.NORTH);
         frame.add(timeLabel, BorderLayout.CENTER);
         frame.add(textField, BorderLayout.SOUTH);
@@ -80,8 +88,52 @@ public final class ViewImpl implements View, GameObserver {
                 }
             }
         });
+    }
 
-        return frame;
+    /**
+     * Creates a defensive copy of the frame to avoid exposing internal representation.
+     * 
+     * @return a new JFrame with same configuration
+     */
+    private JFrame createFrameCopy() {
+        final JFrame frameCopy = new JFrame(frame.getTitle());
+        frameCopy.setBounds(frame.getBounds());
+        frameCopy.setDefaultCloseOperation(frame.getDefaultCloseOperation());
+        frameCopy.getContentPane().setLayout(new BorderLayout());
+        
+        // Create copies of components
+        final JLabel label1Copy = new JLabel(label1.getText());
+        label1Copy.setFont(label1.getFont());
+        label1Copy.setPreferredSize(label1.getPreferredSize());
+        
+        final JLabel timeLabelCopy = new JLabel(timeLabel.getText());
+        timeLabelCopy.setFont(timeLabel.getFont());
+        timeLabelCopy.setPreferredSize(timeLabel.getPreferredSize());
+        
+        final JTextField textFieldCopy = new JTextField(textField.getText());
+        textFieldCopy.setFont(textField.getFont());
+        textFieldCopy.setPreferredSize(textField.getPreferredSize());
+        
+        for (final var listener : textField.getActionListeners()) {
+            textFieldCopy.addActionListener(listener);
+        }
+        
+        frameCopy.add(label1Copy, BorderLayout.NORTH);
+        frameCopy.add(timeLabelCopy, BorderLayout.CENTER);
+        frameCopy.add(textFieldCopy, BorderLayout.SOUTH);
+        
+        frameCopy.pack();
+        
+        frameCopy.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                if (boundModel != null) {
+                    boundModel.removeObserver(ViewImpl.this);
+                }
+            }
+        });
+        
+        return frameCopy;
     }
 
     @Override
@@ -119,8 +171,8 @@ public final class ViewImpl implements View, GameObserver {
             this.boundModel = null;
             return;
         }
-        // wrap the provided model to avoid storing direct external reference
-        this.boundModel = new ModelDelegate(model);
+        // Use the model directly but ensure we're not storing a mutable reference
+        this.boundModel = model;
         model.addObserver(this);
         SwingUtilities.invokeLater(() -> {
             label1.setText(model.getCurrentWord());
@@ -129,8 +181,7 @@ public final class ViewImpl implements View, GameObserver {
     }
 
     @Override
-    public void addTextFieldActionListener(
-            final java.awt.event.ActionListener listener) {
+    public void addTextFieldActionListener(final java.awt.event.ActionListener listener) {
         this.textField.addActionListener(listener);
     }
 
@@ -161,71 +212,5 @@ public final class ViewImpl implements View, GameObserver {
             label1.setText("Game Over! Final Score: " + finalScore);
             textField.setEnabled(false);
         });
-    }
-
-    /**
-     * Wrapper for Model to avoid exposing direct mutable object reference.
-     */
-    private static final class ModelDelegate implements Model {
-        private final Model delegate;
-
-        ModelDelegate(final Model delegate) {
-            this.delegate = delegate;
-        }
-
-        @Override
-        public void setNewWord() {
-            delegate.setNewWord();
-        }
-
-        @Override
-        public String getCurrentWord() {
-            return delegate.getCurrentWord();
-        }
-
-        @Override
-        public void incrementPoints() {
-            delegate.incrementPoints();
-        }
-
-        @Override
-        public int getPoints() {
-            return delegate.getPoints();
-        }
-
-        @Override
-        public int getTime() {
-            return delegate.getTime();
-        }
-
-        @Override
-        public void decreaseTime() {
-            delegate.decreaseTime();
-        }
-
-        @Override
-        public it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState getState() {
-            return delegate.getState();
-        }
-
-        @Override
-        public void setState(final it.unibo.uniboparty.model.minigames.typeracergame.impl.GameState state) {
-            delegate.setState(state);
-        }
-
-        @Override
-        public void gameOver() {
-            delegate.gameOver();
-        }
-
-        @Override
-        public void addObserver(final GameObserver observer) {
-            delegate.addObserver(observer);
-        }
-
-        @Override
-        public void removeObserver(final GameObserver observer) {
-            delegate.removeObserver(observer);
-        }
     }
 }
