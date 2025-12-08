@@ -55,7 +55,7 @@ public final class ModelImpl implements Model {
 
     @Override
     public void decreaseTime() {
-        if (time > 0) {
+        if (time > 0 && state != GameState.WIN) {
             time--;
             if (time == 0) {
                 state = GameState.GAME_OVER;
