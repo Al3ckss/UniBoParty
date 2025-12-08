@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import it.unibo.uniboparty.model.minigames.tetris.api.GridModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 
@@ -39,9 +41,8 @@ public final class GridModelImpl implements GridModel {
         this.rows = rows2; 
         this.cols = cols2;
         this.grid = new boolean[rows2][cols2];
-        for (int r = 0; r < rows2; r++) {
-            System.arraycopy(newGrid[r], 0, this.grid[r], 0, cols2);
-        }
+       IntStream.range(0, rows2)
+                 .forEach(r -> System.arraycopy(newGrid[r], 0, this.grid[r], 0, cols2));
     }
 
     /**
@@ -65,9 +66,8 @@ public final class GridModelImpl implements GridModel {
      */
     @Override
     public void fireChange() {
-         for (final ModelListener l : listeners) {
-            l.onModelChanged();
-         }
+         listeners.stream()
+                  .forEach(ModelListener::onModelChanged);
     }
 
     /**
@@ -116,43 +116,19 @@ public final class GridModelImpl implements GridModel {
     @Override
     public int clearFullLines() {
 
-        final List<Integer> fullRows = new ArrayList<>();
-        final List<Integer> fullCols = new ArrayList<>();
+        final List<Integer> fullRows = IntStream.range(0, rows)
+            .filter(r -> IntStream.range(0, cols).allMatch(c -> grid[r][c]))
+            .boxed()
+            .toList();
 
-        for (int r = 0; r < rows; r++) {
-            boolean full = true;
-            for (int c = 0; c < cols; c++) {
-                if (!grid[r][c]) { 
-                    full = false; 
-                    break; 
-                }
-            }
-            if (full) {
-                 fullRows.add(r);
-            }
-        }
+        final List<Integer> fullCols = IntStream.range(0, cols)
+            .filter(c -> IntStream.range(0, rows).allMatch(r -> grid[r][c]))
+            .boxed()
+            .toList();
 
-        for (int c = 0; c < cols; c++) {
-            boolean full = true;
-            for (int r = 0; r < rows; r++) {
-                if (!grid[r][c]) {
-                      full = false; 
-                      break;
-                }
-            }
-            if (full) {
-                fullCols.add(c);
-            }
-        }
+        fullRows.forEach(r -> Arrays.fill(grid[r], false));
 
-        for (final int r : fullRows) {
-            Arrays.fill(grid[r], false);
-        }
-        for (final int c : fullCols) {
-            for (int r = 0; r < rows; r++) {
-                grid[r][c] = false;
-            }
-        }
+        fullCols.forEach(this::clearColumn);
 
         return fullRows.size() + fullCols.size();
     }
@@ -162,9 +138,8 @@ public final class GridModelImpl implements GridModel {
      */
     @Override
     public void reset() {
-        for (int r = 0; r < rows; r++) {
-            Arrays.fill(grid[r], false);
-        }
+        IntStream.range(0, rows)
+                 .forEach(r -> Arrays.fill(grid[r], false));
         fireChange();
     }
 
@@ -189,11 +164,21 @@ public final class GridModelImpl implements GridModel {
      */
     @Override
     public GridModel copy() {
-        final boolean[][] newGrid = new boolean[rows][cols];
+        final boolean[][] newGrid = Arrays.stream(this.grid)
+            .map(boolean[]::clone)
+            .toArray(boolean[][]::new);
 
-        for (int r = 0; r < rows; r++) {
-            System.arraycopy(this.grid[r], 0, newGrid[r], 0, cols);
-        }
         return new GridModelImpl(rows, cols, newGrid);
+    }
+
+    /**
+     * Clears a specific column in the grid.
+     * 
+     * @param col the column index to clear
+     */
+    private void clearColumn(final int col) {
+        for (int r = 0; r < rows; r++) {
+            grid[r][col] = false;
+        }
     }
 }

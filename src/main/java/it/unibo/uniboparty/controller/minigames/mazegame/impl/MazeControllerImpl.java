@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.uniboparty.controller.minigames.mazegame.api.MazeController;
 import it.unibo.uniboparty.model.minigames.mazegame.api.MazeModel;
 import it.unibo.uniboparty.model.minigames.mazegame.impl.MazeModelImpl;
@@ -35,7 +36,6 @@ public class MazeControllerImpl implements MazeController {
     @Override
     public void startNewGame() {
         model.reset();
-        view.setupFrame();
         view.render(model);
     }
 
@@ -52,5 +52,25 @@ public class MazeControllerImpl implements MazeController {
                 }
             }
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "La view è immutabile / l’esposizione è intenzionale"
+    )
+    @Override
+    public JFrame getView() {
+        return this.view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getState() {
+        return this.view.getState();
     }
 }

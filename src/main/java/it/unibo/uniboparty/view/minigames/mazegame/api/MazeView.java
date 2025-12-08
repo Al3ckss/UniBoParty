@@ -14,7 +14,9 @@ public interface MazeView extends GameObserver {
     void render(MazeModel model);
 
     /**
-     * Setup the JFrame properties.
+     * Gets the current state of the game.
+     * 
+     * @return 2 if there is no result, 1 if the player has won, 0 if the game is over
      */
-    void setupFrame();
+    int getState();
 }

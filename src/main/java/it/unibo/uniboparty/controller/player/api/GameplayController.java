@@ -3,25 +3,30 @@ package it.unibo.uniboparty.controller.player.api;
 import it.unibo.uniboparty.utilities.MinigameId;
 
 /**
- * Interface of the Gameplay main controller.
- *
- * <p>
- * Moves players, starts a minigame depending on the position
- * </p>
+ * API for controlling the gameplay flow.
  */
 public interface GameplayController {
 
     /**
-     * Handles turn management.
+     * Called when the dice have been rolled by the current player.
      *
-     * @param steps number of steps on the board
+     * @param steps the number of steps obtained from the dice
      */
     void onDiceRolled(int steps);
 
     /**
-     * Handles minigame launching.
+     * Called when a minigame ends.
      *
-     * @param id the id of the minigame the player landed on
+     * <p>Return codes:
+     * <ul>
+     *   <li>0 = minigame lost (-1 cell)</li>
+     *   <li>1 = minigame won (+1 cell)</li>
+     *   <li>2 = minigame still running</li>
+     * </ul>
+     * </p>
+     *
+     * @param result the result code of the minigame
+     * @param id     the identifier of the minigame
      */
-    void startMinigame(MinigameId id);
+    void onMinigameFinished(int result, MinigameId id);
 }

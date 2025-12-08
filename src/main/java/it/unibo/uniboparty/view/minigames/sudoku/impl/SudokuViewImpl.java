@@ -4,7 +4,6 @@ import it.unibo.uniboparty.view.minigames.sudoku.api.ISudokuView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -32,8 +31,8 @@ import java.util.logging.Logger;
  * the number selection buttons, and the end-game dialogs (Win/Loss).
  * It handles the layout and loading of graphical resources.
  */
-public class SudokuViewImpl implements ISudokuView {
-
+public class SudokuViewImpl extends JFrame implements ISudokuView {
+    private static final long serialVersionUID = 1L;
     private static final int FRAME_WIDTH = 600;
     private static final int FRAME_HEIGHT = 650;
     private static final int BOLD_NUMS = 30;
@@ -56,7 +55,7 @@ public class SudokuViewImpl implements ISudokuView {
 
     private ImageIcon winIcon;
     private ImageIcon loseIcon;
-    private Image background;
+    private transient Image background;
 
     /**
      * Constructs the Sudoku View.
@@ -69,7 +68,7 @@ public class SudokuViewImpl implements ISudokuView {
     public SudokuViewImpl() {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setResizable(true);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
@@ -148,8 +147,8 @@ public class SudokuViewImpl implements ISudokuView {
         textLabel.setFont(new Font(FONT_NAME, Font.BOLD, TILES_FONT));
         textLabel.setForeground(Color.BLACK);
 
-        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconLabel.setAlignmentX(CENTER_ALIGNMENT);
+        textLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         panel.add(Box.createVerticalGlue());
         panel.add(iconLabel);
@@ -183,8 +182,8 @@ public class SudokuViewImpl implements ISudokuView {
         textLabel.setFont(new Font(FONT_NAME, Font.BOLD, TILES_FONT));
         textLabel.setForeground(Color.BLACK);
 
-        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconLabel.setAlignmentX(CENTER_ALIGNMENT);
+        textLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         panel.add(Box.createVerticalGlue());
         panel.add(iconLabel);

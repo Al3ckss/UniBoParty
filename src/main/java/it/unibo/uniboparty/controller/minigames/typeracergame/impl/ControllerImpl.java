@@ -41,6 +41,7 @@ public final class ControllerImpl implements Controller {
         this.view = new ViewDelegate(view);
 
         model.setState(GameState.RUNNING);
+        model.setNewWord(); // Generate first word before binding view
         // bind the view to the model so the view will observe updates
         view.bindModel(model);
 
@@ -56,9 +57,14 @@ public final class ControllerImpl implements Controller {
                 if (model.getTime() <= 0) {
                     model.gameOver();
                     timer.stop();
-                    // Show final score when game ends
                     view.showFinalScore(model.getPoints());
+                } else if (model.getState() == GameState.WIN) {
+                    timer.stop();
+                    view.showVictoryMessage(model.getPoints());
                 }
+            } else if (model.getState() == GameState.WIN) {
+                timer.stop();
+                view.showVictoryMessage(model.getPoints());
             }
         });
     }
@@ -78,6 +84,20 @@ public final class ControllerImpl implements Controller {
                 view.clearTextField();
             }
         });
+    }
+
+    /**
+     * Returns the current game state.
+     * 
+     * @return 0 if game lost, 1 if game won, 2 if still running
+     */
+    @Override
+    public int getState() {
+        return switch (model.getState()) {
+            case WIN -> 1;
+            case GAME_OVER -> 0;
+            default -> 2;
+        };
     }
 
     /**
@@ -200,6 +220,11 @@ public final class ControllerImpl implements Controller {
         @Override
         public void showFinalScore(final int finalScore) {
             delegate.showFinalScore(finalScore);
+        }
+
+        @Override
+        public void showVictoryMessage(final int finalScore) {
+            delegate.showVictoryMessage(finalScore);
         }
     }
 }

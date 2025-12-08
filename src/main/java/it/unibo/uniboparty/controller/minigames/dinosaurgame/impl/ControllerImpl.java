@@ -53,8 +53,9 @@ public final class ControllerImpl implements Controller {
             if (model.getGameState() == GameState.RUNNING) {
                 model.update();
 
-                // Stop timer if game over
-                if (model.getGameState() == GameState.GAME_OVER) {
+                // Stop timer if game over or won
+                if (model.getGameState() == GameState.GAME_OVER
+                        || model.getGameState() == GameState.WIN) {
                     timer.stop();
                 }
             }
@@ -103,5 +104,19 @@ public final class ControllerImpl implements Controller {
     @Override
     public void stop() {
         timer.stop();
+    }
+
+    /**
+     * Returns the current game state.
+     * 
+     * @return 0 if game lost, 1 if game won, 2 if still running
+     */
+    @Override
+    public int getState() {
+        return switch (model.getGameState()) {
+            case WIN -> 1;
+            case GAME_OVER -> 0;
+            default -> 2;
+        };
     }
 }

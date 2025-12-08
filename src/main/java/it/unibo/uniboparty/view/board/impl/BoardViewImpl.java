@@ -20,9 +20,13 @@ import it.unibo.uniboparty.model.board.api.BoardModel;
 import it.unibo.uniboparty.model.board.impl.BoardModelImpl;
 import it.unibo.uniboparty.utilities.MinigameId;
 import it.unibo.uniboparty.view.board.api.BoardView;
+import it.unibo.uniboparty.view.minigames.dinosaurgame.impl.DinoGameIntroFrame;
+import it.unibo.uniboparty.view.minigames.hangman.impl.HangManIntroFrame;
+import it.unibo.uniboparty.view.minigames.mazegame.impl.MazeIntroFrame;
+import it.unibo.uniboparty.view.minigames.sudoku.impl.SudokuIntroFrame;
+import it.unibo.uniboparty.view.minigames.tetris.impl.TetrisIntroFrame;
+import it.unibo.uniboparty.view.minigames.typeracergame.impl.TyperacerGameIntroFrame;
 import it.unibo.uniboparty.view.minigames.whacamole.impl.WhacAMoleIntroFrame;
-// import it.unibo.uniboparty.view.minigames.memory.impl.MemoryIntroFrame;
-// import it.unibo.uniboparty.view.minigames.xxx.impl.XxxIntroFrame;
 
 /**
  * Swing implementation of the {@link BoardView} interface.
@@ -258,7 +262,24 @@ public final class BoardViewImpl extends JPanel implements BoardView {
         case GAME_1:
             new WhacAMoleIntroFrame();
             break;
-
+        case GAME_2:
+            new SudokuIntroFrame();
+            break;
+        case GAME_3:
+            new HangManIntroFrame();
+            break;
+        case GAME_4:
+            new MazeIntroFrame();
+            break;
+        case GAME_5:
+            new TetrisIntroFrame();
+            break;
+        case GAME_6:
+            new TyperacerGameIntroFrame();
+            break;
+        case GAME_7:
+            new DinoGameIntroFrame();
+            break;
         default:
             // Other games will be added by teammates:
             // case GAME_2: new MemoryIntroFrame(); break;

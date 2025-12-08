@@ -3,8 +3,8 @@ package it.unibo.uniboparty.view.minigames.typeracergame.impl;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -13,67 +13,54 @@ import it.unibo.uniboparty.model.minigames.typeracergame.impl.GameConfig;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.Model;
 import it.unibo.uniboparty.model.minigames.typeracergame.api.GameObserver;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 /**
- * Implementation of the TypeRacer minigame view.
+ * Implementation of the TypeRacer minigame view as a JPanel.
  */
-public final class ViewImpl implements View, GameObserver {
+public final class ViewImpl extends JPanel implements View, GameObserver {
 
+    private static final long serialVersionUID = 1L;
     private static final String TIME_PREFIX = "Remaining time: ";
 
-    private final JFrame frame = new JFrame("TypeRacer");
-    private final JLabel label1 = new JLabel();
+    private final JLabel wordLabel = new JLabel();
     private final JLabel timeLabel = new JLabel();
     private final JTextField textField = new JTextField();
 
-    private Model boundModel;
+    private transient Model boundModel;
 
     /**
-     * Empty constructor to allow instantiation without parameters.
+     * Creates the TypeRacer view panel with all UI components configured.
      */
     public ViewImpl() {
-        // empty
+        super(new BorderLayout());
+        configureComponents();
     }
 
     /**
-     * Starts the Window for TypeRacer.
+     * Configures the panel components and layout.
      */
-    public void initView() {
-        SwingUtilities.invokeLater(() -> {
-            frame.setBounds(100, 100, GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT);
+    private void configureComponents() {
+        wordLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+        timeLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
+        textField.setFont(new Font(GameConfig.DEFAULT_FONT, Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
 
-            label1.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            timeLabel.setFont(new Font(GameConfig.DEFAULT_FONT, Font.BOLD, GameConfig.LABEL_FONT_SIZE));
-            textField.setFont(new Font(GameConfig.DEFAULT_FONT, Font.PLAIN, GameConfig.INPUT_FONT_SIZE));
+        wordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-            label1.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
-            timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
-            textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+        wordLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+        timeLabel.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
+        textField.setPreferredSize(new Dimension(GameConfig.FRAME_WIDTH, GameConfig.FRAME_HEIGHT / 4));
 
-            frame.add(label1, BorderLayout.NORTH);
-            frame.add(timeLabel, BorderLayout.CENTER);
-            frame.add(textField, BorderLayout.SOUTH);
+        wordLabel.setText("Loading...");
+        timeLabel.setText(TIME_PREFIX + "0");
 
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(final WindowEvent e) {
-                    if (boundModel != null) {
-                        boundModel.removeObserver(ViewImpl.this);
-                    }
-                }
-            });
-        });
+        add(wordLabel, BorderLayout.NORTH);
+        add(timeLabel, BorderLayout.CENTER);
+        add(textField, BorderLayout.SOUTH);
     }
 
     @Override
     public void setLabel1(final String text) {
-        label1.setText(text);
+        wordLabel.setText(text);
     }
 
     @Override
@@ -92,8 +79,8 @@ public final class ViewImpl implements View, GameObserver {
 
     @Override
     public JLabel getLabel1() {
-        final JLabel copy = new JLabel(label1.getText());
-        copy.setFont(label1.getFont());
+        final JLabel copy = new JLabel(wordLabel.getText());
+        copy.setFont(wordLabel.getFont());
         return copy;
     }
 
@@ -102,22 +89,32 @@ public final class ViewImpl implements View, GameObserver {
         if (this.boundModel != null) {
             this.boundModel.removeObserver(this);
         }
-        if (model == null) {
-            this.boundModel = null;
-            return;
+
+        // Wrap model to avoid exposing internal mutable reference
+        this.boundModel = model == null ? null : new ModelDelegate(model);
+
+        if (model != null) {
+            model.addObserver(this);
+            SwingUtilities.invokeLater(() -> {
+                wordLabel.setText(model.getCurrentWord());
+                timeLabel.setText(TIME_PREFIX + model.getTime());
+            });
         }
-        // wrap the provided model to avoid storing direct external reference
-        this.boundModel = new ModelDelegate(model);
-        model.addObserver(this);
-        SwingUtilities.invokeLater(() -> {
-            label1.setText(model.getCurrentWord());
-            timeLabel.setText(TIME_PREFIX + model.getTime());
-        });
+    }
+
+    /**
+     * Unregisters this view from the bound model.
+     * Should be called when the view is no longer needed (e.g., window closing).
+     */
+    public void unbindModel() {
+        if (boundModel != null) {
+            boundModel.removeObserver(this);
+            boundModel = null;
+        }
     }
 
     @Override
-    public void addTextFieldActionListener(
-            final java.awt.event.ActionListener listener) {
+    public void addTextFieldActionListener(final java.awt.event.ActionListener listener) {
         this.textField.addActionListener(listener);
     }
 
@@ -137,7 +134,7 @@ public final class ViewImpl implements View, GameObserver {
             if (boundModel == null) {
                 return;
             }
-            label1.setText(boundModel.getCurrentWord());
+            wordLabel.setText(boundModel.getCurrentWord());
             timeLabel.setText(TIME_PREFIX + boundModel.getTime());
         });
     }
@@ -145,7 +142,15 @@ public final class ViewImpl implements View, GameObserver {
     @Override
     public void showFinalScore(final int finalScore) {
         SwingUtilities.invokeLater(() -> {
-            label1.setText("Game Over! Final Score: " + finalScore);
+            wordLabel.setText("Game Over! Final Score: " + finalScore);
+            textField.setEnabled(false);
+        });
+    }
+
+    @Override
+    public void showVictoryMessage(final int finalScore) {
+        SwingUtilities.invokeLater(() -> {
+            wordLabel.setText("You Win! Score: " + finalScore + " words!");
             textField.setEnabled(false);
         });
     }

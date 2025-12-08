@@ -2,88 +2,84 @@ package it.unibo.uniboparty.view.minigames.dinosaurgame.impl;
 
 import java.awt.Dimension;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.JFrame;
+import java.util.Objects;
+
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.GameConfig;
-import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ModelImpl;
 import it.unibo.uniboparty.model.minigames.dinosaurgame.api.GameObserver;
+import it.unibo.uniboparty.model.minigames.dinosaurgame.api.Model;
 import it.unibo.uniboparty.view.minigames.dinosaurgame.api.View;
 
 /**
- * Implementation of the game view for the Dinosaur Game.
+ * Implementation of the game view for the Dinosaur Game as a JPanel.
  * 
  * <p>
- * Manages the main game window and delegates drawing to GamePanelImpl.
+ * Manages the game panel and delegates drawing to GamePanelImpl.
  */
-public final class ViewImpl implements View, GameObserver {
+public final class ViewImpl extends JPanel implements View, GameObserver {
 
-    private final GamePanelImpl panel1;
-    private boolean showGameOver;
+    private static final long serialVersionUID = 1L;
+
+    private final GamePanelImpl gamePanel;
+    private final transient Model model;
 
     /**
-     * Creates the view and initializes the main window.
+     * Creates the view panel and initializes internal components.
      *
-     * @param model the game model used by the panel
+     * @param model the game model used by the panel (non-null)
+     * @throws NullPointerException if model is null
      */
-    public ViewImpl(final ModelImpl model) {
-        final JFrame frame = new JFrame("Dino Game");
-        this.panel1 = new GamePanelImpl(model);
+    public ViewImpl(final Model model) {
+        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.gamePanel = new GamePanelImpl(this.model);
 
-        frame.setMinimumSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
-        frame.add(this.panel1);
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
 
-        panel1.setFocusable(true);
-        panel1.requestFocusInWindow();
+        // Register as observer now so model updates can be observed
+        this.model.addObserver(this);
 
-        // Register as observer
-        model.addObserver(this);
+        setPreferredSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
+        add(this.gamePanel);
+    }
 
-        // Deregister observer when window is closing to avoid leaks
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(final WindowEvent e) {
-                model.removeObserver(ViewImpl.this);
+    /**
+     * Called by the model when it updates.
+     * Ensures repaint happens on Swing event thread.
+     */
+    @Override
+    public void modelUpdated() {
+        SwingUtilities.invokeLater(() -> {
+            if (gamePanel != null) {
+                gamePanel.repaint();
             }
         });
     }
 
     /**
-     * Repaints the game panel.
+     * Unregisters this view from the model.
+     * Should be called when the view is no longer needed (e.g., window closing).
      */
-    @Override
-    public void repaint() {
-        panel1.repaint();
+    public void unbindModel() {
+        model.removeObserver(this);
     }
 
     /**
-     * Called by the model when it updates.
-     * Ensures repaint happens on the Swing event dispatch thread.
-     */
-    @Override
-    public void modelUpdated() {
-        SwingUtilities.invokeLater(this::repaint);
-    }
-
-    /**
-     * Adds a key listener to the game panel in a safe way.
+     * Adds a key listener to the game panel.
      *
-     * @param listener the key listener to attach
+     * @param listener the key listener to attach (must not be null)
      */
     public void addPanelKeyListener(final KeyListener listener) {
-        panel1.addKeyListener(listener);
+        gamePanel.addKeyListener(Objects.requireNonNull(listener, "Listener cannot be null"));
     }
 
     /**
      * Requests focus for the game panel.
      */
     public void requestPanelFocus() {
-        panel1.requestFocusInWindow();
+        gamePanel.requestFocusInWindow();
     }
 
     /**
@@ -92,21 +88,6 @@ public final class ViewImpl implements View, GameObserver {
      * @param focusable true to allow focus, false otherwise
      */
     public void setPanelFocusable(final boolean focusable) {
-        panel1.setFocusable(focusable);
-    }
-
-    /**
-     * Displays the game-over overlay on the panel.
-     */
-    public void showGameOverOverlay() {
-        this.showGameOver = true;
-        panel1.repaint();
-    }
-
-    /**
-     * @return whether the game-over overlay should be shown.
-     */
-    public boolean isGameOver() {
-        return this.showGameOver;
+        gamePanel.setFocusable(focusable);
     }
 }

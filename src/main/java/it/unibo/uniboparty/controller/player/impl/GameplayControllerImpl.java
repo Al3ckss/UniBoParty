@@ -1,75 +1,78 @@
 package it.unibo.uniboparty.controller.player.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import it.unibo.uniboparty.controller.player.api.GameplayController;
+import it.unibo.uniboparty.controller.board.api.BoardController;
+import it.unibo.uniboparty.model.player.api.Player;
 import it.unibo.uniboparty.model.player.api.PlayerManager;
 import it.unibo.uniboparty.model.player.api.TurnResult;
+import it.unibo.uniboparty.model.player.impl.PlayerManagerImpl;
 import it.unibo.uniboparty.utilities.MinigameId;
+import it.unibo.uniboparty.view.board.api.BoardView;
 
 /**
- * Controller implementation for handling minigame launch mechanics.
- *
- * <p>
- * Delegates the logic of a player's turn to {@link PlayerManager} and
- * starts the appropriate minigame if the landed cell requires it.
- * </p>
+ * Implementation of the GameplayController.
  */
 public final class GameplayControllerImpl implements GameplayController {
 
     private final PlayerManager playerManager;
+    private TurnResult lastTurnResult;
 
     /**
-     * Constructs a GameplayControllerImpl.
+     * Creates a new GameplayControllerImpl.
      *
-     * @param playerManager the player manager
+     * @param playerNames the names of players coming from the start menu
+     * @param boardView the board view to update player positions
+     * @param boardController the board controller for board information
      */
-    public GameplayControllerImpl(final PlayerManager playerManager) {
-        this.playerManager = Objects.requireNonNull(playerManager, "PlayerManager must not be null");
+    public GameplayControllerImpl(
+            final List<String> playerNames,
+            final BoardView boardView,
+            final BoardController boardController
+    ) {
+        Objects.requireNonNull(playerNames);
+        Objects.requireNonNull(boardView);
+        Objects.requireNonNull(boardController);
+
+        final List<Player> players = playerNames.stream()
+                .map(Player::new)
+                .toList();
+
+        this.playerManager = new PlayerManagerImpl(players, boardView, boardController);
     }
 
-    /**
-     * Handles a dice roll by executing the current player's turn.
-     *
-     * <p>The turn logic (movement, special effects, updating the view)
-     * is handled entirely by {@link PlayerManager#playTurn(int)}. This
-     * method only reacts to the results, such as starting minigames.</p>
-     *
-     * @param steps the number of steps rolled on the dice
-     */
     @Override
     public void onDiceRolled(final int steps) {
-        final TurnResult result = playerManager.playTurn(steps);
+        this.lastTurnResult = this.playerManager.playTurn(steps);
+    }
 
-        // Avvia il minigioco se la cella lo richiede
-        if (result.minigameToStart() != null) {
-            startMinigame(result.minigameToStart());
+    @Override
+    public void onMinigameFinished(final int result, final MinigameId id) {
+        if (result == 2) {
+            return;
         }
+
+        final int movement = (result == 1) ? 1 : -1;
+        this.lastTurnResult = this.playerManager.playTurn(movement);
     }
 
     /**
-     * Starts a minigame based on the landing cell.
+     * Gets the last turn result.
      *
-     * @param id the minigame identifier
+     * @return the last turn result, or null if no turn has been played yet
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-            value = "UC_USELESS_VOID_METHOD",
-            justification = "Method will be implemented by team members handling minigames"
-    )
-    @Override
-    public void startMinigame(final MinigameId id) {
-        switch (id) {
-            case GAME_1 -> { /* TODO insert game initializer */ }
-            case GAME_2 -> { /* TODO insert game initializer */ }
-            case GAME_3 -> { /* TODO insert game initializer */ }
-            case GAME_4 -> { /* TODO insert game initializer */ }
-            case GAME_5 -> { /* TODO insert game initializer */ }
-            case GAME_6 -> { /* TODO insert game initializer */ }
-            case GAME_7 -> { /* TODO insert game initializer */ }
-            case GAME_8 -> { /* TODO insert game initializer */ }
-        }
+    public TurnResult getLastTurnResult() {
+        return this.lastTurnResult;
+    }
 
-        // TODO add score to player after turn ends
-        // TODO start new round after turn ends
+    /**
+     * Checks if the game has ended.
+     *
+     * @return true if the game has ended, false otherwise
+     */
+    public boolean isGameEnded() {
+        return this.lastTurnResult != null && this.lastTurnResult.gameEnded();
     }
 }

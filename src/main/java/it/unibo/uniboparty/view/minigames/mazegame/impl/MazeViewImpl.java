@@ -1,6 +1,7 @@
 package it.unibo.uniboparty.view.minigames.mazegame.impl;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,13 +15,10 @@ import it.unibo.uniboparty.view.minigames.mazegame.api.MazeView;
 /**
  * Implementation of the MazeView interface.
  */
-public class MazeViewImpl extends JFrame implements MazeView {
+public final class MazeViewImpl extends JFrame implements MazeView {
     private static final long serialVersionUID = 1L;
     private static final int CELL_SIZE = 40;
-    private static final int FRAME_WIDTH_INSET = 16;
-    private static final int FRAME_HEIGHT_INSET = 39;
-    private static final int PLAYER_PADDING = 5;
-    private static final int PLAYER_DIAMETER_INSET = 10;
+    private int state;
     private final transient MazeModel model;
     private final MazePanel mazePanel;
 
@@ -36,21 +34,17 @@ public class MazeViewImpl extends JFrame implements MazeView {
     public MazeViewImpl(final MazeModel model) {
         this.model = model;
         this.mazePanel = new MazePanel();
-    }
-
-    /**
-     * Setup the JFrame properties.
-     */
-    @Override
-    public void setupFrame() {
+        this.state = 2;
         setTitle("Maze Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        mazePanel.setPreferredSize(new Dimension(
+        model.getCols() * CELL_SIZE,
+        model.getRows() * CELL_SIZE
+        ));
 
-        setSize(model.getCols() * CELL_SIZE + FRAME_WIDTH_INSET, model.getRows() * CELL_SIZE + FRAME_HEIGHT_INSET);
-
-        setLocationRelativeTo(null);
         add(mazePanel);
-
+        pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         requestFocus();
     }
@@ -64,9 +58,11 @@ public class MazeViewImpl extends JFrame implements MazeView {
 
         if (model.checkWin()) {
             JOptionPane.showMessageDialog(this, "Hai vinto!");
+            state = 1;
             this.dispose();
         } else if (model.checkLose()) {
             JOptionPane.showMessageDialog(this, "Hai perso!");
+            state = 0;
             this.dispose();
         }
     }
@@ -77,6 +73,14 @@ public class MazeViewImpl extends JFrame implements MazeView {
     @Override
     public void render(final MazeModel newModel) {
         mazePanel.repaint();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getState() {
+        return this.state;
     }
 
     /**
@@ -97,26 +101,40 @@ public class MazeViewImpl extends JFrame implements MazeView {
 
             final int rows = model.getRows();
             final int cols = model.getCols();
-            final int cellSize = CELL_SIZE;
+
+            final int cellW = getWidth() / cols;
+            final int cellH = getHeight() / rows;
+            final int cellSize = Math.min(cellW, cellH);
 
             for (int r = 0; r < rows; r++) {
                 for (int c = 0; c < cols; c++) {
                     final Cell cell = model.getCell(r, c);
+
                     switch (cell.getType()) {
                         case WALL -> g.setColor(Color.BLACK);
                         case EMPTY -> g.setColor(Color.WHITE);
                         case START -> g.setColor(Color.GREEN);
                         case EXIT -> g.setColor(Color.RED);
                     }
+
                     g.fillRect(c * cellSize, r * cellSize, cellSize, cellSize);
 
                     if (r == model.getPlayer().getRow() && c == model.getPlayer().getCol()) {
                         g.setColor(Color.BLUE);
-                        g.fillOval(c * CELL_SIZE + PLAYER_PADDING, r * CELL_SIZE + PLAYER_PADDING,
-                        CELL_SIZE - PLAYER_DIAMETER_INSET, CELL_SIZE - PLAYER_DIAMETER_INSET);
+
+                        final int padding = cellSize / 6;
+                        final int diameter = cellSize - 2 * padding;
+
+                        g.fillOval(
+                            c * cellSize + padding,
+                            r * cellSize + padding,
+                            diameter,
+                            diameter
+                        );
                     }
                 }
             }
         }
+
     }
 }
