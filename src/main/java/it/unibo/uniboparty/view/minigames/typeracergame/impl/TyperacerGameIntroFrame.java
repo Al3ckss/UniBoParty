@@ -32,8 +32,8 @@ protected String getRulesText() {
           "How to play:\n"
         + "- Type the displayed sentence as fast as you can.\n"
         + "- Every correct word gives you 1 point.\n"
-        + "- If you make a mistake, you need to try again.\n"
-        + "- You have 20 seconds: type 10 correct words to win!";
+        + "- Get 10 points in under 20 seconds to win.\n"
+        + "- If you make a mistake, the point won't be given. Fix the word and try again.\n";
 }
 
     @Override
