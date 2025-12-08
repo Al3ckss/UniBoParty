@@ -80,7 +80,7 @@ public final class GamePanelImpl extends JPanel {
         if (model.getGameState() == it.unibo.uniboparty.model.minigames.dinosaurgame.impl.GameState.GAME_OVER) {
             g.setColor(Color.RED);
             g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, GAME_OVER_FONT_SIZE));
-            g.drawString("GAME OVER", PANEL_WIDTH / 2 - GAME_OVER_TEXT_X_OFFSET, PANEL_HEIGHT / 2);
+            g.drawString("YOU LOSE!", PANEL_WIDTH / 2 - GAME_OVER_TEXT_X_OFFSET, PANEL_HEIGHT / 2);
         } else if (model.getGameState() == it.unibo.uniboparty.model.minigames.dinosaurgame.impl.GameState.WIN) {
             g.setColor(Color.GREEN);
             g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, GAME_OVER_FONT_SIZE));
