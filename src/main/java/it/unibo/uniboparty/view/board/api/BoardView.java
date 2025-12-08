@@ -8,18 +8,18 @@ import it.unibo.uniboparty.controller.board.api.BoardController;
 public interface BoardView {
 
     /**
-     * Updates the logical position of the player,
+     * Updates the logical position of the current player's token,
      * refreshes the board UI,
      * and automatically launches the intro screen of the corresponding
      * minigame if the player lands on a MINIGAME cell.
      * 
      * <p>
      * This method is typically called by the part of the application that manages
-     * player turns and movement (e.g., the PlayersManager).
+     * player turns and movement (e.g., the PlayerManager).
      * </p>
      * 
-     * @param position index of the destination cell
-     * @throws IllegalArgumentException if {@code position} is outside the board bounds.
+     * @param position index of the destination cell on the board
+     * @throws IllegalArgumentException if {@code position} is outside the board bounds
      */
     void setPlayerPosition(int position);
 
