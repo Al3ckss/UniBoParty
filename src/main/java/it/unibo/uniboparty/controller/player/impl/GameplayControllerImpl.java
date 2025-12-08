@@ -62,8 +62,7 @@ public final class GameplayControllerImpl implements GameplayController {
      * Applies the result of a minigame to the current player's movement.
      *
      * <p>
-     * This method should be called after a minigame finishes to move the player
-     * forward if they won, or backward if they lost.
+     * Call the method after a minigame finishes to move the player.
      * </p>
      *
      * @param result the result of the minigame (1 for win, 0 for loss; 2 is ignored)
