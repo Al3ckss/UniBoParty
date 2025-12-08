@@ -129,6 +129,7 @@ public final class PlayerManagerImpl implements PlayerManager {
                 current.setPosition(newPos);
                 this.boardViewDelegate.setPlayerPosition(newPos);
             }
+
             case SWAP -> {
                 if (this.numberOfPlayers > 1) {
                     int otherIndex;
@@ -142,9 +143,8 @@ public final class PlayerManagerImpl implements PlayerManager {
                     current.setPosition(tempPos);
 
                     this.boardViewDelegate.setPlayerPosition(current.getPosition());
-                    this.boardViewDelegate.setPlayerPosition(other.getPosition());
                 }
-            }
+}
             case MINIGAME -> {
                 minigameToStart = this.boardControllerDelegate.getMinigameAt(newPos);
             }
