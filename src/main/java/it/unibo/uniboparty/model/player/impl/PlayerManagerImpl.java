@@ -37,8 +37,7 @@ public final class PlayerManagerImpl implements PlayerManager {
      * <p>
      * Note: BoardView and BoardController are stored as interface references,
      * not concrete implementations. These are shared collaborators in the MVC pattern
-     * that must maintain synchronized state throughout the game lifecycle.
-     * The interfaces already provide a limited, controlled API preventing misuse.
+     * that must be mantained synchronized during the game.
      * </p>
      *
      * @param players the list of players in the match
@@ -49,7 +48,6 @@ public final class PlayerManagerImpl implements PlayerManager {
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
         justification = "Interfaces used as shared collaborators (MVC pattern). "
-            + "Limited API prevents misuse. Defensive copying not applicable for stateful collaborators."
     )
     public PlayerManagerImpl(final List<Player> players,
                              final BoardView boardView,
@@ -67,7 +65,7 @@ public final class PlayerManagerImpl implements PlayerManager {
         this.numberOfPlayers = this.players.size();
         this.scores = new int[this.numberOfPlayers];
         this.currentPlayerIndex = 0;
-        // Intentionally storing mutable references - these are shared collaborators
+        // Intentionally mutable references, shared collaborators
         this.boardView = boardView;
         this.boardController = boardController;
     }
@@ -170,7 +168,7 @@ public final class PlayerManagerImpl implements PlayerManager {
                 minigameToStart = this.boardController.getMinigameAt(newPos);
             }
             default -> {
-                // Normal cell, no additional action
+                // Normal cell, nothing happens.
             }
         }
 
@@ -184,7 +182,7 @@ public final class PlayerManagerImpl implements PlayerManager {
     @Override
     public void applyMinigameResult(final int playerIndex, final MinigameId minigameId, final int resultCode) {
         if (resultCode == 2) {
-            // Game still in progress, no action
+            // Game still in progress, nothing happens.
             return;
         }
 
