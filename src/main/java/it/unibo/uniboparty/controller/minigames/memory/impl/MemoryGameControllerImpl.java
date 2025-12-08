@@ -41,6 +41,14 @@ public final class MemoryGameControllerImpl implements MemoryGameController {
     private static final int TIME_TICK_MILLIS = 1_000;
 
     /**
+     * Result codes for the game:
+     * 2 = in progress, 1 = won, 0 = lost.
+     */
+    private static final int RESULT_LOST = 0;
+    private static final int RESULT_WON = 1;
+    private static final int RESULT_IN_PROGRESS = 2;
+
+    /**
      * The game model that contains the core logic.
      */
     private final MemoryGameModel game;
@@ -54,6 +62,11 @@ public final class MemoryGameControllerImpl implements MemoryGameController {
      * Seconds passed since the game started.
      */
     private int secondsPassed;
+
+    /**
+     * Encoded game result: 2 = in progress, 1 = won, 0 = lost.
+     */
+    private int resultCode;
 
     /**
      * Swing timer that updates the time and the info panel every second.
@@ -87,6 +100,7 @@ public final class MemoryGameControllerImpl implements MemoryGameController {
 
         // Initialize timer and info panel (time + moves)
         this.secondsPassed = 0;
+        this.resultCode = RESULT_IN_PROGRESS;
         this.view.updateInfoPanel(this.secondsPassed, initialState.getMoves());
 
         // Swing timer that fires every second to update the info panel
@@ -123,6 +137,21 @@ public final class MemoryGameControllerImpl implements MemoryGameController {
         final JPanel container = new JPanel(new BorderLayout());
         container.add((JPanel) this.view, BorderLayout.CENTER);
         return container;
+    }
+
+    /**
+     * Returns the current result code of the game.
+     *
+     * <p>
+     * 2 = game in progress,
+     * 1 = game won,
+     * 0 = game lost.
+     * </p>
+     *
+     * @return the result code
+     */
+    public int getResultCode() {
+        return this.resultCode;
     }
 
     /**
@@ -213,5 +242,12 @@ public final class MemoryGameControllerImpl implements MemoryGameController {
     private void endGame() {
         this.timer.stop();
         this.view.setAllButtonsDisabled(true);
+
+        final MemoryGameReadOnlyState finalState = this.game.getGameState();
+        if (finalState.getMatchedPairs() == finalState.getTotalPairs()) {
+            this.resultCode = RESULT_WON;
+        } else {
+            this.resultCode = RESULT_LOST;
+        }
     }
 }

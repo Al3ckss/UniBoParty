@@ -28,14 +28,28 @@ public final class WhacAMoleControllerImpl implements WhacAMoleController {
     /** Interval between two logic updates (in milliseconds). */
     private static final int TICK_MILLIS = 100;
 
+    /**
+     * Result codes for the game:
+     * 2 = in progress, 1 = won, 0 = lost.
+     */
+    private static final int RESULT_LOST = 0;
+    private static final int RESULT_WON = 1;
+    private static final int RESULT_IN_PROGRESS = 2;
+
     private final WhacAMoleModel game;
     private Timer gameLoop;
+
+    /**
+     * Encoded game result: 2 = in progress, 1 = won, 0 = lost.
+     */
+    private int resultCode;
 
     /**
      * Creates a new controller with its own game Model.
      */
     public WhacAMoleControllerImpl() {
         this.game = new WhacAMoleGame();
+        this.resultCode = RESULT_IN_PROGRESS;
     }
 
     /**
@@ -44,6 +58,7 @@ public final class WhacAMoleControllerImpl implements WhacAMoleController {
     @Override
     public void startGame() {
         this.game.startGame();
+        this.resultCode = RESULT_IN_PROGRESS;
 
         // If a previous loop exists, stop it before starting a new one
         if (this.gameLoop != null) {
@@ -93,12 +108,37 @@ public final class WhacAMoleControllerImpl implements WhacAMoleController {
     }
 
     /**
+     * Returns the current result code of the game.
+     *
+     * <p>
+     * 2 = game in progress,
+     * 1 = game won (final score &gt; 0),
+     * 0 = game lost (final score == 0).
+     * </p>
+     *
+     * @return the result code
+     */
+    public int getResultCode() {
+        return this.resultCode;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void stopIfGameOver() {
-        if (this.gameLoop != null && this.game.getGameState().isGameOver()) {
+        final WhacAMoleGameState state = this.game.getGameState();
+        if (this.gameLoop != null && state.isGameOver()) {
             this.gameLoop.stop();
+
+            // Simple rule:
+            // if the player scored at least 1 point, consider it a win,
+            // otherwise it is a loss.
+            if (state.getScore() > 0) {
+                this.resultCode = RESULT_WON;
+            } else {
+                this.resultCode = RESULT_LOST;
+            }
         }
     }
 }

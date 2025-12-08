@@ -34,6 +34,12 @@ public final class MinigameIntroPanel extends JPanel {
     /** Font size of the title label. */
     private static final float TITLE_FONT_SIZE = 26f;
 
+    /** Preferred width of the intro panel. */
+    private static final int PANEL_WIDTH = 600;
+
+    /** Preferred height of the intro panel. */
+    private static final int PANEL_HEIGHT = 400;
+
     /** Background image used for the intro screen. May be {@code null} if not found. */
     private final transient Image backgroundImage;
 
@@ -51,7 +57,7 @@ public final class MinigameIntroPanel extends JPanel {
     ) {
         super(new BorderLayout());
 
-        this.setPreferredSize(new Dimension(600, 400));
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 
         final URL url = this.getClass().getResource("/background.png");
         this.backgroundImage = url != null ? new ImageIcon(url).getImage() : null;

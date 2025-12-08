@@ -18,6 +18,12 @@ import it.unibo.uniboparty.model.minigames.memory.api.MemoryGameReadOnlyState;
 public final class MemoryGameImpl implements MemoryGameModel {
 
     /**
+     * Maximum number of moves allowed, expressed as a multiplier
+     * of the total number of pairs.
+     */
+    private static final int MOVES_PER_PAIR_LIMIT = 3;
+
+    /**
      * All the cards in the current game.
      */
     private final List<Card> cards; 
@@ -26,6 +32,11 @@ public final class MemoryGameImpl implements MemoryGameModel {
      * Total number of pairs in the game.
      */
     private final int totalPairs;
+
+    /**
+     * Maximum number of moves allowed before the game is lost.
+     */
+    private final int maxMoves;
 
     /**
      * Number of pairs matched so far.
@@ -43,9 +54,15 @@ public final class MemoryGameImpl implements MemoryGameModel {
     private Card secondSelectedCard;
 
     /**
-     * {@code true} when the player has just revealed two different cards (mismatch) and they must be hidden again.
+     * {@code true} when the player has just revealed two different cards (mismatch)
+     * and they must be hidden again.
      */
     private boolean mismatchPending;
+
+    /**
+     * {@code true} when the player has exceeded the maximum number of moves.
+     */
+    private boolean gameLost;
 
     /**
      * Short feedback message for the player.
@@ -66,10 +83,12 @@ public final class MemoryGameImpl implements MemoryGameModel {
     public MemoryGameImpl(final List<Card> deck) {
         this.cards = List.copyOf(deck);
         this.totalPairs = deck.size() / 2;
+        this.maxMoves = this.totalPairs * MOVES_PER_PAIR_LIMIT;
         this.matchedPairs = 0;
         this.firstSelectedCard = null;
         this.secondSelectedCard = null;
         this.mismatchPending = false;
+        this.gameLost = false;
         this.lastMessage = "Game started! Select a card.";
         this.moves = 0;
     }
@@ -78,7 +97,13 @@ public final class MemoryGameImpl implements MemoryGameModel {
      * {@inheritDoc}
      */
     @Override
-     public boolean flipCard(final int index) {
+    public boolean flipCard(final int index) {
+
+        // Do not accept new clicks if the game is already over
+        if (this.isGameOver()) {
+            this.lastMessage = "The game is already over.";
+            return false;
+        }
 
         // Do not accept new clicks if there is a mismatch still visible
         if (this.mismatchPending) {
@@ -114,14 +139,19 @@ public final class MemoryGameImpl implements MemoryGameModel {
         // Second card of the turn
         this.secondSelectedCard = selected;
 
-        // Every time you flip the second card, it count as a move
+        // Every time you flip the second card, it counts as a move
         this.moves++;
 
         if (checkForMatch(this.firstSelectedCard, this.secondSelectedCard)) {
             this.matchedPairs++;
 
-            if (this.isGameOver()) {
+            if (this.matchedPairs == this.totalPairs) {
+                // All pairs found: victory, regardless of move limit
                 this.lastMessage = "Congratulations! You win in " + this.moves + " moves!";
+            } else if (this.moves > this.maxMoves) {
+                // Move limit exceeded before finding all pairs: defeat
+                this.gameLost = true;
+                this.lastMessage = "You lost: move limit (" + this.maxMoves + ") exceeded.";
             } else {
                 this.lastMessage = "It's a match!";
             }
@@ -132,19 +162,23 @@ public final class MemoryGameImpl implements MemoryGameModel {
             // NO MATCH:
             // Keep both cards visible and wait for resolveMismatch()
             this.mismatchPending = true;
-            this.lastMessage = "No match. Try to remember these cards.";
-            // We do not close the turn here
-            // endTurn() will be called later in resolveMismatch()
+
+            if (this.moves > this.maxMoves && this.matchedPairs < this.totalPairs) {
+                this.gameLost = true;
+                this.lastMessage = "You lost: move limit (" + this.maxMoves + ") exceeded.";
+            } else {
+                this.lastMessage = "No match. Try to remember these cards.";
+            }
         }
 
         return true;
-     }
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     @Override
-     public void resolveMismatch() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resolveMismatch() {
         if (this.mismatchPending && this.firstSelectedCard != null && this.secondSelectedCard != null) {
             this.firstSelectedCard.hide();
             this.secondSelectedCard.hide();
@@ -152,64 +186,66 @@ public final class MemoryGameImpl implements MemoryGameModel {
         endTurn();
         this.mismatchPending = false;
 
-        if (this.isGameOver()) {
+        if (this.gameLost) {
+            this.lastMessage = "You lost: move limit (" + this.maxMoves + ") exceeded.";
+        } else if (this.isGameOver()) {
             this.lastMessage = "You found all pairs in " + this.moves + " moves!";
         } else {
             this.lastMessage = "Try again!";
         }
-     }
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     @Override
-     public boolean hasMismatchPending() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasMismatchPending() {
         return this.mismatchPending;
-     }
+    }
 
-     /**
-      * Checks if the two given cards form a matching pair.
-      * 
-      * @param first first card
-      * @param second second card
-      * @return {@code true} if the two cards match, {@code false} otherwise
-      */
-     private boolean checkForMatch(final Card first, final Card second) {
+    /**
+     * Checks if the two given cards form a matching pair.
+     * 
+     * @param first first card
+     * @param second second card
+     * @return {@code true} if the two cards match, {@code false} otherwise
+     */
+    private boolean checkForMatch(final Card first, final Card second) {
         // We can use == here because Symbol is an enum
         return first.getSymbol() == second.getSymbol();
-     }
+    }
 
-     /**
-      * Ends the current turn by clearing the selected cards.
-      * After this call, the next click will be considered as "first card".
-      */
-     private void endTurn() {
+    /**
+     * Ends the current turn by clearing the selected cards.
+     * After this call, the next click will be considered as "first card".
+     */
+    private void endTurn() {
         this.firstSelectedCard = null;
         this.secondSelectedCard = null;
-     }
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     @Override
-     public boolean isGameOver() {
-        return this.matchedPairs == this.totalPairs;
-     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isGameOver() {
+        return this.matchedPairs == this.totalPairs || this.gameLost;
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     @Override
-     public List<Card> getCards() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Card> getCards() {
         // Returns a defensive copy to avoid external modifications
         return List.copyOf(this.cards);
-     }
+    }
 
-     /**
-      * {@inheritDoc}
-      */
-     @Override
-     public MemoryGameReadOnlyState getGameState() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MemoryGameReadOnlyState getGameState() {
         return new MemoryGameState(
             this.matchedPairs,
             this.totalPairs,
@@ -219,15 +255,15 @@ public final class MemoryGameImpl implements MemoryGameModel {
             this.lastMessage,
             this.moves
         );
-     }
+    }
 
-     /**
-      * Checks if the given index is valid for the current deck.
-      * 
-      * @param index the index to check
-      * @return {@code true} if the index is inside [0, cards.size() - 1]
-      */
-     private boolean isValidIndex(final int index) {
+    /**
+     * Checks if the given index is valid for the current deck.
+     * 
+     * @param index the index to check
+     * @return {@code true} if the index is inside [0, cards.size() - 1]
+     */
+    private boolean isValidIndex(final int index) {
         return index >= 0 && index < this.cards.size();
-     }
+    }
 }

@@ -137,7 +137,6 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
     private ImageIcon loadScaledIcon(final String path, final int width, final int height) {
         final URL url = getClass().getResource(path);
         if (url == null) {
-            // In a student project, we simply return null if the image is missing.
             return null;
         }
         final ImageIcon icon = new ImageIcon(url);

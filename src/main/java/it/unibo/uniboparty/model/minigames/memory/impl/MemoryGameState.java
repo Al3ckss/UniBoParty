@@ -39,7 +39,7 @@ public final class MemoryGameState implements MemoryGameReadOnlyState {
         final int totalPairs,
         final boolean gameOver,
         final boolean waitingSecondFlip,
-        final List<CardReadOnly> cards,
+        final List<? extends CardReadOnly> cards,
         final String message,
         final int moves
     ) {
