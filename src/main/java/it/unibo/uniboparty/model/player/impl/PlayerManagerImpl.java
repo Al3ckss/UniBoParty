@@ -23,6 +23,11 @@ public final class PlayerManagerImpl implements PlayerManager {
 
     private static final String INVALID_PLAYER_INDEX = "Invalid player index: ";
 
+    /** Result codes used by minigames. */
+    private static final int GAME_RESULT_LOST = 0;
+    private static final int GAME_RESULT_WON = 1;
+    private static final int GAME_RESULT_IN_PROGRESS = 2;
+
     private final List<Player> players;
     private final int numberOfPlayers;
     private final int[] scores;
@@ -37,21 +42,24 @@ public final class PlayerManagerImpl implements PlayerManager {
      * <p>
      * Note: BoardView and BoardController are stored as interface references,
      * not concrete implementations. These are shared collaborators in the MVC pattern
-     * that must be mantained synchronized during the game.
+     * that must be maintained synchronized during the game.
      * </p>
      *
      * @param players the list of players in the match
      * @param boardView the board view for updating player positions (must not be null)
      * @param boardController the board controller for reading cell types (must not be null)
-     * @throws IllegalArgumentException if players is null or empty, or if boardView or boardController is null
+     * @throws IllegalArgumentException if players is null or empty,
+     *      or if boardView or boardController is null
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2",
-        justification = "Interfaces used as shared collaborators (MVC pattern). "
+        justification = "Interfaces used as shared collaborators (MVC pattern)."
     )
-    public PlayerManagerImpl(final List<Player> players,
-                             final BoardView boardView,
-                             final BoardController boardController) {
+    public PlayerManagerImpl(
+            final List<Player> players,
+            final BoardView boardView,
+            final BoardController boardController) {
+
         if (players == null || players.isEmpty()) {
             throw new IllegalArgumentException("players must not be null or empty");
         }
@@ -61,6 +69,7 @@ public final class PlayerManagerImpl implements PlayerManager {
         if (boardController == null) {
             throw new IllegalArgumentException("boardController must not be null");
         }
+
         this.players = List.copyOf(players);
         this.numberOfPlayers = this.players.size();
         this.scores = new int[this.numberOfPlayers];
@@ -148,7 +157,6 @@ public final class PlayerManagerImpl implements PlayerManager {
                 current.setPosition(newPos);
                 this.boardView.setPlayerPosition(newPos);
             }
-
             case SWAP -> {
                 if (this.numberOfPlayers > 1) {
                     int otherIndex;
@@ -161,9 +169,10 @@ public final class PlayerManagerImpl implements PlayerManager {
                     other.setPosition(current.getPosition());
                     current.setPosition(tempPos);
 
+                    // On the board we show only the current player's token
                     this.boardView.setPlayerPosition(current.getPosition());
                 }
-}
+            }
             case MINIGAME -> {
                 minigameToStart = this.boardController.getMinigameAt(newPos);
             }
@@ -180,10 +189,17 @@ public final class PlayerManagerImpl implements PlayerManager {
     }
 
     @Override
-    public void applyMinigameResult(final int playerIndex, final MinigameId minigameId, final int resultCode) {
-        if (resultCode == 2) {
-            // Game still in progress, nothing happens.
+    public void applyMinigameResult(
+            final int playerIndex,
+            final MinigameId minigameId,
+            final int resultCode) {
+
+        if (resultCode == GAME_RESULT_IN_PROGRESS) {
             return;
+        }
+
+        if (resultCode != GAME_RESULT_WON && resultCode != GAME_RESULT_LOST) {
+            throw new IllegalArgumentException("Invalid result code: " + resultCode);
         }
 
         if (playerIndex < 0 || playerIndex >= this.numberOfPlayers) {
@@ -191,11 +207,10 @@ public final class PlayerManagerImpl implements PlayerManager {
         }
 
         final Player player = this.players.get(playerIndex);
-        final int movement = (resultCode == 1) ? 1 : -1;
+        final int movement = resultCode == GAME_RESULT_WON ? 1 : -1;
         int newPos = player.getPosition() + movement;
         final int boardSize = this.boardController.getBoardSize();
 
-        // Ensure position stays within bounds
         if (newPos < 0) {
             newPos = 0;
         } else if (newPos >= boardSize) {

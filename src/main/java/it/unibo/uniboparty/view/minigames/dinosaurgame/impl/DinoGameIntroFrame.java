@@ -1,10 +1,14 @@
 package it.unibo.uniboparty.view.minigames.dinosaurgame.impl;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
 
 import it.unibo.uniboparty.controller.minigames.dinosaurgame.impl.ControllerImpl;
 import it.unibo.uniboparty.model.minigames.dinosaurgame.impl.ModelImpl;
 import it.unibo.uniboparty.utilities.AbstractMinigameIntroFrame;
+import it.unibo.uniboparty.utilities.MinigameResultCallback;
 
 /**
  * Intro window for the Dinosaur Game minigame.
@@ -14,10 +18,28 @@ public final class DinoGameIntroFrame extends AbstractMinigameIntroFrame {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates the intro window for the Dinosaur Game minigame.
+     * Optional callback used to notify the board when the minigame ends.
+     */
+    private final transient MinigameResultCallback resultCallback;
+
+    /**
+     * Creates the intro window without a callback.
+     *
+     * <p>Useful to run the minigame standalone.</p>
      */
     public DinoGameIntroFrame() {
+        this(null);
+    }
+
+    /**
+     * Creates the intro window with a callback.
+     *
+     * @param resultCallback callback that receives the result code
+     *                       when the game window is closed
+     */
+    public DinoGameIntroFrame(final MinigameResultCallback resultCallback) {
         super();
+        this.resultCallback = resultCallback;
         initIntroFrame();
     }
 
@@ -26,15 +48,15 @@ public final class DinoGameIntroFrame extends AbstractMinigameIntroFrame {
         return "Dinosaur Run";
     }
 
-@Override
-protected String getRulesText() {
-    return
-          "How to play:\n"
-        + "- Press SPACE to make the dinosaur jump.\n"
-        + "- Avoid all obstacles, you lose if you touch one of them.\n"
-    + "- Survive for 30 seconds to win.\n"
-    + "- The speed increases over time, so be ready.";
-}
+    @Override
+    protected String getRulesText() {
+        return
+              "How to play:\n"
+            + "- Press SPACE to make the dinosaur jump.\n"
+            + "- Avoid all obstacles, you lose if you touch one of them.\n"
+            + "- Survive for 30 seconds to win.\n"
+            + "- The speed increases over time, so be ready.";
+    }
 
     @Override
     protected JFrame createGameFrame() {
@@ -42,18 +64,26 @@ protected String getRulesText() {
         final ModelImpl model = new ModelImpl();
         final ViewImpl view = new ViewImpl(model);
 
-        // Controller starts the game in its constructor
-        new ControllerImpl(model, view);
+        final ControllerImpl controller = new ControllerImpl(model, view);
 
         gameFrame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         gameFrame.setContentPane(view);
         gameFrame.pack();
+        gameFrame.setLocationRelativeTo(null);
 
-        // Cleanup when window closes
-        gameFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+        gameFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(final java.awt.event.WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 view.unbindModel();
+                controller.cleanup();
+            }
+
+            @Override
+            public void windowClosed(final WindowEvent e) {
+                if (resultCallback != null) {
+                    final int resultCode = controller.getState();
+                    resultCallback.onResult(resultCode);
+                }
             }
         });
 
