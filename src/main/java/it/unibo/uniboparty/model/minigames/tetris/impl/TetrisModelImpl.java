@@ -2,9 +2,12 @@ package it.unibo.uniboparty.model.minigames.tetris.impl;
 
 import it.unibo.uniboparty.model.minigames.tetris.api.TetrisModel;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
 import it.unibo.uniboparty.model.minigames.tetris.api.GridModel;
 import it.unibo.uniboparty.model.minigames.tetris.api.ModelListener;
 
@@ -38,9 +41,9 @@ public final class TetrisModelImpl implements TetrisModel {
     @Override
     public void newRack() {
         rack.clear();
-        while (rack.size() < 3) {
-            rack.add(randomPiece());
-        }
+        Stream.generate(this::randomPiece)
+              .limit(3)
+              .forEach(rack::add);
         notifyAllListeners();
     }
 
@@ -69,16 +72,13 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     public boolean hasAnyMove() {
-        for (final PieceImpl p : rack) {
-            for (int r = 0; r < grid.getRows(); r++) {
-                for (int c = 0; c < grid.getCols(); c++) {
-                    if (grid.canPlace(p, r, c)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+       return rack.stream().anyMatch(p -> 
+            IntStream.range(0, grid.getRows()).anyMatch(r -> 
+                IntStream.range(0, grid.getCols()).anyMatch(c -> 
+                    grid.canPlace(p, r, c)
+                )
+            )
+        );
     }
 
     /**
@@ -153,7 +153,7 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     public PieceImpl[] getRack() {
-        return Collections.unmodifiableList(rack).toArray(new PieceImpl[0]);
+        return rack.stream().toArray(PieceImpl[]::new);
     }
 
     /**
@@ -177,19 +177,17 @@ public final class TetrisModelImpl implements TetrisModel {
      */
     @Override
     public void tryPlaceAt(final int r, final int c) {
-        if (this.selected == null) {
-            return;
-        }
-        if (this.grid.canPlace(this.selected, r, c)) {
-            final int cellsPlaced = this.selected.getCells().size();
-            this.grid.place(this.selected, r, c);
-            final int linesCleared = this.grid.clearFullLines();
-            award(cellsPlaced, linesCleared);
-            consumePiece(this.selected);
-            this.selected = null;
-        } else {
-            this.selected = null;
-        }
+        Optional.ofNullable(this.selected)
+            .ifPresent(piece -> {
+                if (this.grid.canPlace(piece, r, c)) {
+                    final int cellsPlaced = piece.getCells().size();
+                    this.grid.place(piece, r, c);
+                    final int linesCleared = this.grid.clearFullLines();
+                    award(cellsPlaced, linesCleared);
+                    consumePiece(piece);
+                }
+                this.selected = null;
+            });
     }
 
 }

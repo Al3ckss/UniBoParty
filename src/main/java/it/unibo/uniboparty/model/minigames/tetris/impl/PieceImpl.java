@@ -2,9 +2,10 @@ package it.unibo.uniboparty.model.minigames.tetris.impl;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import it.unibo.uniboparty.model.minigames.tetris.api.Piece;
 
@@ -27,11 +28,12 @@ public final class PieceImpl implements Piece {
 
         final int minR = cells.stream().mapToInt(p -> p.y).min().orElse(0);
         final int minC = cells.stream().mapToInt(p -> p.x).min().orElse(0);
-        final List<Point> norm = new ArrayList<>();
-        for (final Point p : cells) {
-            norm.add(new Point(p.x - minC, p.y - minR));
-        }
-        this.cells = Collections.unmodifiableList(norm);
+        this.cells = cells.stream()
+            .map(p -> new Point(p.x - minC, p.y - minR))
+            .collect(Collectors.collectingAndThen(
+                Collectors.toList(), 
+                Collections::unmodifiableList
+            ));
         this.name = name;
         this.color = color;
     }
@@ -45,11 +47,10 @@ public final class PieceImpl implements Piece {
      * @return a new PieceImpl instance
      */
     public static PieceImpl of(final int[][] coords, final String name, final Color color) {
-        final List<Point> pts = new ArrayList<>();
-        for (final int[] rc : coords) {
-            pts.add(new Point(rc[1], rc[0]));
-        }
-        return new PieceImpl(pts, name, color);
+       final List<Point> points = Arrays.stream(coords)
+            .map(rc -> new Point(rc[1], rc[0]))
+            .collect(Collectors.toList());
+        return new PieceImpl(points, name, color);
     }
 
     /**

@@ -115,7 +115,6 @@ public final class GridModelImpl implements GridModel {
      */
     @Override
     public int clearFullLines() {
-
         final List<Integer> fullRows = IntStream.range(0, rows)
             .filter(r -> IntStream.range(0, cols).allMatch(c -> grid[r][c]))
             .boxed()

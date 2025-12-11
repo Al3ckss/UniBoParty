@@ -154,6 +154,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
                 final JButton b = new JButton();
                 b.setPreferredSize(new Dimension(HOLE_SIZE, HOLE_SIZE));
                 b.setFocusPainted(false);
+                b.setOpaque(true);
+                b.setBorderPainted(false);
                 b.setBackground(Color.GRAY);
 
                 final int holeIndex = index;
@@ -229,6 +231,8 @@ public final class WhacAMoleViewImpl extends JPanel implements WhacAMoleView {
 
         for (int i = 0; i < this.holeButtons.length; i++) {
             final JButton b = this.holeButtons[i];
+            b.setOpaque(true);
+            b.setBorderPainted(false);
 
             if (!state.isGameOver() && i == moleIndex) {
 

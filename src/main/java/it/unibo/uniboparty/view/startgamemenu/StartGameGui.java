@@ -121,7 +121,11 @@ public final class StartGameGui extends JFrame {
         buttonPanel.setOpaque(false);
 
         startButton = createButton(" Start Game ", START_GAME_COLOR);
+        startButton.setOpaque(true);
+        startButton.setBorderPainted(false);
         exitButton = createButton(" Exit ", EXIT_GAME_COLOR);
+        exitButton.setOpaque(true);
+        exitButton.setBorderPainted(false);
 
         buttonPanel.add(startButton);
         buttonPanel.add(exitButton);
