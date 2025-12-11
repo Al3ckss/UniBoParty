@@ -34,13 +34,13 @@ public class LeaderboardViewImpl implements LeaderboardView {
      * and prepares the bottom panel containing the "Back to Menu" button.
      */
     public LeaderboardViewImpl() {
-        frame = new JFrame("Classifica - Podio");
+        frame = new JFrame("Classification - Podium");
         frame.setSize(WIDTH, HEIGHT);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        backButton = new JButton("Torna al Menu");
+        backButton = new JButton("Go back to Menu");
         backButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
 
         // Pannello pulsante in basso
