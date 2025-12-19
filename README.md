@@ -1,3 +1,20 @@
-# UniBoParty
+# UniBoParty 🎉
 
-This is a repository that can be used as a base to develop an OOP project. The tools seen in the lab are pre-integrated in the build file.
+UniBoParty is a digital turn-based board game developed in Java, where players move across a board and face a variety of mini-games. The goal is to earn points and compete for the top positions.
+
+🎮 Features  
+✅ Support for 2–4 players  
+🎲 Dice-based movement  
+🧩 Multiple mini-games  
+🏁 Dynamic board with special cells  
+👀 Text and graphical interface  
+
+## About
+Caterina Torelli
+Lorenzo Marchegiani
+Alessandro Chierici
+Nicola Mazzotti
+
+## How to run
+```bash
+java -jar OOP24-UniboParty-all.jar
